@@ -157,7 +157,7 @@ namespace OffersMicroservices.Controllers
 
         /*   POST: api/engageOffer
              API fix engage_date of a specific offer_id to current date and time   */
-        [Route("EngageOffer")]
+        [Route("engageOffer")]
         [HttpPost]
         public void Engage(int Id, int Emp_Id)
         {
