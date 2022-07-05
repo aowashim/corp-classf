@@ -16,21 +16,39 @@ namespace OffersMicroservices.Controllers
         {
             db = new DatabaseContext();
         }
-        // GET: api/<OfferController>
 
+        // GET: api/<offer>
+        // Api to get all the offers 
         [Route("Offer")]
         [HttpGet]
-        public IEnumerable<Offer> GetOfferDetails()
+        public IEnumerable<Offer> Offer()
         {
             return db.Offers.ToList();
         }
 
-        //// GET api/<OfferController>/5
+        // GET: api/<getOfferDetails>/5
         [Route("getOfferDetails/{id}")]
         [HttpGet]
-        public Offer Get(int id)
+        public Offer GetOfferDetails(int id)
         {
             return db.Offers.Find(id);
+        }
+
+        // GET: api/<getOfferDetailsByCategory>/5
+        [Route("getOfferDetailsByCategory/{id}")]
+        [HttpGet]
+        public List<Offer> GetOfferDetailsByCategory(int id)
+        {
+            List<Offer> filtered = new List<Offer>();
+
+            foreach (Offer offer in db.Offers)
+            {
+                if (offer.Category_Id == id)
+                {
+                    filtered.Add(offer);
+                }
+            }
+            return filtered;
         }
 
 
