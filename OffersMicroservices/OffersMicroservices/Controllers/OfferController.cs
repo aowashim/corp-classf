@@ -54,6 +54,16 @@ namespace OffersMicroservices.Controllers
         }
 
 
+        // GET: api/<offer>
+        // API to get all the offers sorted by no of likes
+        [Route("getOfferByPostedDate")]
+        [HttpGet]
+        public IEnumerable<Offer> GetOfferByPostedDate()
+        {
+            return db.Offers.OrderByDescending(o => o.Start_Date).ToList();
+        }
+
+
 
         //[HttpGet("{id}")]
         //public Offer Get(int id)
