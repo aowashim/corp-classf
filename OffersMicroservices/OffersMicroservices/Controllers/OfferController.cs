@@ -13,6 +13,7 @@ namespace OffersMicroservices.Controllers
     [ApiController]
     public class OfferController : ControllerBase
     {
+        private DateTime def_date = new DateTime(2001, 01, 01);
         private readonly DatabaseContext db;
         public OfferController()
         {
@@ -101,6 +102,78 @@ namespace OffersMicroservices.Controllers
 
         }
 
+
+        // [ POST METHODS ]
+
+        [Route("AddOffer")]
+        [HttpPost]
+        public void CreateOffer(Offer offer)
+        {
+            var result = db.Offers.AddAsync(offer);
+            db.SaveChanges();
+        }
+
+
+        [Route("EditOffer")]
+        [HttpPost]
+        public void Edit(int Id, Offer data)
+        {
+
+            Offer temp = db.Offers.Find(Id);
+            if (temp.Title != null)
+            {
+                temp.Title = data.Title;
+            }
+            if (temp.Description != null)
+            {
+                temp.Description = data.Description;
+            }
+            if (temp.Start_Date != null)
+            {
+                temp.Start_Date = data.Start_Date;
+            }
+            if (temp.End_Date != null)
+            {
+                temp.End_Date = data.End_Date;
+            }
+            temp.Engaged_Date = def_date;
+            db.Offers.Update(temp);
+            db.SaveChanges();
+        }
+
+        //[Route("AddOffer")]
+        //[HttpPost]
+        //public void Add(int Id, int Emp_Id, Offer data)
+        //{
+        //    Offer temp = new Offer();
+
+        //    temp.Title = data.Title;
+        //    temp.Description = data.Description;
+        //    temp.N_Likes = 0;
+        //    temp.Start_Date = data.Start_Date;
+        //    temp.End_Date = data.End_Date;
+        //    temp.Engaged_Date = def_date;
+        //    temp.Category_Id = data.Category_Id;
+        //    temp.Emp_Id = Emp_Id;
+
+        //    db.Offers.Add(temp);
+        //    db.SaveChanges();
+
+        //}
+
+
+        // POST api/<OfferController>
+        [Route("EngageOffer")]
+        [HttpPost]
+        public void Engage(int Id, int Emp_Id)
+        {
+            Offer temp = db.Offers.Find(Id);
+            temp.Emp_Id = Emp_Id;
+            temp.Engaged_Date = System.DateTime.Now;
+            db.Offers.Update(temp);
+            db.SaveChanges();
+
+        }
 
         // POST api/<OfferController>
         [HttpPost]

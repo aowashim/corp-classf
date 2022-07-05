@@ -1,17 +1,11 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using OffersMicroservices.Database;
-using Swashbuckle.AspNetCore.Swagger;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace OffersMicroservices
 {
@@ -27,17 +21,17 @@ namespace OffersMicroservices
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           
+
             services.AddControllers();
-            services.AddSwaggerGen(c => 
+            services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
-                    Title ="Offers Microservices",
+                    Title = "Offers Microservices",
                     Description = "API for Building Offers Microservices",
                     Version = "v1"
                 });
-             
+
             });
         }
 
@@ -48,6 +42,18 @@ namespace OffersMicroservices
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseExceptionHandler(a => a.Run(async context =>
+            {
+                var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+                var exception = exceptionHandlerPathFeature.Error;
+
+                var result = JsonConvert.SerializeObject(new { error = exception.Message });
+                context.Response.ContentType = "application/json";
+                await context.Response.WriteAsync(result);
+            }));
+
+
             app.UseHttpsRedirection();
             app.UseRouting();
 
@@ -64,6 +70,6 @@ namespace OffersMicroservices
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Offers Microservices");
                 });
         }
-       
+
     }
 }

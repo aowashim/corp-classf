@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace OffersMicroservices.Migrations
 {
@@ -11,8 +11,7 @@ namespace OffersMicroservices.Migrations
                 name: "Offer_Category",
                 columns: table => new
                 {
-                    Cateory_Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Cateory_Id = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -24,14 +23,13 @@ namespace OffersMicroservices.Migrations
                 name: "Offers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    N_Likes = table.Column<int>(type: "int", nullable: false),
+                    N_Likes = table.Column<int>(type: "int", nullable: true),
                     Start_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     End_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Engaged_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Engaged_Date = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Category_Id = table.Column<int>(type: "int", nullable: false),
                     Emp_Id = table.Column<int>(type: "int", nullable: false)
                 },
