@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EmployeeMicroservice
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
