@@ -1,6 +1,5 @@
 ﻿using CorpClassfAuth.Data.Model;
 using CorpClassfAuth.Repository;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -25,12 +24,12 @@ namespace CorpClassfAuth.Controllers
             return result.Succeeded ? Ok(result) : BadRequest(result);
         }
 
-        //[HttpPost("login")]
-        //public async Task<IActionResult> LogIn([FromBody] SignIn signInModel)
-        //{
-        //    var result = await _accountRepository.LoginAsync(signInModel);
+        [HttpPost("login")]
+        public async Task<IActionResult> LogIn([FromBody] SignIn signInModel)
+        {
+            var result = await _authRepository.LoginAsync(signInModel);
 
-        //    return result == null ? Unauthorized(result) : Ok(result);
-        //}
+            return result == null ? Unauthorized(result) : Ok(result);
+        }
     }
 }

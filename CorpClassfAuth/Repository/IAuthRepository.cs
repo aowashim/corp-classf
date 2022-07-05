@@ -7,6 +7,6 @@ namespace CorpClassfAuth.Repository
     public interface IAuthRepository
     {
         Task<IdentityResult> SignUpAsync(SignUp signUpModel);
-        //Task<string> LoginAsync(SignIn signModel);
+        Task<string> LoginAsync(SignIn signModel);
     }
 }
