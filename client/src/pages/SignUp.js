@@ -11,6 +11,8 @@ import {
 import { useFormik } from 'formik'
 import { signUpValidation } from '../helpers/yupValidation'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
+import NavBar from '../components/NavBar'
+import { useLocation } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -34,6 +36,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignUp(props) {
   const classes = useStyles()
+  const { pathname } = useLocation()
 
   const formik = useFormik({
     initialValues: {
@@ -52,7 +55,7 @@ export default function SignUp(props) {
 
   return (
     <div>
-      {/* <NavBar path={props.location.pathname} /> */}
+      <NavBar path={pathname} />
       <Toolbar />
       <Container component='main' maxWidth='sm'>
         <div className={classes.paper}>
@@ -124,6 +127,7 @@ export default function SignUp(props) {
                   formik.errors.confirmPassword
                 }
               />
+
               <TextField
                 variant='outlined'
                 fullWidth
@@ -164,7 +168,7 @@ export default function SignUp(props) {
                 type='submit'
                 fullWidth
                 variant='contained'
-                color='secondary'
+                color='primary'
                 className={classes.submit}
               >
                 Sign Up
