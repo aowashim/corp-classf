@@ -13,6 +13,8 @@ namespace OffersMicroservices.Controllers
     [ApiController]
     public class OfferController : ControllerBase
     {
+        /* --------[SETUP]-------- */
+
         private DateTime def_date = new DateTime(2001, 01, 01);
         private readonly DatabaseContext db;
         public OfferController()
@@ -20,8 +22,12 @@ namespace OffersMicroservices.Controllers
             db = new DatabaseContext();
         }
 
-        // GET: api/<offer>
-        // API to get all the offers 
+
+        /* --------[GET REQUESTS]-------- */
+
+
+        /*   GET: GET: api/offer
+             API to get all the offers     */
         [Route("Offer")]
         [HttpGet]
         public IEnumerable<Offer> Offer()
@@ -29,8 +35,9 @@ namespace OffersMicroservices.Controllers
             return db.Offers.ToList();
         }
 
-        // GET: api/<getOfferDetails>/5
-        // API to fetch data on the basis on offerID
+
+        /*   GET: api/getOfferDetails/<offer_id>
+             API to fetch data on the basis on offerID    */
         [Route("getOfferDetails/{id}")]
         [HttpGet]
         public ActionResult<Offer> GetOfferDetails(int id)
@@ -45,8 +52,9 @@ namespace OffersMicroservices.Controllers
             }
         }
 
-        // GET: api/<getOfferDetailsByCategory>/5
-        // API to fetch filtered data on the basis of category
+
+        /*   GET: api/getOfferDetailsByCategory/<category_id>
+             API to fetch filtered data on the basis of category    */
         [Route("getOfferDetailsByCategory/{id}")]
         [HttpGet]
         public ActionResult<IEnumerable<Offer>> GetOfferDetailsByCategory(int id)
@@ -61,8 +69,9 @@ namespace OffersMicroservices.Controllers
             }
         }
 
-        // GET: api/<offer>
-        // API to get all the offers sorted by no of likes
+
+        /*   GET: api/getofferbytoplikes
+             API to fetch sorted data on the basis of likes    */
         [Route("getOfferByTopLikes")]
         [HttpGet]
         public ActionResult<IEnumerable<Offer>> GetOfferByTopLikes()
@@ -79,8 +88,8 @@ namespace OffersMicroservices.Controllers
         }
 
 
-        // GET: api/<offer>
-        // API to get all the offers sorted by no of likes
+        /*   GET: api/getOfferByPostedDate>
+             API to fetch sorted data on the basis of posted date    */
         [Route("getOfferByPostedDate")]
         [HttpGet]
         public IEnumerable<Offer> GetOfferByPostedDate()
@@ -103,9 +112,11 @@ namespace OffersMicroservices.Controllers
         }
 
 
-        // [ POST METHODS ]
+        /* --------[POST REQUESTS]-------- */
 
-        [Route("AddOffer")]
+        /*   POST: api/AddOffer
+             API to take an object of offer and store it in database    */
+        [Route("addOffer")]
         [HttpPost]
         public void CreateOffer(Offer offer)
         {
@@ -114,7 +125,9 @@ namespace OffersMicroservices.Controllers
         }
 
 
-        [Route("EditOffer")]
+        /*   POST: api/editOffer
+             API to edit offer data   */
+        [Route("editOffer")]
         [HttpPost]
         public void Edit(int Id, Offer data)
         {
@@ -141,6 +154,9 @@ namespace OffersMicroservices.Controllers
             db.SaveChanges();
         }
 
+
+        /*   POST: api/engageOffer
+             API fix engage_date of a specific offer_id to current date and time   */
         [Route("EngageOffer")]
         [HttpPost]
         public void Engage(int Id, int Emp_Id)
