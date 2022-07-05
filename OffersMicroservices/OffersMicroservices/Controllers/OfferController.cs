@@ -18,7 +18,7 @@ namespace OffersMicroservices.Controllers
         }
 
         // GET: api/<offer>
-        // Api to get all the offers 
+        // API to get all the offers 
         [Route("Offer")]
         [HttpGet]
         public IEnumerable<Offer> Offer()
@@ -27,6 +27,7 @@ namespace OffersMicroservices.Controllers
         }
 
         // GET: api/<getOfferDetails>/5
+        // API to fetch data on the basis on offerID
         [Route("getOfferDetails/{id}")]
         [HttpGet]
         public Offer GetOfferDetails(int id)
@@ -35,20 +36,12 @@ namespace OffersMicroservices.Controllers
         }
 
         // GET: api/<getOfferDetailsByCategory>/5
+        // API to fetch filtered data on the basis of category
         [Route("getOfferDetailsByCategory/{id}")]
         [HttpGet]
-        public List<Offer> GetOfferDetailsByCategory(int id)
+        public IEnumerable<Offer> GetOfferDetailsByCategory(int id)
         {
-            List<Offer> filtered = new List<Offer>();
-
-            foreach (Offer offer in db.Offers)
-            {
-                if (offer.Category_Id == id)
-                {
-                    filtered.Add(offer);
-                }
-            }
-            return filtered;
+            return db.Offers.Where(offer => offer.Category_Id == id);
         }
 
 
