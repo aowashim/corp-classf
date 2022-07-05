@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using OffersMicroservices.Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -48,9 +50,18 @@ namespace OffersMicroservices.Controllers
         // API to get all the offers sorted by no of likes
         [Route("getOfferByTopLikes")]
         [HttpGet]
-        public IEnumerable<Offer> GetOfferByTopLikes()
+        public ActionResult<IEnumerable<Offer>> GetOfferByTopLikes()
         {
-            return db.Offers.OrderByDescending(o => o.N_Likes).ToList();
+            try
+            {
+                return db.Offers.OrderByDescending(o => o.N_Likes).ToList();
+
+            }
+            catch (Exception e)
+            {
+                //return StatusCode(StatusCodes.Status500InternalServerError, "Error retriving data from the database");
+                return BadRequest(e.Message);
+            }
         }
 
 
@@ -60,16 +71,23 @@ namespace OffersMicroservices.Controllers
         [HttpGet]
         public IEnumerable<Offer> GetOfferByPostedDate()
         {
-            return db.Offers.OrderByDescending(o => o.Start_Date).ToList();
+            try
+            {
+                IEnumerable<Offer> result = db.Offers.OrderByDescending(o => o.Start_Date).ToList();
+
+                if (result == null)
+                {
+                    return (IEnumerable<Offer>)NotFound();
+                }
+                return result;
+            }
+            catch (Exception)
+            {
+                return (IEnumerable<Offer>)StatusCode(StatusCodes.Status500InternalServerError, "Error retriving data from the database");
+            }
+
         }
 
-
-
-        //[HttpGet("{id}")]
-        //public Offer Get(int id)
-        //{
-        //    return db.Offers.Find(id);
-        //}
 
         // POST api/<OfferController>
         [HttpPost]
