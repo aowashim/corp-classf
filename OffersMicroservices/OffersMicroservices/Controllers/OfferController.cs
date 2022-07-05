@@ -32,18 +32,32 @@ namespace OffersMicroservices.Controllers
         // API to fetch data on the basis on offerID
         [Route("getOfferDetails/{id}")]
         [HttpGet]
-        public Offer GetOfferDetails(int id)
+        public ActionResult<Offer> GetOfferDetails(int id)
         {
-            return db.Offers.Find(id);
+            try
+            {
+                return db.Offers.Find(id);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         // GET: api/<getOfferDetailsByCategory>/5
         // API to fetch filtered data on the basis of category
         [Route("getOfferDetailsByCategory/{id}")]
         [HttpGet]
-        public IEnumerable<Offer> GetOfferDetailsByCategory(int id)
+        public ActionResult<IEnumerable<Offer>> GetOfferDetailsByCategory(int id)
         {
-            return db.Offers.Where(offer => offer.Category_Id == id);
+            try
+            {
+                return db.Offers.Where(offer => offer.Category_Id == id).ToList();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         // GET: api/<offer>
@@ -59,7 +73,6 @@ namespace OffersMicroservices.Controllers
             }
             catch (Exception e)
             {
-                //return StatusCode(StatusCodes.Status500InternalServerError, "Error retriving data from the database");
                 return BadRequest(e.Message);
             }
         }
