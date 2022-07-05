@@ -44,6 +44,15 @@ namespace OffersMicroservices.Controllers
             return db.Offers.Where(offer => offer.Category_Id == id);
         }
 
+        // GET: api/<offer>
+        // API to get all the offers sorted by no of likes
+        [Route("getOfferByTopLikes")]
+        [HttpGet]
+        public IEnumerable<Offer> GetOfferByTopLikes()
+        {
+            return db.Offers.OrderByDescending(o => o.N_Likes).ToList();
+        }
+
 
 
         //[HttpGet("{id}")]
