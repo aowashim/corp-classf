@@ -141,28 +141,6 @@ namespace OffersMicroservices.Controllers
             db.SaveChanges();
         }
 
-        //[Route("AddOffer")]
-        //[HttpPost]
-        //public void Add(int Id, int Emp_Id, Offer data)
-        //{
-        //    Offer temp = new Offer();
-
-        //    temp.Title = data.Title;
-        //    temp.Description = data.Description;
-        //    temp.N_Likes = 0;
-        //    temp.Start_Date = data.Start_Date;
-        //    temp.End_Date = data.End_Date;
-        //    temp.Engaged_Date = def_date;
-        //    temp.Category_Id = data.Category_Id;
-        //    temp.Emp_Id = Emp_Id;
-
-        //    db.Offers.Add(temp);
-        //    db.SaveChanges();
-
-        //}
-
-
-        // POST api/<OfferController>
         [Route("EngageOffer")]
         [HttpPost]
         public void Engage(int Id, int Emp_Id)
@@ -175,22 +153,5 @@ namespace OffersMicroservices.Controllers
 
         }
 
-        // POST api/<OfferController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<OfferController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<OfferController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }
