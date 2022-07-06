@@ -76,23 +76,5 @@ namespace PointsMicroservices.Controllers
             return (Emp.First().Emp_Point);
 
         }
-
-        // POST api/<PointController>
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
-
-        // PUT api/<PointController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        // DELETE api/<PointController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }
