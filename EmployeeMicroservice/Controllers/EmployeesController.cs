@@ -8,15 +8,18 @@ using OffersMicroservices.Database;
 using System.Linq;
 using System.Text.Json;
 using EmployeeMicroservice.Database.Entities;
+using EmployeeMicroservice.Database;
+using Microsoft.AspNetCore.Http;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace EmployeeMicroservice.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api")]
     [ApiController]
     public class EmployeesController : ControllerBase
     {
+        /* --------[SETUP]-------- */
 
         private readonly EmployeeContext _context;
 
@@ -25,49 +28,76 @@ namespace EmployeeMicroservice.Controllers
             _context = context;
         }
 
+        /* --------[GET REQUESTS]-------- */
 
         // GET: api/Employees/viewProfile/5
+        // API to fetch Employee Profile based on given Employee Id
         [HttpGet("ViewProfile/{id}")]
         public async Task<ActionResult<Employee>> ViewProfile(int id)
         {
-            var employee = await _context.Employees.FindAsync(id);
-
-            if (employee == null)
+            try 
             {
-                return NotFound();
-            }
+                var employee = await _context.Employees.FindAsync(id);
 
-            return employee;
+                if (employee == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(employee);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
 
         // GET: api/Employees/viewEmployeeOffers/5
+        // API to fetch Offers data based on given Employee Id
         [HttpGet("ViewEmployeeOffers/{id}")]
         public async Task<ActionResult<Offer>> ViewEmployeeOffers(int id)
         {
-            var offers = await _context.Offers.Where(x => x.Emp_Id == id).ToListAsync();
-
-            if (offers == null)
+            try
             {
-                return NotFound();
-            }
-            //var json = JsonSerializer.Serialize(offers);
+                var offers = await _context.Offers.Where(x => x.Emp_Id == id).ToListAsync();
 
-            return Ok(offers);
+                if (offers == null)
+                {
+                    return NotFound();
+                }
+                //var json = JsonSerializer.Serialize(offers);
+
+                return Ok(offers);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
 
-        // GET: api/Employees/viewEmployeeOffers/5
+        // GET: api/Employees/viewEmployeeOffers
+        // API to fetch sorted top 3 data on the basis of likes
         [HttpGet("ViewMostLikedOffers")]
         public async Task<ActionResult<Offer>> ViewMostLikedOffers()
         {
-            var top3offers = await _context.Offers.OrderBy(x => x.N_Likes).Take(3).ToListAsync();
-
-            if (top3offers == null)
+            try
             {
-                return NotFound();
-            }
-            //var json = JsonSerializer.Serialize(offers);
+                var top3offers = await _context.Offers.OrderByDescending(x => x.N_Likes).Take(3).ToListAsync();
 
-            return Ok(top3offers);
+                if (top3offers == null)
+                {
+                    return NotFound();
+                }
+                //var json = JsonSerializer.Serialize(offers);
+
+                return Ok(top3offers);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
