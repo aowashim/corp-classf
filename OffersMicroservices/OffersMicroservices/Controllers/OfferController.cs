@@ -169,5 +169,33 @@ namespace OffersMicroservices.Controllers
 
         }
 
+        /* --------[POINTS UTILITY METHODS]-------- */
+
+        /*   GET: api/getOfferDetailsByCategory/<EMP_id>
+             API to fetch filtered data on the basis of EMP_ID    */
+        [Route("getOfferDetailsByEmpID/{id}")]
+        [HttpGet]
+        public ActionResult<IEnumerable<Offer>> GetOfferDetailsByEmpId(int id)
+        {
+            try
+            {
+                return db.Offers.Where(offer => offer.Emp_Id == id).ToList();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
+        /* --------[COMMENT UTILITY METHODS]-------- */
+
+        [Route("addComment")]
+        [HttpPost]
+        public void CreateComment(Comment comment)
+        {
+            db.Comments.Update(comment);
+            db.SaveChanges();
+        }
     }
 }
