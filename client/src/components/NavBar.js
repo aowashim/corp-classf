@@ -1,6 +1,5 @@
 import {
   AppBar,
-  Badge,
   IconButton,
   Menu,
   MenuItem,
@@ -8,16 +7,15 @@ import {
   Typography,
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
-import { useContext, useEffect, useState } from 'react'
+import { useState } from 'react'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
-// import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 // import CartContext from '../store/CartContext'
 // import UserContext from '../store/UserContext'
 // import UserInfoContext from '../store/UserInfoContext'
 
 export default function NavBar({ path }) {
-  //   const history = useHistory()
+  const navigate = useNavigate()
   const [anchorEl, setAnchorEl] = useState(null)
   //   const { user, setUser } = useContext(UserContext)
   //   const { setUserInfo } = useContext(UserInfoContext)
@@ -42,11 +40,11 @@ export default function NavBar({ path }) {
   }
 
   const handleNavigate = curPath => {
-    // if (path !== curPath) {
-    //   history.push(curPath)
-    // } else {
-    //   handleClose()
-    // }
+    if (path !== curPath) {
+      navigate(curPath)
+    } else {
+      handleClose()
+    }
   }
 
   return (
@@ -83,7 +81,7 @@ export default function NavBar({ path }) {
           <IconButton
             color='inherit'
             aria-label='cart'
-            onClick={() => handleNavigate('/cart')}
+            onClick={() => handleNavigate('/profile')}
           >
             <AccountCircleIcon />
           </IconButton>
