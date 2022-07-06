@@ -32,3 +32,23 @@ export const signInValidation = yup.object({
       'Must Contain 6 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
     ),
 })
+
+export const postOfferValidation = yup.object({
+  title: yup.string().required('Title is required').max(50),
+  description: yup.string().required('Description is required').max(200),
+  startDate: yup
+    .string()
+    .matches(
+      /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/,
+      'Invalid date'
+    )
+    .required('Start Date is required'),
+  endDate: yup
+    .string()
+    .matches(
+      /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/,
+      'Invalid date'
+    )
+    .required('End Date is required'),
+  // category: yup.string().required('Category is required'),
+})
