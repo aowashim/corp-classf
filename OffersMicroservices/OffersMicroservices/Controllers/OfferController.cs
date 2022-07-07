@@ -157,8 +157,8 @@ namespace OffersMicroservices.Controllers
                 {
                     return NotFound();
                 }
-                db.SaveChanges();
-                return Ok(result);
+                await db.SaveChangesAsync();
+                return Ok(result.Entity);
             }
             catch (Exception e)
             {
