@@ -59,7 +59,6 @@ export default function SignIn() {
     validationSchema: signInValidation,
     onSubmit: values => {
       handleSignIn(values)
-      // console.log(values)
     },
   })
 
@@ -75,6 +74,8 @@ export default function SignIn() {
         id: values.empId,
         token: res.data,
       })
+    } else {
+      alert('Invalid Employee Id or Password')
     }
   }
 

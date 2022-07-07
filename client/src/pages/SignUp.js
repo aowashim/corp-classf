@@ -7,12 +7,12 @@ import {
   Toolbar,
   Typography,
 } from '@material-ui/core'
-// import NavBar from '../components/NavBar'
 import { useFormik } from 'formik'
 import { signUpValidation } from '../helpers/yupValidation'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import NavBar from '../components/NavBar'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { signUpApi } from '../helpers/API/auth'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -37,6 +37,7 @@ const useStyles = makeStyles(theme => ({
 export default function SignUp(props) {
   const classes = useStyles()
   const { pathname } = useLocation()
+  const navigate = useNavigate()
 
   const formik = useFormik({
     initialValues: {
@@ -50,9 +51,21 @@ export default function SignUp(props) {
     },
     validationSchema: signUpValidation,
     onSubmit: values => {
-      console.log(values)
+      handleSignUp(values)
     },
   })
+
+  // this handles sign up by calling the signup api
+  const handleSignUp = async values => {
+    const res = await signUpApi(values)
+
+    if (res.status === 200) {
+      alert('Sign Up successfull, please sign in to continue...')
+      navigate('/signin')
+    } else {
+      alert('An error occurred, please try again...')
+    }
+  }
 
   return (
     <div>

@@ -18,3 +18,20 @@ export const signInApi = async values => {
 
   return res
 }
+
+export const signUpApi = async values => {
+  const res = { data: '', status: 200 }
+  try {
+    const val = await axios.post(`${server}/Auth/signup`, {
+      ...values,
+    })
+
+    res.data = val.data
+    res.status = val.status
+  } catch (error) {
+    res.data = error.message
+    res.status = error.response.status
+  }
+
+  return res
+}
