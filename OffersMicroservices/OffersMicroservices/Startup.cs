@@ -23,6 +23,7 @@ namespace OffersMicroservices
         {
 
             services.AddControllers();
+            services.AddCors();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
@@ -53,6 +54,13 @@ namespace OffersMicroservices
                 await context.Response.WriteAsync(result);
             }));
 
+            app.UseCors(builder =>
+            {
+                builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            });
 
             app.UseHttpsRedirection();
             app.UseRouting();

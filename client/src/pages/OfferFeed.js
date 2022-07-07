@@ -4,7 +4,6 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -12,9 +11,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useLocation } from "react-router-dom";
 import Link from "@material-ui/core/Link";
-import { getAllUsers } from "../helpers/Services";
 import SimpleMenu from "../components/Menu";
-import Box from "@material-ui/core/Box";
+import { useState, useEffect } from "react";
 
 function Copyright() {
   return (
@@ -62,22 +60,49 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+// const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 export default function OfferFeed() {
   const classes = useStyles();
 
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:19759/api/getofferbytoplikes")
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          setIsLoaded(true);
+          setItems(result);
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          setIsLoaded(true);
+          setError(error);
+        }
+      );
+  }, []);
+
   const { pathname } = useLocation();
+  if (error) {
+    return <div><h3>Error Error</h3>
+      Error: {error.message}</div>;
+  } else if (!isLoaded) {
+    return <div>Loading...</div>;
+  } else {
   return (
     <React.Fragment>
       <CssBaseline />
       <NavBar path={pathname} />
       <main>
         <div className={classes.heroContent}>
-          <Container maxWidth="md">
-          </Container>
+          <Container maxWidth="md"></Container>
         </div>
-
+      
         <div className={classes.card}>
           <Container maxWidth="md">
             <SimpleMenu></SimpleMenu>
@@ -86,8 +111,8 @@ export default function OfferFeed() {
 
         <Container className={classes.cardGrid} maxWidth="md">
           <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6}>
+            {items.map((item) => (
+              <Grid item key={item} xs={12} sm={6}>
                 <Card className={classes.card}>
                   {/* <CardMedia
                     className={classes.cardMedia}
@@ -96,14 +121,13 @@ export default function OfferFeed() {
                   /> */}
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Heading
+                      {item.title}
                     </Typography>
                     <Typography gutterBottom variant="h6" component="h3">
-                      Employee Name
+                      {item.emp_Id}
                     </Typography>
                     <Typography>
-                      This is a media card. You can use this section to describe
-                      the content.
+                      {item.description}
                     </Typography>
                   </CardContent>
                   <CardActions>
@@ -138,4 +162,5 @@ export default function OfferFeed() {
       {/* End footer */}
     </React.Fragment>
   );
+}
 }
