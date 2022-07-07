@@ -20,23 +20,17 @@ namespace PointsMicroservices.Controllers
         {
             _context = new DatabaseContext();
         }
-        // POST: api/<getpoints>
-        [Route("getpoints")]
+        // POST: api/<refreshPointsOfEmployee>
+        [Route("refreshPointsOfEmployee")]
         [HttpPost]
         public ActionResult PointsCalculations(Offer offer)
         {
             try
             {
-                int rewards = 0;
                 int Emp_id = offer.Emp_Id;
-                IEnumerable<Point> list_point = _context.Points.Where(x => x.Emp_Id == Emp_id);
-
-                Point point = new Point();
-                if (list_point.Any())
-                {
-                    point = list_point.First();
-                    rewards = point.Emp_Point;
-                }
+                IEnumerable<Employee> list_point = _context.Employees.Where(x => x.EmpId == Emp_id);
+                Employee emp = list_point.FirstOrDefault();
+                int rewards = emp.Points_Gained;
                 int diff_date = (DateTime.Now - offer.Start_Date).Days;
                 int engage_diif_date = (offer.Engaged_Date - offer.Start_Date).Days;
                 int n_likes = (int)offer.N_Likes;
@@ -52,19 +46,8 @@ namespace PointsMicroservices.Controllers
                 {
                     rewards += 100;
                 }
-                if (list_point.Any())
-                {
-                    point.Emp_Id = Emp_id;
-                    point.Emp_Point = rewards;
-                    _context.Points.Update(point);
-                }
-                else
-                {
-                    Point temp = new Point();
-                    temp.Emp_Id = Emp_id;
-                    temp.Emp_Point = rewards;
-                    _context.Points.Add(temp);
-                }
+                emp.Points_Gained = rewards;
+                _context.Employees.Update(emp);
                 _context.SaveChanges();
                 return Ok();
             }
@@ -74,19 +57,19 @@ namespace PointsMicroservices.Controllers
             }
         }
 
-        // GET api/<points>/5
-        [Route("points/{id}")]
+        // GET api/<getPointsOfEmployee>/5
+        [Route("getPointsOfEmployee/{id}")]
         [HttpGet]
         public ActionResult FetchPoints(int id)
         {
             try
             {
-                var Emp = _context.Points.Where(point => point.Emp_Id == id);
+                var Emp = _context.Employees.Where(point => point.EmpId == id);
                 if (!Emp.Any())
                 {
                     return NotFound();
                 }
-                return Ok(Emp.First().Emp_Point);
+                return Ok(Emp.First().Points_Gained);
             }
             catch (Exception ex)
             {
