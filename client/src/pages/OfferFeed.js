@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(8),
   },
   card: {
+    // boxShadow: "0px 0px 27px 0px rgba(94,94,94,0.64)",
     height: "100%",
     display: "flex",
     flexDirection: "column",
@@ -107,7 +108,7 @@ export default function OfferFeed() {
                   </CardContent>
                   <CardActions>
                     <Button size="small" color="primary">
-                      Comment
+                      View
                     </Button>
                     <Button size="small" color="primary">
                       Edit
