@@ -21,19 +21,14 @@ namespace EmployeeMicroservice.Migrations
 
             modelBuilder.Entity("EmployeeMicroservice.Database.Entities.Employee", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                    b.Property<int>("EmpId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Designation")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("EmpId")
-                        .HasColumnType("int");
 
                     b.Property<string>("EmpName")
                         .HasColumnType("nvarchar(max)");
@@ -44,7 +39,7 @@ namespace EmployeeMicroservice.Migrations
                     b.Property<int>("Points_Gained")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("EmpId");
 
                     b.ToTable("Employees");
                 });

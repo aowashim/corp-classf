@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EmployeeMicroservice.Migrations
 {
-    public partial class first : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,18 +11,16 @@ namespace EmployeeMicroservice.Migrations
                 name: "Employees",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EmpId = table.Column<int>(type: "int", nullable: false),
                     EmpName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Designation = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Points_Gained = table.Column<int>(type: "int", nullable: false),
-                    Office_Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmpId = table.Column<int>(type: "int", nullable: false)
+                    Office_Location = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Employees", x => x.Id);
+                    table.PrimaryKey("PK_Employees", x => x.EmpId);
                 });
 
             migrationBuilder.CreateTable(
