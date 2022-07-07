@@ -4,6 +4,10 @@ const emailValidTxt = 'Must be valid email'
 
 export const signUpValidation = yup.object({
   name: yup.string().max(20).required('Name is required'),
+  empId: yup
+    .number()
+    .typeError('Employee Id must be a integer')
+    .required('Employee Id is required'),
   email: yup.string().email(emailValidTxt).required('Email is required'),
   password: yup
     .string()
@@ -23,7 +27,10 @@ export const signUpValidation = yup.object({
 })
 
 export const signInValidation = yup.object({
-  email: yup.string().email(emailValidTxt).required('Email is required'),
+  empId: yup
+    .number()
+    .typeError('Employee Id must be a integer')
+    .required('Employee Id is required'),
   password: yup
     .string()
     .required('Password is required')

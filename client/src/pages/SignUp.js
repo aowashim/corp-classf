@@ -41,6 +41,7 @@ export default function SignUp(props) {
   const formik = useFormik({
     initialValues: {
       name: '',
+      empId: '',
       email: '',
       password: '',
       confirmPassword: '',
@@ -79,6 +80,19 @@ export default function SignUp(props) {
                 onChange={formik.handleChange}
                 error={formik.touched.name && Boolean(formik.errors.name)}
                 helperText={formik.touched.name && formik.errors.name}
+              />
+
+              <TextField
+                variant='outlined'
+                fullWidth
+                margin='normal'
+                id='empId'
+                name='empId'
+                label='Employee Id'
+                value={formik.values.empId}
+                onChange={formik.handleChange}
+                error={formik.touched.empId && Boolean(formik.errors.empId)}
+                helperText={formik.touched.empId && formik.errors.empId}
               />
 
               <TextField
