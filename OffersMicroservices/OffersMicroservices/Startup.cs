@@ -23,6 +23,16 @@ namespace OffersMicroservices
         {
 
             services.AddControllers();
+
+            // cors
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                });
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
@@ -56,6 +66,8 @@ namespace OffersMicroservices
 
             app.UseHttpsRedirection();
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 
