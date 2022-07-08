@@ -107,8 +107,8 @@ export default function NavBar({ path }) {
               My Profile
             </MenuItem>
             {/* <MenuItem onClick={() => handleNavigate('/')}>Products</MenuItem> */}
-            <MenuItem onClick={() => handleNavigate('/orders')}>
-              Offers
+            <MenuItem onClick={() => handleNavigate('/postoffer')}>
+              Post Offer
             </MenuItem>
             {user ? (
               <MenuItem onClick={handleLogout}>Logout</MenuItem>

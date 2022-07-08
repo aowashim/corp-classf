@@ -13,8 +13,10 @@ import {
 import { useFormik } from 'formik'
 import { postOfferValidation } from '../helpers/yupValidation'
 import NavBar from '../components/NavBar'
-import { useLocation } from 'react-router-dom'
-import { useState } from 'react'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { useContext, useState } from 'react'
+import UserContext from '../store/UserContext'
+import { getAllOfferApi, postOfferApi } from '../helpers/API/offer'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -47,8 +49,9 @@ const useStyles = makeStyles(theme => ({
 export default function PostOrder(props) {
   const classes = useStyles()
   const { pathname } = useLocation()
-
+  const { user, setUser } = useContext(UserContext)
   const [category, setCategory] = useState(1)
+  const navigate = useNavigate()
 
   const handleChangeCatg = event => {
     setCategory(event.target.value)
@@ -63,11 +66,22 @@ export default function PostOrder(props) {
     },
     validationSchema: postOfferValidation,
     onSubmit: values => {
-      console.log(values, category)
+      handlePostOffer(values)
     },
   })
 
-  return (
+  const handlePostOffer = async values => {
+    const res = await postOfferApi(values, category, user.id)
+
+    if (res.status === 200) {
+      alert('Offer posted successfully')
+      navigate('/')
+    } else {
+      alert('An error occurred, please try again...')
+    }
+  }
+
+  return user.id ? (
     <div>
       <NavBar path={pathname} />
       <Toolbar />
@@ -156,21 +170,6 @@ export default function PostOrder(props) {
                 helperText={formik.touched.endDate && formik.errors.endDate}
               />
 
-              {/* <TextField
-                variant='outlined'
-                fullWidth
-                margin='normal'
-                id='category'
-                name='category'
-                label='Category'
-                value={formik.values.category}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.category && Boolean(formik.errors.category)
-                }
-                helperText={formik.touched.category && formik.errors.category}
-              /> */}
-
               <Button
                 type='submit'
                 fullWidth
@@ -185,5 +184,7 @@ export default function PostOrder(props) {
         </div>
       </Container>
     </div>
+  ) : (
+    <Navigate to='/signin' />
   )
 }

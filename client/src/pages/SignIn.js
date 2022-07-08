@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import { useFormik } from 'formik'
 import { signInValidation } from '../helpers/yupValidation'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import NavBar from '../components/NavBar'
 import { Toolbar } from '@material-ui/core'
 import { signInApi } from '../helpers/API/auth'
@@ -50,6 +50,7 @@ export default function SignIn() {
   const classes = useStyles()
   const { pathname } = useLocation()
   const { user, setUser } = useContext(UserContext)
+  const navigate = useNavigate()
 
   const formik = useFormik({
     initialValues: {
@@ -74,6 +75,8 @@ export default function SignIn() {
         id: values.empId,
         token: res.data,
       })
+
+      navigate('/')
     } else {
       alert('Invalid Employee Id or Password')
     }

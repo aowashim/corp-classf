@@ -46,15 +46,15 @@ export const postOfferValidation = yup.object({
   startDate: yup
     .string()
     .matches(
-      /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/,
-      'Invalid date'
+      /^(0?[1-9]|1[0-2])\/(0?[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/,
+      'Please enter date in mm/dd/yyyy format'
     )
     .required('Start Date is required'),
   endDate: yup
     .string()
     .matches(
-      /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/,
-      'Invalid date'
+      /^(0?[1-9]|1[0-2])\/(0?[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/,
+      'Please enter date in mm/dd/yyyy format'
     )
     .required('End Date is required'),
   // category: yup.string().required('Category is required'),
