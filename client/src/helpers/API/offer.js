@@ -34,10 +34,10 @@ export const postOfferApi = async (values, category_Id, emp_Id) => {
   return res
 }
 
-export const getAllOfferApi = async () => {
+export const getAllOfferApi = async endPoint => {
   const res = { data: '', status: 200 }
   try {
-    const val = await axios.get(`${server}/offer`)
+    const val = await axios.get(`${server}/${endPoint}`)
 
     res.data = val.data
     res.status = val.status
