@@ -13,6 +13,7 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import Comment from "../components/Comment";
 import Divider from "@material-ui/core/Divider";
 import WriteComment from "../components/WriteComment";
+import { useState, useEffect } from "react";
 
 function Copyright() {
   return (
@@ -45,8 +46,8 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
   },
-  cmtsec:{
-    marginTop:"2rem",
+  cmtsec: {
+    marginTop: "2rem",
   },
   card: {
     height: "100%",
@@ -64,64 +65,96 @@ const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 export default function OfferFeed() {
   const classes = useStyles();
 
-  const { pathname } = useLocation();
-  return (
-    <React.Fragment>
-      <CssBaseline />
-      <NavBar path={pathname} />
-      <main>
-        <div className={classes.heroContent}>
-          <Container maxWidth="md"></Container>
-        </div>
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [items, setItems] = useState([]);
 
-        <Container className={classes.card} maxWidth="md">
-          <Container className={classes.cont_each} maxWidth="md">
-            <Typography variant="h4" align="left">
-              Employee Name
-            </Typography>
-            <Typography variant="h6" align="left">
-              12 April at 9:28 pm
-            </Typography>
-          </Container>
-          <Container maxWidth="md">
-            <Typography variant="h2" align="center">
-              Lorem ipsum dolor sit
-            </Typography>
-            <Typography
-              className={classes.cont_each}
-              variant="subtitle1"
-              align="justify"
-            >
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolores
-              itaque magni non aut amet eum adipisci sunt numquam perspiciatis
-              molestias necessitatibus sapiente doloribus sed deserunt quibusdam
-              at, nam, sit aliquid!
-            </Typography>
-          </Container>
-          <Container className={classes.bnn} maxWidth="md">
-            <Button size="large" color="primary">
-              <FavoriteIcon></FavoriteIcon>
-              Like
-            </Button>
-            <Button size="large" color="primary">
-              <CalendarMonthIcon></CalendarMonthIcon>
-              Engage
-            </Button>
-          </Container>
-          <Container className={classes.cmtsec}>
-            <WriteComment></WriteComment>
-            
-          </Container>
-          <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
-          <Container>
+  useEffect(() => {
+    fetch("http://localhost:19759/api/getOfferDetails/15")
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          setIsLoaded(true);
+          setItems(result);
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          setIsLoaded(true);
+          setError(error);
+        }
+      );
+  }, []);
+
+  const { pathname } = useLocation();
+  if (error) {
+    return (
+      <div>
+        <h3>Error Error</h3>
+        Error: {error.message}
+      </div>
+    );
+  } else if (!isLoaded) {
+    return <div>Loading...</div>;
+  } else {
+    return (
+      <React.Fragment>
+        <CssBaseline />
+        <NavBar path={pathname} />
+        <main>
+          <div className={classes.heroContent}>
+            <Container maxWidth="md"></Container>
+          </div>
+
+          <Container className={classes.card} maxWidth="md">
+            <Container className={classes.cont_each} maxWidth="md">
+              <Typography variant="h4" align="left">
+                {items.emp_Id}
+              </Typography>
+              <Typography variant="h6" align="left">
+                {items.start_Date}
+              </Typography>
+            </Container>
+            <Container maxWidth="md">
+              <Typography variant="h2" align="center">
+                {items.title}
+              </Typography>
+              <Typography
+                className={classes.cont_each}
+                variant="subtitle1"
+                align="justify"
+              >
+                {items.description}
+              </Typography>
+            </Container>
+            <Container className={classes.bnn} maxWidth="md">
+              <Button size="large" color="primary">
+                <FavoriteIcon></FavoriteIcon>
+                {items.n_Likes} Like
+              </Button>
+              <Button size="large" color="primary">
+                <CalendarMonthIcon></CalendarMonthIcon>
+                Engage
+              </Button>
+            </Container>
+            <Container className={classes.cmtsec}>
+              <WriteComment></WriteComment>
+            </Container>
+            <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
+            <Container>
               <Typography variant="h5" align="left">
                 Comments
               </Typography>
-            <Comment></Comment>
-            <Comment></Comment>
+              {/* {
+                items.commentList.forEach(cmt => {
+                  <comment></comment>
+                })
+              } */}
+            </Container>
           </Container>
-        </Container>
-      </main>
-    </React.Fragment>
-  );
+        </main>
+      </React.Fragment>
+    );
+  }
 }
