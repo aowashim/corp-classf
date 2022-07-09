@@ -34,13 +34,13 @@ namespace PointsMicroservices.Controllers
                 int diff_date = (DateTime.Now - offer.Start_Date).Days;
                 int engage_diif_date = (offer.Engaged_Date - offer.Start_Date).Days;
                 int n_likes = (int)offer.N_Likes;
-                if (n_likes > 50 && diff_date <= 2)
-                {
-                    rewards += 10;
-                }
-                if (n_likes > 100 && diff_date <= 2)
+                if (n_likes % 100==0 && diff_date <= 2)
                 {
                     rewards += 50;
+                }
+                else if (n_likes % 50==0 && diff_date <= 2)
+                {
+                    rewards += 10;
                 }
                 if (engage_diif_date <= 2)
                 {
