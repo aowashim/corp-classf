@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System;
-using OffersMicroservices.Database;
 using System.Linq;
 using System.Text.Json;
 using EmployeeMicroservice.Database.Entities;
 using EmployeeMicroservice.Database;
+using EmployeeMicroservice.Repository;
 using Microsoft.AspNetCore.Http;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -20,13 +20,13 @@ namespace EmployeeMicroservice.Controllers
     public class EmployeesController : ControllerBase
     {
         /* --------[SETUP]-------- */
+        private readonly IEmployeeService _employeeService;
 
-        private readonly EmployeeContext _context;
-
-        public EmployeesController(EmployeeContext context)
+        public EmployeesController(IEmployeeService employeeService)
         {
-            _context = context;
+            _employeeService = employeeService;
         }
+
 
         /* --------[GET REQUESTS]-------- */
 
@@ -37,13 +37,12 @@ namespace EmployeeMicroservice.Controllers
         {
             try 
             {
-                var employee = await _context.Employees.FindAsync(id);
+                var employee = await _employeeService.ViewProfile(id);
 
                 if (employee == null)
                 {
                     return NotFound();
                 }
-
                 return Ok(employee);
             }
             catch (Exception ex)
@@ -60,7 +59,8 @@ namespace EmployeeMicroservice.Controllers
         {
             try
             {
-                var offers = await _context.Offers.Where(x => x.Emp_Id == id).ToListAsync();
+
+                var offers = await _employeeService.ViewEmployeeOffers(id);
 
                 if (offers == null)
                 {
@@ -84,7 +84,7 @@ namespace EmployeeMicroservice.Controllers
         {
             try
             {
-                var top3offers = await _context.Offers.OrderByDescending(x => x.N_Likes).Take(3).ToListAsync();
+                var top3offers = await _employeeService.ViewMostLikedOffers();
 
                 if (top3offers == null)
                 {

@@ -1,4 +1,5 @@
 using EmployeeMicroservice.Database;
+using EmployeeMicroservice.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
@@ -43,6 +44,7 @@ namespace EmployeeMicroservice
                     Version = "v1" 
                 });
             });
+            services.AddScoped<IEmployeeService, EmployeeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

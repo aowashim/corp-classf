@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using EmployeeMicroservice.Database.Entities;
-using OffersMicroservices.Database;
 
 namespace EmployeeMicroservice.Database
 {
@@ -8,6 +7,8 @@ namespace EmployeeMicroservice.Database
     {
         public EmployeeContext(DbContextOptions options) : base(options)
         { }
+
+        //public EmployeeContext() { }
 
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Offer> Offers { get; set; }
