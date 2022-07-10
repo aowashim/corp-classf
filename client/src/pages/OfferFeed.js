@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
-import { useLocation } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import Link from '@material-ui/core/Link'
 import { useState, useEffect } from 'react'
 import { getAllOfferApi } from '../helpers/API/offer'
@@ -22,6 +22,8 @@ import {
   Divider,
 } from '@material-ui/core'
 import UserContext from '../store/UserContext'
+import PersonIcon from '@material-ui/icons/Person'
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt'
 
 function Copyright() {
   return (
@@ -72,6 +74,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
   },
+  iconTextCont: { display: 'flex', flexDirection: 'row' },
 }))
 
 // const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -79,11 +82,11 @@ const useStyles = makeStyles(theme => ({
 export default function OfferFeed(props) {
   const classes = useStyles()
 
-  const [error, setError] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const [items, setItems] = useState([])
   const [viewOfferBy, setViewOfferBy] = useState(5)
   const { user } = useContext(UserContext)
+  const navigate = useNavigate()
 
   const { pathname } = useLocation()
 
@@ -120,73 +123,128 @@ export default function OfferFeed(props) {
     }
   }
 
-  return (
+  const handleViewOfferDetails = id => {
+    navigate(`/offer/${id}`)
+  }
+
+  const handleEditOffer = id => {
+    navigate(`/edit/${id}`)
+  }
+
+  return user.id ? (
     <>
       <NavBar path={pathname} />
       <Toolbar />
-      <div>
-        <Container maxWidth='md'>
-          <FormControl className={classes.formControl}>
-            <InputLabel shrink id='offer-select-label'>
-              Filter offer
-            </InputLabel>
-            <Select
-              labelId='offer-select-label'
-              id='offer-select'
-              value={viewOfferBy}
-              onChange={e => setViewOfferBy(e.target.value)}
-              className={classes.selectEmpty}
-            >
-              <MenuItem value={5}>All Offers</MenuItem>
-              <MenuItem value={6}>My Offers</MenuItem>
-              <Divider />
+      {isLoaded ? (
+        <div>
+          <Container maxWidth='md'>
+            <FormControl className={classes.formControl}>
+              <InputLabel shrink id='offer-select-label'>
+                Filter offer
+              </InputLabel>
+              <Select
+                labelId='offer-select-label'
+                id='offer-select'
+                value={viewOfferBy}
+                onChange={e => setViewOfferBy(e.target.value)}
+                className={classes.selectEmpty}
+              >
+                <MenuItem value={5}>All Offers</MenuItem>
+                <MenuItem value={6}>My Offers</MenuItem>
+                <Divider />
 
-              <MenuItem value={7}>Recently Liked</MenuItem>
-              <MenuItem value={8}>Top Likes</MenuItem>
-              <MenuItem value={9}>Posted Date</MenuItem>
-              <Divider />
+                <MenuItem value={7}>Recently Liked</MenuItem>
+                <MenuItem value={8}>Top Likes</MenuItem>
+                <MenuItem value={9}>Posted Date</MenuItem>
+                <Divider />
 
-              <MenuItem value={1}>Electronics</MenuItem>
-              <MenuItem value={2}>Home Goods</MenuItem>
-              <MenuItem value={3}>Education</MenuItem>
-              <MenuItem value={4}>Clothing</MenuItem>
-            </Select>
-          </FormControl>
-        </Container>
+                <MenuItem value={1}>Electronics</MenuItem>
+                <MenuItem value={2}>Home Goods</MenuItem>
+                <MenuItem value={3}>Education</MenuItem>
+                <MenuItem value={4}>Clothing</MenuItem>
+              </Select>
+            </FormControl>
+          </Container>
 
-        <Container component='main' className={classes.cardGrid} maxWidth='md'>
-          <Grid container spacing={4}>
-            {items.map(item => (
-              <Grid item key={item.id} xs={12} sm={6}>
-                <Card className={classes.card}>
-                  {/* <CardMedia
+          <Container
+            component='main'
+            className={classes.cardGrid}
+            maxWidth='md'
+          >
+            <Grid container spacing={4}>
+              {items.map(item => (
+                <Grid item key={item.id} xs={12} sm={6}>
+                  <Card className={classes.card}>
+                    {/* <CardMedia
                     className={classes.cardMedia}
                     image="https://source.unsplash.com/random"
                     title="Image title"
                   /> */}
-                  <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant='h5' component='h2'>
-                      {item.title}
-                    </Typography>
-                    <Typography gutterBottom variant='h5' component='h6'>
-                      {item.description}
-                    </Typography>
-                    <Typography>{item.empName}</Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size='small' color='primary'>
-                      View
-                    </Button>
-                    <Button size='small' color='primary'>
-                      Edit
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-      </div>
+                    <CardContent className={classes.cardContent}>
+                      <Typography
+                        gutterBottom
+                        noWrap
+                        variant='h5'
+                        component='h2'
+                      >
+                        {item.title}
+                      </Typography>
+
+                      <div className={classes.iconTextCont}>
+                        <ArrowRightAltIcon fontSize='small' />
+                        <Typography
+                          gutterBottom
+                          noWrap
+                          variant='body1'
+                          style={{ marginLeft: 5 }}
+                        >
+                          {item.description}
+                        </Typography>
+                      </div>
+
+                      <div
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'row',
+                          marginTop: 10,
+                        }}
+                      >
+                        <PersonIcon fontSize='small' />
+                        <Typography
+                          noWrap
+                          variant='body2'
+                          style={{ marginLeft: 5, marginTop: 1 }}
+                        >
+                          {item.empName}
+                        </Typography>
+                      </div>
+                    </CardContent>
+                    <CardActions>
+                      <Button
+                        size='small'
+                        color='primary'
+                        onClick={() => handleViewOfferDetails(item.id)}
+                      >
+                        View
+                      </Button>
+                      <Button
+                        size='small'
+                        color='primary'
+                        onClick={() => handleEditOffer(item.id)}
+                        disabled={viewOfferBy === 6 ? false : true}
+                      >
+                        Edit
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </Container>
+        </div>
+      ) : (
+        <Loading color='primary' size={50} />
+      )}
       {/* Footer */}
       {/* <footer className={classes.footer}>
         <Typography variant='h6' align='center' gutterBottom>
@@ -204,5 +262,7 @@ export default function OfferFeed(props) {
       </footer> */}
       {/* End footer */}
     </>
+  ) : (
+    <Navigate to='/signin' />
   )
 }

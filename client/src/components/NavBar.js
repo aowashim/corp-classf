@@ -7,21 +7,15 @@ import {
   Typography,
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import { useNavigate } from 'react-router-dom'
-// import CartContext from '../store/CartContext'
-// import UserContext from '../store/UserContext'
-// import UserInfoContext from '../store/UserInfoContext'
+import UserContext from '../store/UserContext'
 
 export default function NavBar({ path }) {
   const navigate = useNavigate()
   const [anchorEl, setAnchorEl] = useState(null)
-  //   const { user, setUser } = useContext(UserContext)
-  //   const { setUserInfo } = useContext(UserInfoContext)
-  //   const { cartVal, setCartVal } = useContext(CartContext)
-
-  const user = true
+  const { user, setUser } = useContext(UserContext)
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget)
@@ -32,11 +26,13 @@ export default function NavBar({ path }) {
   }
 
   const handleLogout = () => {
-    // sessionStorage.clear()
-    // setUserInfo(false)
-    // setCartVal(0)
-    // setUser('')
-    // history.push('/signin')
+    localStorage.removeItem('id')
+    localStorage.removeItem('token')
+
+    setUser({
+      id: '',
+      token: '',
+    })
   }
 
   const handleNavigate = curPath => {
@@ -103,15 +99,13 @@ export default function NavBar({ path }) {
             //open={open}
             onClose={handleClose}
           >
-            <MenuItem onClick={() => handleNavigate('/profile')}>
-              My Profile
-            </MenuItem>
+            <MenuItem onClick={() => handleNavigate('/')}>Offers</MenuItem>
             {/* <MenuItem onClick={() => handleNavigate('/')}>Products</MenuItem> */}
             <MenuItem onClick={() => handleNavigate('/postoffer')}>
               Post Offer
             </MenuItem>
-            {user ? (
-              <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            {user.id ? (
+              <MenuItem onClick={handleLogout}>Sign Out</MenuItem>
             ) : (
               <MenuItem onClick={() => handleNavigate('/signin')}>
                 Sign In

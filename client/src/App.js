@@ -4,16 +4,33 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { CssBaseline } from '@material-ui/core'
 import PostOffer from './pages/PostOffer'
 import Profile from './pages/Profile'
-import Home from './pages/Home'
 import UserContext from './store/UserContext'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import OfferFeed from './pages/OfferFeed'
+import Offer from './pages/Offer'
+import Loading from './components/Loading'
+import EditOffer from './pages/EditOffer'
 
 function App() {
   const [user, setUser] = useState({
-    id: '123',
+    id: '',
     token: '',
   })
+  const [isLoaded, setIsLoaded] = useState(false)
+
+  useEffect(() => {
+    const savedId = localStorage.getItem('id')
+    const savedToken = localStorage.getItem('token')
+
+    if (savedId && savedToken) {
+      setUser({
+        id: savedId,
+        token: savedToken,
+      })
+    }
+
+    setIsLoaded(true)
+  }, [])
 
   const userMemo = useMemo(
     () => ({
@@ -27,18 +44,23 @@ function App() {
     <>
       <CssBaseline />
 
-      <BrowserRouter>
-        <UserContext.Provider value={userMemo}>
-          <Routes>
-            <Route index element={<Home />} />
-            <Route path='signin' element={<SignIn />} />
-            <Route path='signup' element={<SignUp />} />
-            <Route path='postoffer' element={<PostOffer />} />
-            <Route path='profile' element={<Profile />} />
-            <Route path='offers' element={<OfferFeed />} />
-          </Routes>
-        </UserContext.Provider>
-      </BrowserRouter>
+      {isLoaded ? (
+        <BrowserRouter>
+          <UserContext.Provider value={userMemo}>
+            <Routes>
+              <Route index element={<OfferFeed />} />
+              <Route path='signin' element={<SignIn />} />
+              <Route path='signup' element={<SignUp />} />
+              <Route path='postoffer' element={<PostOffer />} />
+              <Route path='profile' element={<Profile />} />
+              <Route path='offer/:id' element={<Offer />} />
+              <Route path='edit/:id' element={<EditOffer />} />
+            </Routes>
+          </UserContext.Provider>
+        </BrowserRouter>
+      ) : (
+        <Loading color='primary' size={50} />
+      )}
     </>
   )
 }

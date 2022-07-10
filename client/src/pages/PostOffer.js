@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
 export default function PostOffer(props) {
   const classes = useStyles()
   const { pathname } = useLocation()
-  const { user, setUser } = useContext(UserContext)
+  const { user } = useContext(UserContext)
   const [category, setCategory] = useState(1)
   const navigate = useNavigate()
 

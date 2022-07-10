@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import { useFormik } from 'formik'
 import { signInValidation } from '../helpers/yupValidation'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import NavBar from '../components/NavBar'
 import { Toolbar } from '@material-ui/core'
 import { signInApi } from '../helpers/API/auth'
@@ -82,7 +82,7 @@ export default function SignIn() {
     }
   }
 
-  return (
+  return !user.id ? (
     <div>
       <NavBar path={pathname} />
       <Toolbar />
@@ -94,6 +94,7 @@ export default function SignIn() {
           <Typography component='h1' variant='h5'>
             Sign in
           </Typography>
+
           <form className={classes.form} onSubmit={formik.handleSubmit}>
             <TextField
               variant='outlined'
@@ -141,5 +142,7 @@ export default function SignIn() {
         </div>
       </Container>
     </div>
+  ) : (
+    <Navigate to='/' />
   )
 }
