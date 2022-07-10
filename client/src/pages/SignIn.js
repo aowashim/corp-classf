@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
-import CssBaseline from '@material-ui/core/CssBaseline'
 import TextField from '@material-ui/core/TextField'
 import Box from '@material-ui/core/Box'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
@@ -9,10 +8,12 @@ import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import { useFormik } from 'formik'
-import { signInValidation, signUpValidation } from '../helpers/yupValidation'
-import { Link, useLocation } from 'react-router-dom'
+import { signInValidation } from '../helpers/yupValidation'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import NavBar from '../components/NavBar'
 import { Toolbar } from '@material-ui/core'
+import { signInApi } from '../helpers/API/auth'
+import UserContext from '../store/UserContext'
 
 function Copyright() {
   return (
@@ -48,17 +49,38 @@ const useStyles = makeStyles(theme => ({
 export default function SignIn() {
   const classes = useStyles()
   const { pathname } = useLocation()
+  const { user, setUser } = useContext(UserContext)
+  const navigate = useNavigate()
 
   const formik = useFormik({
     initialValues: {
-      email: '',
+      empId: '',
       password: '',
     },
     validationSchema: signInValidation,
     onSubmit: values => {
-      console.log(values)
+      handleSignIn(values)
     },
   })
+
+  // this handles sign in by calling the signin api
+  const handleSignIn = async values => {
+    const res = await signInApi(values)
+
+    if (res.status === 200) {
+      localStorage.setItem('token', res.data)
+      localStorage.setItem('id', values.empId)
+
+      setUser({
+        id: values.empId,
+        token: res.data,
+      })
+
+      navigate('/')
+    } else {
+      alert('Invalid Employee Id or Password')
+    }
+  }
 
   return (
     <div>
@@ -77,13 +99,13 @@ export default function SignIn() {
               variant='outlined'
               fullWidth
               margin='normal'
-              id='email'
-              name='email'
-              label='Email'
-              value={formik.values.email}
+              id='empId'
+              name='empId'
+              label='Employee Id'
+              value={formik.values.empId}
               onChange={formik.handleChange}
-              error={formik.touched.email && Boolean(formik.errors.email)}
-              helperText={formik.touched.email && formik.errors.email}
+              error={formik.touched.empId && Boolean(formik.errors.empId)}
+              helperText={formik.touched.empId && formik.errors.empId}
             />
 
             <TextField

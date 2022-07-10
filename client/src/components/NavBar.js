@@ -1,6 +1,5 @@
 import {
   AppBar,
-  Badge,
   IconButton,
   Menu,
   MenuItem,
@@ -8,16 +7,15 @@ import {
   Typography,
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
-import { useContext, useEffect, useState } from 'react'
+import { useState } from 'react'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
-// import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 // import CartContext from '../store/CartContext'
 // import UserContext from '../store/UserContext'
 // import UserInfoContext from '../store/UserInfoContext'
 
 export default function NavBar({ path }) {
-  //   const history = useHistory()
+  const navigate = useNavigate()
   const [anchorEl, setAnchorEl] = useState(null)
   //   const { user, setUser } = useContext(UserContext)
   //   const { setUserInfo } = useContext(UserInfoContext)
@@ -42,17 +40,17 @@ export default function NavBar({ path }) {
   }
 
   const handleNavigate = curPath => {
-    // if (path !== curPath) {
-    //   history.push(curPath)
-    // } else {
-    //   handleClose()
-    // }
+    if (path !== curPath) {
+      navigate(curPath)
+    } else {
+      handleClose()
+    }
   }
 
   return (
     <div>
-      <AppBar position="fixed">
-        <Toolbar style={{ justifyContent: "space-between" }}>
+      <AppBar position='fixed'>
+        <Toolbar style={{ justifyContent: 'space-between' }}>
           {/* <div
               style={{
                 display: 'flex',
@@ -62,29 +60,28 @@ export default function NavBar({ path }) {
             > */}
           <IconButton
             onClick={handleClick}
-            edge="start"
-            color="inherit"
-            aria-label="menu"
+            edge='start'
+            color='inherit'
+            aria-label='menu'
           >
             <MenuIcon />
           </IconButton>
           <Typography
-            align="center"
-            variant="h4"
+            align='center'
+            variant='h5'
             style={{
-              fontFamily: "montserrat",
               //marginTop: 4,
-              color: "#ffffff",
-              //textShadow: '2px 2px 8px #FF0000',
+              color: '#ffe6b0',
+              textShadow: '2px 2px 8px #FF0000',
             }}
           >
             Corporate Classifieds
           </Typography>
           {/* </div> */}
           <IconButton
-            color="inherit"
-            aria-label="cart"
-            onClick={() => handleNavigate("/cart")}
+            color='inherit'
+            aria-label='cart'
+            onClick={() => handleNavigate('/profile')}
           >
             <AccountCircleIcon />
           </IconButton>
@@ -95,35 +92,35 @@ export default function NavBar({ path }) {
             // onClose={handleClose}
             anchorEl={anchorEl}
             anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
+              vertical: 'top',
+              horizontal: 'right',
             }}
             keepMounted
             transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
+              vertical: 'top',
+              horizontal: 'right',
             }}
             //open={open}
             onClose={handleClose}
           >
-            <MenuItem onClick={() => handleNavigate("/profile")}>
+            <MenuItem onClick={() => handleNavigate('/profile')}>
               My Profile
             </MenuItem>
             {/* <MenuItem onClick={() => handleNavigate('/')}>Products</MenuItem> */}
-            <MenuItem onClick={() => handleNavigate("/orders")}>
-              Offers
+            <MenuItem onClick={() => handleNavigate('/postoffer')}>
+              Post Offer
             </MenuItem>
             {user ? (
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             ) : (
-              <MenuItem onClick={() => handleNavigate("/signin")}>
+              <MenuItem onClick={() => handleNavigate('/signin')}>
                 Sign In
               </MenuItem>
             )}
-            <MenuItem onClick={() => handleNavigate("/more")}>More</MenuItem>
+            <MenuItem onClick={() => handleNavigate('/more')}>More</MenuItem>
           </Menu>
         </Toolbar>
       </AppBar>
     </div>
-  );
+  )
 }
