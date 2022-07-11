@@ -11,7 +11,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import Comment from '../components/Comment'
 import Divider from '@material-ui/core/Divider'
 import WriteComment from '../components/WriteComment'
-import { getOfferDetailsApi } from '../helpers/API/offer'
+import { getCommentsApi, getOfferDetailsApi } from '../helpers/API/offer'
 import Loading from '../components/Loading'
 import { jsonToNormalDate } from '../helpers/convertDate'
 import userEvent from '@testing-library/user-event'
@@ -69,6 +69,9 @@ export default function Offer() {
   const [isLoaded, setIsLoaded] = useState(false)
   const [offerData, setOfferData] = useState('')
   const { user } = useContext(UserContext)
+  const [viewComment, setViewComment] = useState(false)
+  const [commentData, setCommentData] = useState([])
+  const [commentLoaded, setCommentLoaded] = useState(false)
 
   useEffect(() => {
     handleGetOfferDetails()
@@ -80,6 +83,24 @@ export default function Offer() {
     if (res.status === 200) {
       setOfferData(res.data[0])
       setIsLoaded(true)
+    } else {
+      alert('An error occurred, please try again...')
+    }
+  }
+
+  const handleGetComments = async () => {
+    if (viewComment) {
+      setViewComment(!viewComment)
+      return
+    }
+
+    setViewComment(!viewComment)
+
+    const res = await getCommentsApi(offerData.o.id)
+
+    if (res.status === 200) {
+      setCommentData(res.data)
+      setCommentLoaded(true)
     } else {
       alert('An error occurred, please try again...')
     }
@@ -128,11 +149,24 @@ export default function Offer() {
           </Container>
           <Divider variant='fullWidth' style={{ margin: '30px 0' }} />
           <div>
-            <Typography variant='h5' align='left'>
-              Comments
-            </Typography>
-            {/* <Comment />
-          <Comment /> */}
+            <Button
+              type='submit'
+              variant='outlined'
+              color='primary'
+              onClick={handleGetComments}
+            >
+              {viewComment ? 'Hide Comments' : 'View Comments'}
+            </Button>
+
+            {viewComment && (
+              <div style={{ marginLeft: 10, marginTop: 25 }}>
+                {commentLoaded ? (
+                  commentData.map(item => <Comment data={item} />)
+                ) : (
+                  <Loading color='primary' size={30} />
+                )}
+              </div>
+            )}
           </div>
         </Container>
       ) : (

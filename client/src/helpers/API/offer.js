@@ -118,3 +118,20 @@ export const postCommentApi = async (content, user_Id, offer_Id) => {
 
   return res
 }
+
+export const getCommentsApi = async id => {
+  const res = { data: '', status: 200 }
+
+  try {
+    const val = await axios.get(`${server}/comments/${id}`)
+
+    res.data = val.data
+    res.status = val.status
+  } catch (error) {
+    res.data = error.message
+    res.status = error.response.status
+  }
+
+  console.log(res)
+  return res
+}
