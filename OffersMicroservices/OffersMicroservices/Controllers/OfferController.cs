@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using OffersMicroservices.Database;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -249,26 +250,16 @@ namespace OffersMicroservices.Controllers
                 {
                     return NotFound();
                 }
-                if (temp.Title != null)
-                {
-                    temp.Title = data.Title;
-                }
-                if (temp.Description != null)
-                {
-                    temp.Description = data.Description;
-                }
-                if (temp.Start_Date != null)
-                {
-                    temp.Start_Date = data.Start_Date;
-                }
-                if (temp.End_Date != null)
-                {
-                    temp.End_Date = data.End_Date;
-                }
-                temp.Engaged_Date = def_date;
+
+                temp.Title = data.Title;
+                temp.Description = data.Description;
+                temp.Start_Date = data.Start_Date;
+                temp.End_Date = data.End_Date;
+                temp.Category_Id = data.Category_Id;
+
                 db.Offers.Update(temp);
                 db.SaveChanges();
-                return Ok(data);
+                return Ok(temp);
             }
             catch (Exception e)
             {
@@ -344,6 +335,53 @@ namespace OffersMicroservices.Controllers
             }
         }
 
-    }
+        // ------------------------
+        // For comments
 
+        // GET: api/comments/5
+        // API to fetch all comments of a offer based on offer Id
+        [HttpGet("comments/{id}")]
+        public async Task<ActionResult<Comment>> GetComments(int id)
+        {
+            try
+            {
+                var comments = await db.Comment.Where(x => x.Offer_Id == id).Join(db.Employees, c => c.User_Id, e => e.EmpId, (c, e) => new
+                {
+                    id = c.Id,
+                    content = c.Content,
+                    empName = e.EmpName,
+                    empId = c.User_Id
+                }).ToListAsync();
+
+                if (comments == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(comments);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // POST: api/comment
+        // API to post a comment
+        [HttpPost("comment")]
+        public async Task<ActionResult> PostComment(Comment comment)
+        {
+            try
+            {
+                var res = await db.Comment.AddAsync(comment);
+                await db.SaveChangesAsync();
+
+                return Ok(res.Entity);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+    }
 }
