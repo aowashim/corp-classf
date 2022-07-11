@@ -8,6 +8,9 @@ namespace CorpClassfAuth.Data.Model
         public string Name { get; set; }
 
         [Required]
+        public int EmpId { get; set; }
+
+        [Required]
         [EmailAddress]
         public string Email { get; set; }
 

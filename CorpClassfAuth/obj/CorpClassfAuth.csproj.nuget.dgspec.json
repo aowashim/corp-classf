@@ -1,32 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\aowas\\Documents\\cts_proj\\corp-classf\\CorpClassfAuth\\CorpClassfAuth.csproj": {}
+    "C:\\Users\\aowas\\Documents\\cts_proj\\micro-ser\\new\\CorpClassfAuth\\CorpClassfAuth.csproj": {}
   },
   "projects": {
-    "C:\\Users\\aowas\\Documents\\cts_proj\\corp-classf\\CorpClassfAuth\\CorpClassfAuth.csproj": {
+    "C:\\Users\\aowas\\Documents\\cts_proj\\micro-ser\\new\\CorpClassfAuth\\CorpClassfAuth.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\aowas\\Documents\\cts_proj\\corp-classf\\CorpClassfAuth\\CorpClassfAuth.csproj",
+        "projectUniqueName": "C:\\Users\\aowas\\Documents\\cts_proj\\micro-ser\\new\\CorpClassfAuth\\CorpClassfAuth.csproj",
         "projectName": "CorpClassfAuth",
-        "projectPath": "C:\\Users\\aowas\\Documents\\cts_proj\\corp-classf\\CorpClassfAuth\\CorpClassfAuth.csproj",
+        "projectPath": "C:\\Users\\aowas\\Documents\\cts_proj\\micro-ser\\new\\CorpClassfAuth\\CorpClassfAuth.csproj",
         "packagesPath": "C:\\Users\\aowas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\aowas\\Documents\\cts_proj\\corp-classf\\CorpClassfAuth\\obj\\",
+        "outputPath": "C:\\Users\\aowas\\Documents\\cts_proj\\micro-ser\\new\\CorpClassfAuth\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\aowas\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net5.0"
+          "netcoreapp3.1"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net5.0": {
-            "targetAlias": "net5.0",
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -37,30 +37,34 @@
         }
       },
       "frameworks": {
-        "net5.0": {
-          "targetAlias": "net5.0",
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
-              "version": "[5.0.17, )"
+              "version": "[3.1.26, )"
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[5.0.17, )"
+              "version": "[3.1.26, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[5.0.17, )"
+              "version": "[3.1.26, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[5.0.17, )"
+              "version": "[3.1.26, )"
+            },
+            "Microsoft.OpenApi": {
+              "target": "Package",
+              "version": "[1.2.3, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[5.6.3, )"
+              "version": "[5.5.0, )"
             }
           },
           "imports": [

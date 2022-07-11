@@ -4,8 +4,8 @@ namespace CorpClassfAuth.Data.Model
 {
     public class SignIn
     {
-        [Required, EmailAddress]
-        public string Email { get; set; }
+        [Required]
+        public int EmpId { get; set; }
 
         [Required]
         public string Password { get; set; }

@@ -21,7 +21,10 @@ namespace CorpClassfAuth.Controllers
         {
             var result = await _authRepository.SignUpAsync(signUpModel);
 
-            return result.Succeeded ? Ok(result) : BadRequest(result);
+            if (result.Succeeded) return Ok(result);
+            else return BadRequest(result);
+
+            //return result.Succeeded ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("login")]
@@ -29,7 +32,10 @@ namespace CorpClassfAuth.Controllers
         {
             var result = await _authRepository.LoginAsync(signInModel);
 
-            return result == null ? Unauthorized(result) : Ok(result);
+            if (result == null) return Unauthorized(result);
+            else return Ok(result);
+
+            //return result == null ? Unauthorized(result) : Ok(result);
         }
     }
 }

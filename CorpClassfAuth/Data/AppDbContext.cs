@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using CorpClassfAuth.Data.Model;
 
 namespace CorpClassfAuth.Data
 {
@@ -9,5 +10,7 @@ namespace CorpClassfAuth.Data
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         { }
+
+        public DbSet<Employee> Employees { get; set; }
     }
 }
