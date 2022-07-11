@@ -65,6 +65,7 @@ export default function SignIn() {
 
   // this handles sign in by calling the signin api
   const handleSignIn = async values => {
+    values.empId = parseInt(values.empId)
     const res = await signInApi(values)
 
     if (res.status === 200) {

@@ -59,3 +59,7 @@ export const postOfferValidation = yup.object({
     .required('End Date is required'),
   // category: yup.string().required('Category is required'),
 })
+
+export const postCommentValidation = yup.object({
+  comment: yup.string().required('Comment is required').max(100),
+})

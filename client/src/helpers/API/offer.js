@@ -31,8 +31,6 @@ export const postOfferApi = async (values, category_Id, emp_Id) => {
     res.status = error.response.status
   }
 
-  // console.log(start_Date, sd)
-
   return res
 }
 
@@ -95,6 +93,28 @@ export const editOfferApi = async (values, category_Id, offerId) => {
     res.status = error.response.status
   }
 
-  console.log(res)
+  return res
+}
+
+export const postCommentApi = async (content, user_Id, offer_Id) => {
+  const res = { data: '', status: 200 }
+
+  user_Id = parseInt(user_Id)
+  offer_Id = parseInt(offer_Id)
+
+  try {
+    const val = await axios.post(`${server}/comment`, {
+      content,
+      user_Id,
+      offer_Id,
+    })
+
+    res.data = val.data
+    res.status = val.status
+  } catch (error) {
+    res.data = error.message
+    res.status = error.response.status
+  }
+
   return res
 }

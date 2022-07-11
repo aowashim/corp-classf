@@ -16,6 +16,8 @@ export const signInApi = async values => {
     res.status = error.response.status
   }
 
+  console.log(res)
+
   return res
 }
 

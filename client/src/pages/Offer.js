@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import NavBar from '../components/NavBar'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
@@ -14,6 +14,8 @@ import WriteComment from '../components/WriteComment'
 import { getOfferDetailsApi } from '../helpers/API/offer'
 import Loading from '../components/Loading'
 import { jsonToNormalDate } from '../helpers/convertDate'
+import userEvent from '@testing-library/user-event'
+import UserContext from '../store/UserContext'
 
 function Copyright() {
   return (
@@ -66,6 +68,7 @@ export default function Offer() {
   const { id } = useParams()
   const [isLoaded, setIsLoaded] = useState(false)
   const [offerData, setOfferData] = useState('')
+  const { user } = useContext(UserContext)
 
   useEffect(() => {
     handleGetOfferDetails()
@@ -121,7 +124,7 @@ export default function Offer() {
             </Button>
           </Container>
           <Container className={classes.cmtsec}>
-            <WriteComment />
+            <WriteComment eid={user.id} oid={offerData.o.id} />
           </Container>
           <Divider variant='fullWidth' style={{ margin: '30px 0' }} />
           <div>
