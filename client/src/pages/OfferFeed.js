@@ -1,4 +1,6 @@
 import React, { useContext, useRef } from 'react'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import NavBar from '../components/NavBar'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
@@ -52,7 +54,7 @@ const useStyles = makeStyles(theme => ({
   },
   cardGrid: {
     paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8),
+    paddingBottom: theme.spacing(2),
   },
   formControl: {
     marginTop: theme.spacing(4),
@@ -80,6 +82,7 @@ const useStyles = makeStyles(theme => ({
 
 const dataPerPage = 6
 
+toast.configure()
 export default function OfferFeed(props) {
   const classes = useStyles()
 
@@ -98,6 +101,12 @@ export default function OfferFeed(props) {
   useEffect(() => {
     handleGetOffers()
   }, [viewOfferBy])
+
+  const notifyError = msg =>
+    toast.error(msg, { position: toast.POSITION.TOP_CENTER })
+
+  const notifySuccess = msg =>
+    toast.success(msg, { position: toast.POSITION.TOP_CENTER, autoClose: 2000 })
 
   const handleChange = (event, value) => {
     setIsLoaded(false)
@@ -269,11 +278,22 @@ export default function OfferFeed(props) {
               ))}
             </Grid>
 
-            <Pagination
-              count={numOfPages.current}
-              page={page}
-              onChange={handleChange}
-            />
+            <div
+              style={{
+                marginTop: 30,
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              <Pagination
+                count={numOfPages.current}
+                page={page}
+                variant='outlined'
+                shape='rounded'
+                color='secondary'
+                onChange={handleChange}
+              />
+            </div>
           </Container>
         </div>
       ) : (

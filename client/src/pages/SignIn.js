@@ -1,4 +1,6 @@
 import React, { useContext } from 'react'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
@@ -46,6 +48,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
+toast.configure()
 export default function SignIn() {
   const classes = useStyles()
   const { pathname } = useLocation()
@@ -63,6 +66,12 @@ export default function SignIn() {
     },
   })
 
+  const notifyError = msg =>
+    toast.error(msg, { position: toast.POSITION.TOP_CENTER })
+
+  const notifySuccess = msg =>
+    toast.success(msg, { position: toast.POSITION.TOP_CENTER, autoClose: 2000 })
+
   // this handles sign in by calling the signin api
   const handleSignIn = async values => {
     values.empId = parseInt(values.empId)
@@ -77,9 +86,11 @@ export default function SignIn() {
         token: res.data,
       })
 
+      notifySuccess('Successfully Signed In')
+
       navigate('/')
     } else {
-      alert('Invalid Employee Id or Password')
+      notifyError('Invalid Employee Id or Password')
     }
   }
 

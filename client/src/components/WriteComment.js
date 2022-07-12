@@ -1,10 +1,13 @@
 import React from 'react'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { TextField } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import { useFormik } from 'formik'
 import { postCommentValidation } from '../helpers/yupValidation'
 import { postCommentApi } from '../helpers/API/offer'
 
+toast.configure()
 export default function WriteComment(props) {
   const formik = useFormik({
     initialValues: {
@@ -16,14 +19,20 @@ export default function WriteComment(props) {
     },
   })
 
+  const notifyError = msg =>
+    toast.error(msg, { position: toast.POSITION.TOP_CENTER })
+
+  const notifySuccess = msg =>
+    toast.success(msg, { position: toast.POSITION.TOP_CENTER })
+
   const handlePostComment = async (val, resetForm) => {
     const res = await postCommentApi(val, props.eid, props.oid)
 
     if (res.status === 200) {
       resetForm()
-      alert('Comment posted successfully...')
+      notifySuccess('Comment posted successfully...')
     } else {
-      alert('An error occurred, please try again...')
+      notifyError('An error occurred, please try again...')
     }
   }
 
