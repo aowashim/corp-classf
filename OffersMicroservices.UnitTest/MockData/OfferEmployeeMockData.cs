@@ -53,36 +53,5 @@ namespace EmployeeMicroserviceUnitTest.MockData
                 }
             };
         }
-
-        //public static List<OfferEmployee> Offer()
-        //{
-        //    return new List<OfferEmployee>()
-        //    {
-        //        new OfferEmployee()
-        //        {
-        //            id = 3,
-        //            title = "Poco F3",
-        //            description = "Smartphone Good quality,  good condition",
-        //            empName = "Reshma",
-        //            likes = 15
-        //        },
-        //        new OfferEmployee()
-        //        {
-        //            id = 2,
-        //            title = "Poco F1",
-        //            description = "Smartphone Good quality,  good condition",
-        //            empName = "Reshma",
-        //            likes = 10
-        //        },
-        //        new OfferEmployee()
-        //        {
-        //            id = 1,
-        //            title = "Samsung E10",
-        //            description = "Smartphone Good quality,  good condition",
-        //            empName = "James",
-        //            likes = 5
-        //        }
-        //    };
-        //}
     }
 }
