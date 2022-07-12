@@ -2,10 +2,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
+using OffersMicroservices.Database;
+using OffersMicroservices.Repository;
 
 namespace OffersMicroservices
 {
@@ -23,7 +26,7 @@ namespace OffersMicroservices
         {
 
             services.AddControllers();
-
+            
             // cors
             services.AddCors(options =>
             {
@@ -32,7 +35,7 @@ namespace OffersMicroservices
                     builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
                 });
             });
-
+            services.AddScoped<IOfferService, OfferService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
@@ -43,6 +46,10 @@ namespace OffersMicroservices
                 });
 
             });
+            services.AddDbContext<DatabaseContext>(x =>
+            x.UseSqlServer(Configuration.GetConnectionString("myConn")));
+            services.AddControllers();
+            services.AddScoped<IOfferService, OfferService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

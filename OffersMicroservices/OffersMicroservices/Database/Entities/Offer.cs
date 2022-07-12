@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OffersMicroservices.Database
+namespace OffersMicroservices.Database.Entities
 {
     public class Offer
     {

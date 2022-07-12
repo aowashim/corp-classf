@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using OffersMicroservice.Repository;
 using OffersMicroservices.Database;
+using OffersMicroservices.Database.Entities;
+using OffersMicroservices.Repository;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,10 +21,11 @@ namespace OffersMicroservices.Controllers
         /* --------[SETUP]-------- */
 
         private DateTime def_date = new DateTime(2001, 01, 01);
-        private readonly DatabaseContext db;
-        public OfferController()
+        private readonly IOfferService _offerService;
+        private readonly DatabaseContext _context;
+        public OfferController(IOfferService service)
         {
-            db = new DatabaseContext();
+            _offerService=service;
         }
 
 
@@ -32,30 +36,16 @@ namespace OffersMicroservices.Controllers
              API to get all the offers     */
         [Route("Offer")]
         [HttpGet]
-        public async Task<ActionResult<Offer>> Offer()
+        public async Task<ActionResult> Offer()
         {
             try
             {
-                //var result = await db.Offers.ToListAsync();
-
-                // performing join between offers and employees table to get employee name
-                var result = from o in db.Offers
-                             from e in db.Employees
-                             where o.Emp_Id == e.EmpId
-                             select new
-                             {
-                                 id = o.Id,
-                                 title = o.Title,
-                                 description = o.Description,
-                                 empName = e.EmpName,
-                                 likes = o.N_Likes
-                             };
+                var result = await _offerService.Offer();
 
                 if (result == null)
                 {
                     return NotFound();
                 }
-
                 return Ok(result);
             }
             catch (Exception ex)
@@ -69,25 +59,12 @@ namespace OffersMicroservices.Controllers
              API to fetch data on the basis on offerID    */
         [Route("getOfferDetails/{id}")]
         [HttpGet]
-        public async Task<ActionResult<Offer>> GetOfferDetails(int id)
+        public async Task<ActionResult> GetOfferDetails(int id)
         {
             try
             {
-                //var result = await db.Offers.FindAsync(id);
-
-                // performing join between offers and employees table to get employee name
-                //var result = from o in db.Offers
-                //             from e in db.Employees
-                //             where o.Emp_Id == e.EmpId && o.Id == id
-                //             select new
-                //             {
-                //                 o,
-                //                 e.EmpName
-                //             };
-
-                var result = db.Offers.Where(o => o.Id == id).Include(o => o.Offer_Category)
-                    .Join(db.Employees, O => O.Emp_Id, e => e.EmpId, (o, e) => new { o, e.EmpName });
-
+                var result = await _offerService.GetOfferDetails(id);
+ 
                 if (result == null)
                 {
                     return NotFound();
@@ -101,28 +78,15 @@ namespace OffersMicroservices.Controllers
         }
 
 
-        /*   GET: api/getOfferDetailsByCategory/<category_id>
-             API to fetch filtered data on the basis of category    */
+        //        /*   GET: api/getOfferDetailsByCategory/<category_id>
+        //             API to fetch filtered data on the basis of category    */
         [Route("getOfferDetailsByCategory/{id}")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Offer>>> GetOfferDetailsByCategory(int id)
+        public async Task<ActionResult> GetOfferDetailsByCategory(int id)
         {
             try
             {
-                //var result = db.Offers.Where(offer => offer.Category_Id == id).ToList();
-
-                // performing join between offers and employees table to get employee name
-                var result = from o in db.Offers
-                             from e in db.Employees
-                             where o.Emp_Id == e.EmpId && o.Category_Id == id
-                             select new
-                             {
-                                 id = o.Id,
-                                 title = o.Title,
-                                 description = o.Description,
-                                 empName = e.EmpName,
-                                 likes = o.N_Likes
-                             };
+                var result =await _offerService.GetOfferDetailsByCategory(id);
 
                 if (result == null)
                 {
@@ -137,35 +101,22 @@ namespace OffersMicroservices.Controllers
         }
 
 
-        /*   GET: api/getofferbytoplikes
-             API to fetch sorted data on the basis of likes    */
+        //        /*   GET: api/getofferbytoplikes
+        //             API to fetch sorted data on the basis of likes    */
         [Route("getOfferByTopLikes")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Offer>>> GetOfferByTopLikes()
+        public async Task<ActionResult> GetOfferByTopLikes()
         {
             try
             {
-                //var result = db.Offers.OrderByDescending(o => o.N_Likes).ToList();
-
-                // performing join between offers and employees table to get employee name
-                var result = from o in db.Offers
-                             from e in db.Employees
-                             where o.Emp_Id == e.EmpId
-                             orderby o.N_Likes descending
-                             select new
-                             {
-                                 id = o.Id,
-                                 title = o.Title,
-                                 description = o.Description,
-                                 empName = e.EmpName,
-                                 likes = o.N_Likes
-                             };
+                
+                var result=await _offerService.GetOfferByTopLikes();
 
                 if (result == null)
                 {
                     return NotFound();
                 }
-                return Ok(result);
+                return Ok(result.FirstOrDefault());
 
             }
             catch (Exception e)
@@ -175,29 +126,16 @@ namespace OffersMicroservices.Controllers
         }
 
 
-        /*   GET: api/getOfferByPostedDate>
-             API to fetch sorted data on the basis of posted date    */
+        //        /*   GET: api/getOfferByPostedDate>
+        //             API to fetch sorted data on the basis of posted date    */
         [Route("getOfferByPostedDate")]
         [HttpGet]
-        public async Task<ActionResult<Offer>> GetOfferByPostedDate()
+        public async Task<ActionResult> GetOfferByPostedDate()
         {
             try
             {
-                //var result = db.Offers.OrderByDescending(o => o.Start_Date).ToList();
-
-                // performing join between offers and employees table to get employee name
-                var result = from o in db.Offers
-                             from e in db.Employees
-                             where o.Emp_Id == e.EmpId
-                             orderby o.Start_Date descending
-                             select new
-                             {
-                                 id = o.Id,
-                                 title = o.Title,
-                                 description = o.Description,
-                                 empName = e.EmpName,
-                                 likes = o.N_Likes
-                             };
+                
+                var result= await _offerService.GetOfferByPostedDate();
 
                 if (result == null)
                 {
@@ -212,23 +150,18 @@ namespace OffersMicroservices.Controllers
         }
 
 
-        /* --------[POST REQUESTS]-------- */
+        //        /* --------[POST REQUESTS]-------- */
 
-        /*   POST: api/AddOffer
-             API to take an object of offer and store it in database    */
+        //        /*   POST: api/AddOffer
+        //             API to take an object of offer and store it in database    */
         [Route("addOffer")]
         [HttpPost]
         public async Task<ActionResult> CreateOffer(Offer offer)
         {
             try
             {
-                var result = await db.Offers.AddAsync(offer);
-                if (result == null)
-                {
-                    return NotFound();
-                }
-                await db.SaveChangesAsync();
-                return Ok(result.Entity);
+                await _offerService.CreateAsync(offer);
+                return Ok();
             }
             catch (Exception e)
             {
@@ -241,87 +174,48 @@ namespace OffersMicroservices.Controllers
              API to edit offer data   */
         [Route("editOffer")]
         [HttpPost]
-        public async Task<ActionResult> Edit(int Id, Offer data)
+        public async Task<ActionResult> EditOffer(int Id, Offer data)
         {
             try
             {
-                Offer temp = await db.Offers.FindAsync(Id);
-                if (temp == null)
-                {
-                    return NotFound();
-                }
-
-                temp.Title = data.Title;
-                temp.Description = data.Description;
-                temp.Start_Date = data.Start_Date;
-                temp.End_Date = data.End_Date;
-                temp.Category_Id = data.Category_Id;
-
-                db.Offers.Update(temp);
-                db.SaveChanges();
-                return Ok(temp);
+                await _offerService.EditAsync(Id, data);
+                return Ok();
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
-
-
         }
 
 
-        /*   POST: api/engageOffer
-             API fix engage_date of a specific offer_id to current date and time   */
+        //        /*   POST: api/engageOffer
+        //             API fix engage_date of a specific offer_id to current date and time   */
         [Route("engageOffer")]
         [HttpPost]
-        public async Task<ActionResult> Engage(int Id, int Emp_Id)
+        public async Task<ActionResult> EngageOffer(int Id, int Emp_Id)
         {
             try
             {
-                Offer temp = await db.Offers.FindAsync(Id);
-                if (temp == null)
-                {
-                    return NotFound();
-                }
-                temp.Emp_Id = Emp_Id;
-                temp.Engaged_Date = System.DateTime.Now;
-                db.Offers.Update(temp);
-                db.SaveChanges();
-                return Ok(temp);
+                await _offerService.EngageAsync(Id, Emp_Id);
+                return Ok();
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
-
-
-
         }
 
-        /* --------[POINTS UTILITY METHODS]-------- */
+        //        /* --------[POINTS UTILITY METHODS]-------- */
 
-        /*   GET: api/getOfferDetailsByCategory/<EMP_id>
-             API to fetch filtered data on the basis of EMP_ID    */
+        //        /*   GET: api/getOfferDetailsByCategory/<EMP_id>
+        //             API to fetch filtered data on the basis of EMP_ID    */
         [Route("getOfferDetailsByEmpID/{id}")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Offer>>> GetOfferDetailsByEmpId(int id)
+        public async Task<ActionResult> GetOfferDetailsByEmpId(int id)
         {
             try
-            {
-                //var result = db.Offers.Where(offer => offer.Emp_Id == id).ToList();
-
-                // performing join between offers and employees table to get employee name
-                var result = from o in db.Offers
-                             from e in db.Employees
-                             where o.Emp_Id == e.EmpId && o.Emp_Id == id
-                             select new
-                             {
-                                 id = o.Id,
-                                 title = o.Title,
-                                 description = o.Description,
-                                 empName = e.EmpName,
-                                 likes = o.N_Likes
-                             };
+            { 
+                var result=await _offerService.GetOfferDetailsByEmpId(id);
 
                 if (result == null)
                 {
@@ -335,24 +229,17 @@ namespace OffersMicroservices.Controllers
             }
         }
 
-        // ------------------------
-        // For comments
+        //        // ------------------------
+        //        // For comments
 
-        // GET: api/comments/5
-        // API to fetch all comments of a offer based on offer Id
+        //        // GET: api/comments/5
+        //        // API to fetch all comments of a offer based on offer Id
         [HttpGet("comments/{id}")]
-        public async Task<ActionResult<Comment>> GetComments(int id)
+        public async Task<ActionResult> GetComments(int id)
         {
             try
             {
-                var comments = await db.Comment.Where(x => x.Offer_Id == id).Join(db.Employees, c => c.User_Id, e => e.EmpId, (c, e) => new
-                {
-                    id = c.Id,
-                    content = c.Content,
-                    empName = e.EmpName,
-                    empId = c.User_Id
-                }).ToListAsync();
-
+                var comments=await _offerService.GetComments(id);
                 if (comments == null)
                 {
                     return NotFound();
@@ -366,17 +253,15 @@ namespace OffersMicroservices.Controllers
             }
         }
 
-        // POST: api/comment
-        // API to post a comment
+        //        // POST: api/comment
+        //        // API to post a comment
         [HttpPost("comment")]
         public async Task<ActionResult> PostComment(Comment comment)
         {
             try
-            {
-                var res = await db.Comment.AddAsync(comment);
-                await db.SaveChangesAsync();
-
-                return Ok(res.Entity);
+            {             
+                await _offerService.PostAsync(comment);
+                return Ok();
             }
             catch (Exception ex)
             {
