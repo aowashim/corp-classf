@@ -153,7 +153,7 @@ export default function OfferFeed(props) {
                 <MenuItem value={6}>My Offers</MenuItem>
                 <Divider />
 
-                <MenuItem value={7}>Recently Liked</MenuItem>
+                {/* <MenuItem value={7}>Recently Liked</MenuItem> */}
                 <MenuItem value={8}>Top Likes</MenuItem>
                 <MenuItem value={9}>Posted Date</MenuItem>
                 <Divider />

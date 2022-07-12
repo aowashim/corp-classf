@@ -16,8 +16,6 @@ export const signInApi = async values => {
     res.status = error.response.status
   }
 
-  console.log(res)
-
   return res
 }
 
@@ -34,6 +32,8 @@ export const signUpApi = async values => {
     res.data = error.message
     res.status = error.response.status
   }
+
+  console.log(res)
 
   return res
 }

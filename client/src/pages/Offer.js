@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import { useLocation, useParams } from 'react-router-dom'
 import Link from '@material-ui/core/Link'
-import { Button, Toolbar } from '@material-ui/core'
+import { Box, Button, Toolbar } from '@material-ui/core'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 // import CalendarMonthIcon from '@material-ui/icons/CalendarMonth'
 import Comment from '../components/Comment'
@@ -14,8 +14,8 @@ import WriteComment from '../components/WriteComment'
 import { getCommentsApi, getOfferDetailsApi } from '../helpers/API/offer'
 import Loading from '../components/Loading'
 import { jsonToNormalDate } from '../helpers/convertDate'
-import userEvent from '@testing-library/user-event'
 import UserContext from '../store/UserContext'
+import Alert from '@material-ui/lab/Alert'
 
 function Copyright() {
   return (
@@ -47,18 +47,24 @@ const useStyles = makeStyles(theme => ({
   bnn: {
     display: 'flex',
     justifyContent: 'space-between',
+    marginTop: 20,
+    marginLeft: 140,
+    marginRight: 140,
   },
   cmtsec: {
-    marginTop: '2rem',
+    marginBottom: 30,
+    marginTop: 30,
   },
   card: {
     height: '100%',
     boxShadow: '0px 0px 10px 0px rgba(94,94,94,0.64)',
     display: 'flex',
     border: '1rem',
-    padding: '5rem',
+    padding: '2rem 5rem',
     borderRadius: '10px',
     flexDirection: 'column',
+    marginTop: 30,
+    marginBottom: 30,
   },
 }))
 
@@ -115,27 +121,47 @@ export default function Offer() {
 
       {isLoaded ? (
         <Container component='main' className={classes.card} maxWidth='md'>
-          <Container className={classes.cont_each} maxWidth='md'>
-            <Typography variant='h4' align='left'>
+          <div className={classes.cont_each}>
+            <Typography variant='h5' align='left'>
               {offerData.empName}
             </Typography>
-            <Typography variant='h6' align='left'>
+            {/* <Typography variant='h6' align='left'>
               {jsonToNormalDate(offerData.o.start_Date)}
-            </Typography>
-          </Container>
-          <Container maxWidth='md'>
-            <Typography variant='h2' align='center'>
-              {offerData.o.title}
-            </Typography>
-            <Typography
-              className={classes.cont_each}
-              variant='subtitle1'
-              align='justify'
-            >
-              {offerData.o.description}
-            </Typography>
-          </Container>
-          <Container className={classes.bnn} maxWidth='md'>
+            </Typography> */}
+          </div>
+          <Typography className={classes.cont_each} variant='h5'>
+            {offerData.o.title}
+          </Typography>
+          <Typography
+            className={classes.cont_each}
+            variant='subtitle1'
+            align='justify'
+          >
+            {offerData.o.description}
+          </Typography>
+
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              // width: '50%',
+            }}
+            align='center'
+          >
+            <div>
+              <Alert
+                style={{ marginBottom: 10, marginTop: 20 }}
+                severity='success'
+              >
+                Offer Starts On : {jsonToNormalDate(offerData.o.start_Date)}
+              </Alert>
+              <Alert style={{ marginBottom: 35 }} severity='error'>
+                Offer Ends On : {jsonToNormalDate(offerData.o.end_Date)}
+              </Alert>
+            </div>
+          </div>
+
+          <div className={classes.bnn}>
             <Button size='large' color='primary'>
               <FavoriteIcon />
               Like
@@ -143,11 +169,14 @@ export default function Offer() {
             <Button size='large' color='primary'>
               Engage
             </Button>
-          </Container>
+          </div>
+
+          <Divider variant='fullWidth' style={{ marginTop: 40 }} />
+
           <Container className={classes.cmtsec}>
             <WriteComment eid={user.id} oid={offerData.o.id} />
           </Container>
-          <Divider variant='fullWidth' style={{ margin: '30px 0' }} />
+
           <div>
             <Button
               type='submit'

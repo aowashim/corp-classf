@@ -57,6 +57,7 @@ export default function SignUp(props) {
 
   // this handles sign up by calling the signup api
   const handleSignUp = async values => {
+    values.empId = parseInt(values.empId)
     const res = await signUpApi(values)
 
     if (res.status === 200) {

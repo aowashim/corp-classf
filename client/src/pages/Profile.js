@@ -7,15 +7,6 @@ import NavBar from '../components/NavBar'
 import { getEmpProfileApi } from '../helpers/API/employee'
 import UserContext from '../store/UserContext'
 
-// const data = {
-//   empId: 123444,
-//   empName: 'Owashim Akram',
-//   email: 'aowashim@gmail.com',
-//   designation: 'Programmer Analyst',
-//   officeLocation: 'Bangalore',
-//   pointsGained: 500,
-// }
-
 const useStyles = makeStyles(theme => ({
   profileDetails: {
     marginTop: theme.spacing(3),
@@ -40,7 +31,7 @@ function Profile() {
     const res = await getEmpProfileApi(user.id)
 
     if (res.status === 200) {
-      setData(res.data)
+      setData(res.data.value)
       setIsLoaded(true)
     } else {
       alert('An error occurred, please try again...')

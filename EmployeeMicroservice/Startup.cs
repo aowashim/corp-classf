@@ -1,4 +1,5 @@
 using EmployeeMicroservice.Database;
+using EmployeeMicroservice.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
@@ -35,6 +36,16 @@ namespace EmployeeMicroservice
             services.AddControllers();
             services.AddDbContext<EmployeeContext>(x =>
             x.UseSqlServer(Configuration.GetConnectionString("myConn")));
+
+            // cors
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                });
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { 
@@ -43,6 +54,7 @@ namespace EmployeeMicroservice
                     Version = "v1" 
                 });
             });
+            services.AddScoped<IEmployeeService, EmployeeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,6 +81,8 @@ namespace EmployeeMicroservice
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 

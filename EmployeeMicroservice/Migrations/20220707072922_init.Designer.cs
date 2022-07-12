@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeMicroservice.Migrations
 {
     [DbContext(typeof(EmployeeContext))]
-    [Migration("20220707080723_AddingTables")]
-    partial class AddingTables
+    [Migration("20220707072922_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

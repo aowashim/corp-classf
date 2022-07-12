@@ -132,6 +132,5 @@ export const getCommentsApi = async id => {
     res.status = error.response.status
   }
 
-  console.log(res)
   return res
 }
