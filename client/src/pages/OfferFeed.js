@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useRef } from 'react'
 import NavBar from '../components/NavBar'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
@@ -24,6 +24,7 @@ import {
 import UserContext from '../store/UserContext'
 import PersonIcon from '@material-ui/icons/Person'
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt'
+import Pagination from '@material-ui/lab/Pagination'
 
 function Copyright() {
   return (
@@ -77,16 +78,20 @@ const useStyles = makeStyles(theme => ({
   iconTextCont: { display: 'flex', flexDirection: 'row' },
 }))
 
-// const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const dataPerPage = 6
 
 export default function OfferFeed(props) {
   const classes = useStyles()
 
   const [isLoaded, setIsLoaded] = useState(false)
-  const [items, setItems] = useState([])
+  const items = useRef([])
+  const data = useRef([])
   const [viewOfferBy, setViewOfferBy] = useState(5)
+  const numOfPages = useRef(1)
   const { user } = useContext(UserContext)
   const navigate = useNavigate()
+  const [page, setPage] = useState(1)
+  const [refresh, setRefresh] = useState(false)
 
   const { pathname } = useLocation()
 
@@ -94,8 +99,27 @@ export default function OfferFeed(props) {
     handleGetOffers()
   }, [viewOfferBy])
 
+  const handleChange = (event, value) => {
+    setIsLoaded(false)
+    setPage(value)
+    // data.current = []
+    setSlicedData(value)
+  }
+
+  // sets the data to be shown at each page
+  const setSlicedData = val => {
+    const startIdx = (val - 1) * dataPerPage
+
+    const endIdx =
+      val === numOfPages.current ? items.current.length : val * dataPerPage
+
+    const curData = items.current.slice(startIdx, endIdx)
+
+    data.current = curData
+    setIsLoaded(true)
+  }
+
   const handleGetOffers = async () => {
-    // const res = await getAllOfferApi()
     let res
 
     if (viewOfferBy === 5) {
@@ -116,8 +140,12 @@ export default function OfferFeed(props) {
     }
 
     if (res.status === 200) {
-      setItems(res.data)
-      setIsLoaded(true)
+      data.current = []
+      numOfPages.current = Math.ceil(res.data.length / dataPerPage)
+      setRefresh(!refresh)
+      items.current = res.data
+      setPage(1)
+      setSlicedData(1)
     } else {
       alert('An error occurred, please try again...')
     }
@@ -172,7 +200,7 @@ export default function OfferFeed(props) {
             maxWidth='md'
           >
             <Grid container spacing={4}>
-              {items.map(item => (
+              {data.current.map(item => (
                 <Grid item key={item.id} xs={12} sm={6}>
                   <Card className={classes.card}>
                     {/* <CardMedia
@@ -240,6 +268,12 @@ export default function OfferFeed(props) {
                 </Grid>
               ))}
             </Grid>
+
+            <Pagination
+              count={numOfPages.current}
+              page={page}
+              onChange={handleChange}
+            />
           </Container>
         </div>
       ) : (
