@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OffersMicroservices.Repository
 {
-    public class OfferService:IOfferService
+    public class OfferService : IOfferService
     {
         private readonly DatabaseContext _context;
         public OfferService(DatabaseContext context)
@@ -22,7 +22,7 @@ namespace OffersMicroservices.Repository
             var result = await _context.Offers.Include(o => o.Offer_Category)
                 .Join(_context.Employees, o => o.Emp_Id, e => e.EmpId, (o, e) => new EmployeeOffer
                 {
-                    id = o.Emp_Id,
+                    id = o.Id,
                     title = o.Title,
                     description = o.Description,
                     empName = e.EmpName,
@@ -32,30 +32,19 @@ namespace OffersMicroservices.Repository
         }
         public async Task<List<OfferEmployee>> GetOfferDetails(int id)
         {
-            var offer=_context.Offers.FindAsync(id);
-            var emp=_context.Employees.FindAsync(offer.Result.Emp_Id);
-            var result =await _context.Offers.Where(o => o.Id == id).Select(o=> new OfferEmployee
-            {
-                id = o.Id,
-                title = o.Title,
-                description = o.Description,
-                n_Likes = o.N_Likes,
-                start_Date = o.Start_Date,
-                end_Date = o.End_Date,
-                engaged_Date = o.Engaged_Date,
-                category_Id = o.Category_Id,
-                emp_Id = o.Emp_Id,
-                empName = emp.Result.EmpName
-            }).ToListAsync();
+            var result = await _context.Offers.Where(o => o.Id == id).Include(o => o.Offer_Category)
+                    .Join(_context.Employees, O => O.Emp_Id, e => e.EmpId, (ofr, e) => new OfferEmployee { o = ofr, empName = e.EmpName }).ToListAsync();
+
+
             return result;
         }
         public async Task<List<EmployeeOffer>> GetOfferDetailsByCategory(int id)
         {
             // performing join between offers and employees table to get employee name
-            var result = await _context.Offers.Where(o=>o.Category_Id==id).Include(o => o.Offer_Category)
+            var result = await _context.Offers.Where(o => o.Category_Id == id).Include(o => o.Offer_Category)
                 .Join(_context.Employees, o => o.Emp_Id, e => e.EmpId, (o, e) => new EmployeeOffer
                 {
-                    id = o.Emp_Id,
+                    id = o.Id,
                     title = o.Title,
                     description = o.Description,
                     empName = e.EmpName,
@@ -69,7 +58,7 @@ namespace OffersMicroservices.Repository
             var result = await _context.Offers.Include(o => o.Offer_Category)
                .Join(_context.Employees, o => o.Emp_Id, e => e.EmpId, (o, e) => new EmployeeOffer
                {
-                   id = o.Emp_Id,
+                   id = o.Id,
                    title = o.Title,
                    description = o.Description,
                    empName = e.EmpName,
@@ -80,15 +69,15 @@ namespace OffersMicroservices.Repository
         public async Task<List<EmployeeOffer>> GetOfferByPostedDate()
         {
             // performing join between offers and employees table to get employee name
-            var result =await _context.Offers.OrderByDescending(o => o.Start_Date)
+            var result = await _context.Offers.OrderByDescending(o => o.Start_Date)
                 .Join(_context.Employees, o => o.Emp_Id, e => e.EmpId, (o, e) => new EmployeeOffer
-            {
-                id = o.Emp_Id,
-                title = o.Title,
-                description = o.Description,
-                empName = e.EmpName,
-                likes = o.N_Likes
-            }).ToListAsync();
+                {
+                    id = o.Id,
+                    title = o.Title,
+                    description = o.Description,
+                    empName = e.EmpName,
+                    likes = o.N_Likes
+                }).ToListAsync();
             return result;
         }
         public async Task EditAsync(int Id, Offer data)
@@ -106,7 +95,7 @@ namespace OffersMicroservices.Repository
         public async Task CreateAsync(Offer offer)
         {
             await _context.Offers.AddAsync(offer);
-            
+
             _context.SaveChanges();
         }
         public async Task EngageAsync(int Id, int Emp_Id)
@@ -118,18 +107,18 @@ namespace OffersMicroservices.Repository
             _context.SaveChanges();
         }
         public async Task<List<EmployeeOffer>> GetOfferDetailsByEmpId(int id)
-        {  
+        {
             var emp = _context.Employees.FindAsync(id);
             // performing join between offers and employees table to get employee name
             var offers = await _context.Offers.Where(x => x.Emp_Id == id)
                 .Join(_context.Employees, o => o.Emp_Id, e => e.EmpId, (o, e) => new EmployeeOffer()
-            {
-                id = o.Id,
-                title = o.Title,
-                description = o.Description,
-                empName = emp.Result.EmpName,
-                likes = o.N_Likes
-            }).ToListAsync();
+                {
+                    id = o.Id,
+                    title = o.Title,
+                    description = o.Description,
+                    empName = emp.Result.EmpName,
+                    likes = o.N_Likes
+                }).ToListAsync();
             return offers;
         }
 
@@ -137,12 +126,12 @@ namespace OffersMicroservices.Repository
         {
             var comments = await _context.Comment.Where(x => x.Offer_Id == id)
                 .Join(_context.Employees, c => c.User_Id, e => e.EmpId, (c, e) => new EmployeeComment
-            {
-                id = c.Id,
-                content = c.Content,
-                emp_Name = e.EmpName,
-                offer_Id = c.Offer_Id,
-            }).ToListAsync();
+                {
+                    id = c.Id,
+                    content = c.Content,
+                    emp_Name = e.EmpName,
+                    offer_Id = c.Offer_Id,
+                }).ToListAsync();
             return comments;
         }
         public async Task PostAsync(Comment comment)
