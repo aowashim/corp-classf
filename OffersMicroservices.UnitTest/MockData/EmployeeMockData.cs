@@ -7,21 +7,6 @@ namespace EmployeeMicroserviceUnitTest.MockData
 {
     public static class EmployeeMockData
     {
-        public static List<Employee> GetNoEmployees()
-        {
-            return new List<Employee>()
-            {
-                new Employee()
-                {
-                    EmpId = 1,
-                    EmpName = null,
-                    Email = null,
-                    Points_Gained = 0,
-                    Designation = null,
-                    Office_Location = null
-                }
-            };
-        }
         public static List<Employee> GetEmployees()
         {
             return new List<Employee>()
