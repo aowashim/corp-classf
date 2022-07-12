@@ -30,7 +30,7 @@ namespace EmployeeMicroservice.Controllers
 
         /* --------[GET REQUESTS]-------- */
 
-        // GET: api/Employees/viewProfile/5
+        // GET: api/ViewProfile/5
         // API to fetch Employee Profile based on given Employee Id
         [HttpGet("ViewProfile/{id}")]
         public async Task<ActionResult<Employee>> ViewProfile(int id)
@@ -52,7 +52,7 @@ namespace EmployeeMicroservice.Controllers
             
         }
 
-        // GET: api/Employees/viewEmployeeOffers/5
+        // GET: api/viewEmployeeOffers/5
         // API to fetch Offers data based on given Employee Id
         [HttpGet("ViewEmployeeOffers/{id}")]
         public async Task<ActionResult<Offer>> ViewEmployeeOffers(int id)
@@ -77,7 +77,7 @@ namespace EmployeeMicroservice.Controllers
 
         }
 
-        // GET: api/Employees/viewEmployeeOffers
+        // GET: api/viewEmployeeOffers
         // API to fetch sorted top 3 data on the basis of likes
         [HttpGet("ViewMostLikedOffers")]
         public async Task<ActionResult<Offer>> ViewMostLikedOffers()
