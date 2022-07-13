@@ -22,7 +22,6 @@ namespace OffersMicroservices.Controllers
 
         private DateTime def_date = new DateTime(2001, 01, 01);
         private readonly IOfferService _offerService;
-        private readonly DatabaseContext _context;
         public OfferController(IOfferService service)
         {
             _offerService = service;
