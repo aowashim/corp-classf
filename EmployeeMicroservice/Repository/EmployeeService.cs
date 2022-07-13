@@ -25,11 +25,11 @@ namespace EmployeeMicroservice.Repository
             var emp = _context.Employees.FindAsync(id);
             var offers = await _context.Offers.Where(x => x.Emp_Id == id).Select(o => new EmployeeOffer()
             {
-                Id = o.Id,
-                Title = o.Title,
-                Description = o.Description,
-                EmpName = emp.Result.EmpName,
-                Likes = o.N_Likes
+                id = o.Id,
+                title = o.Title,
+                description = o.Description,
+                empName = emp.Result.EmpName,
+                likes = o.N_Likes
             }).ToListAsync();
             return offers;
         }
@@ -39,11 +39,11 @@ namespace EmployeeMicroservice.Repository
             var top3offers = await _context.Offers.OrderByDescending(x => x.N_Likes).Take(3)
                 .Join(_context.Employees, o => o.Emp_Id, e => e.EmpId, (o, e) => new EmployeeOffer
                 {
-                    Id = o.Emp_Id,
-                    Title = o.Title,
-                    Description = o.Description,
-                    EmpName = e.EmpName,
-                    Likes = o.N_Likes
+                    id = o.Emp_Id,
+                    title = o.Title,
+                    description = o.Description,
+                    empName = e.EmpName,
+                    likes = o.N_Likes
                 }).ToListAsync();
             return top3offers;
         }

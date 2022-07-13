@@ -13,11 +13,11 @@ namespace EmployeeMicroserviceUnitTest.MockData
             {
                 new EmployeeOffer()
                 {
-                    Id = 1,
-                    Title = "Samsung E10",
-                    Description = "Smartphone Good quality,  good condition",
-                    EmpName = "James",
-                    Likes = 0
+                    id = 1,
+                    title = "Samsung E10",
+                    description = "Smartphone Good quality,  good condition",
+                    empName = "James",
+                    likes = 0
                 }
             };
         }
@@ -28,27 +28,27 @@ namespace EmployeeMicroserviceUnitTest.MockData
             {
                 new EmployeeOffer()
                 {
-                    Id = 3,
-                    Title = "Poco F3",
-                    Description = "Smartphone Good quality,  good condition",
-                    EmpName = "Reshma",
-                    Likes = 15
+                    id = 3,
+                    title = "Poco F3",
+                    description = "Smartphone Good quality,  good condition",
+                    empName = "Reshma",
+                    likes = 15
                 },
                 new EmployeeOffer()
                 {
-                    Id = 2,
-                    Title = "Poco F1",
-                    Description = "Smartphone Good quality,  good condition",
-                    EmpName = "Reshma",
-                    Likes = 10
+                    id = 2,
+                    title = "Poco F1",
+                    description = "Smartphone Good quality,  good condition",
+                    empName = "Reshma",
+                    likes = 10
                 },
                 new EmployeeOffer()
                 {
-                    Id = 1,
-                    Title = "Samsung E10",
-                    Description = "Smartphone Good quality,  good condition",
-                    EmpName = "James",
-                    Likes = 5
+                    id = 1,
+                    title = "Samsung E10",
+                    description = "Smartphone Good quality,  good condition",
+                    empName = "James",
+                    likes = 5
                 }
             };
         }
