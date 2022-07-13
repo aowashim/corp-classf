@@ -1,13 +1,24 @@
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { Container, makeStyles, Toolbar, Typography } from '@material-ui/core'
-import SubdirectoryArrowRightIcon from '@material-ui/icons/SubdirectoryArrowRight'
-import { useContext, useEffect, useState } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
-import Loading from '../components/Loading'
 import NavBar from '../components/NavBar'
-import { getEmpProfileApi } from '../helpers/API/employee'
+import Grid from '@material-ui/core/Grid'
+import EmailIcon from '@material-ui/icons/Email'
+import EmojiEventsIcon from '@material-ui/icons/EmojiEvents'
+import LocationOnIcon from '@material-ui/icons/LocationOn'
+import { useContext, useEffect, useState } from 'react'
 import UserContext from '../store/UserContext'
+import { getEmpProfileApi } from '../helpers/API/employee'
+import Loading from '../components/Loading'
 
 const useStyles = makeStyles(theme => ({
+  cont: {
+    height: '80vh',
+    marginTop: '3rem',
+    boxShadow: '0px 0px 10px 0px rgba(94,94,94,0.64)',
+    borderRadius: '20px',
+  },
   profileDetails: {
     marginTop: theme.spacing(3),
     display: 'flex',
@@ -16,6 +27,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
+toast.configure()
 function Profile() {
   const classes = useStyles()
   const { pathname } = useLocation()
@@ -42,86 +54,89 @@ function Profile() {
     <>
       <NavBar path={pathname} />
       <Toolbar />
-
       {isLoaded ? (
-        <Container component='main' maxWidth='sm'>
-          <div className={classes.profileDetails}>
-            <Typography
-              style={{ textDecorationLine: 'underline' }}
-              component='h5'
-              variant='h5'
-            >
-              My Profile
-            </Typography>
-            <div style={{ marginTop: 15 }}>
+        <Container maxWidth='sm' className={classes.cont}>
+          <Grid
+            container
+            spacing={0}
+            direction='column'
+            alignItems='center'
+            justify='center'
+          >
+            <Grid item xs={6} sm={6} md={6}>
+              <Typography variant='title' component='h6'>
+                <img src='./Image/profile.png' alt='logo' height={300} />
+              </Typography>
+            </Grid>
+            <Grid item>
               <div style={{ display: 'flex', padding: 5 }}>
-                <div style={{ marginRight: 8, marginTop: 2 }}>
-                  <SubdirectoryArrowRightIcon
-                    fontSize='small'
-                    color='primary'
-                  />
-                </div>
-                <Typography component='div'>
-                  Employee Id : <b>{data.empId}</b>
+                <Typography variant='h6' component='div'>
+                  <b>{data.empName}</b>
                 </Typography>
               </div>
+            </Grid>
+            <Grid item>
               <div style={{ display: 'flex', padding: 5 }}>
-                <div style={{ marginRight: 8, marginTop: 2 }}>
-                  <SubdirectoryArrowRightIcon
-                    fontSize='small'
-                    color='primary'
-                  />
-                </div>
-                <Typography component='div'>
-                  Name : <b>{data.empName}</b>
+                <Typography variant='subtitle' component='div'>
+                  <b>{data.designation}</b>
                 </Typography>
               </div>
+            </Grid>
+            <Grid item>
               <div style={{ display: 'flex', padding: 5 }}>
-                <div style={{ marginRight: 8, marginTop: 2 }}>
-                  <SubdirectoryArrowRightIcon
-                    fontSize='small'
-                    color='primary'
-                  />
-                </div>
-                <Typography component='div'>
-                  Email : <b>{data.email}</b>
+                <Typography variant='h5' component='div'>
+                  <b>ID : {data.empId}</b>
                 </Typography>
               </div>
+            </Grid>
+            <Grid item>
               <div style={{ display: 'flex', padding: 5 }}>
-                <div style={{ marginRight: 8, marginTop: 2 }}>
-                  <SubdirectoryArrowRightIcon
-                    fontSize='small'
-                    color='primary'
-                  />
-                </div>
-                <Typography component='div'>
-                  Designation : <b>{data.designation}</b>
+                <Typography style={{ paddingRight: 10 }}>
+                  <EmailIcon />
+                </Typography>
+                <Typography variant='h6' component='div'>
+                  <b>{data.email}</b>
                 </Typography>
               </div>
-              <div style={{ display: 'flex', padding: 5 }}>
-                <div style={{ marginRight: 8, marginTop: 2 }}>
-                  <SubdirectoryArrowRightIcon
-                    fontSize='small'
-                    color='primary'
-                  />
+            </Grid>
+
+            <Grid item>
+              <div
+                className='lst'
+                style={{ display: 'flex', justifyContent: 'flex-start' }}
+              >
+                <div
+                  style={{
+                    color: '#17282F',
+                    display: 'flex',
+                    padding: 15,
+                    backgroundColor: '#50C878',
+                    borderRadius: '10px',
+                    marginRight: 40,
+                  }}
+                >
+                  <Typography variant='h5' component='div'>
+                    <LocationOnIcon />
+                    <b>{data.office_Location}</b>
+                  </Typography>
                 </div>
-                <Typography component='div'>
-                  Office Location : <b>{data.office_Location}</b>
-                </Typography>
-              </div>
-              <div style={{ display: 'flex', padding: 5 }}>
-                <div style={{ marginRight: 8, marginTop: 2 }}>
-                  <SubdirectoryArrowRightIcon
-                    fontSize='small'
-                    color='primary'
-                  />
+                <div
+                  style={{
+                    color: '#17282F',
+                    display: 'flex',
+                    padding: 15,
+                    backgroundColor: '#ffd300',
+                    borderRadius: '10px',
+                  }}
+                >
+                  <Typography variant='h5' component='div'>
+                    <EmojiEventsIcon />
+                    <b>{data.points_Gained}</b>
+                  </Typography>
                 </div>
-                <Typography component='div'>
-                  Points Gained : <b>{data.points_Gained}</b>
-                </Typography>
               </div>
-            </div>
-          </div>
+            </Grid>
+          </Grid>
         </Container>
       ) : (
         <Loading color='primary' size={50} />

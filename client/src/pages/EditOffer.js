@@ -21,6 +21,7 @@ import NavBar from '../components/NavBar'
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { jsonToNormalDate } from '../helpers/convertDate'
 import Loading from '../components/Loading'
+import { appBackground } from '../helpers/constant'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -50,6 +51,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
+toast.configure()
 function EditOffer() {
   const classes = useStyles()
   const { id } = useParams()

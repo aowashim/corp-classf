@@ -12,6 +12,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import Link from '@material-ui/core/Link'
+import DescriptionIcon from '@material-ui/icons/Description'
 import { useState, useEffect } from 'react'
 import { getAllOfferApi } from '../helpers/API/offer'
 import Loading from '../components/Loading'
@@ -24,9 +25,9 @@ import {
   Divider,
 } from '@material-ui/core'
 import UserContext from '../store/UserContext'
-import PersonIcon from '@material-ui/icons/Person'
-import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt'
+import FaceIcon from '@material-ui/icons/Face'
 import Pagination from '@material-ui/lab/Pagination'
+import { appBackground, appPrimary } from '../helpers/constant'
 
 function Copyright() {
   return (
@@ -53,7 +54,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(4),
   },
   cardGrid: {
-    paddingTop: theme.spacing(8),
+    paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(2),
   },
   formControl: {
@@ -66,6 +67,7 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
+    backgroundColor: '#e9d7fc',
   },
   cardMedia: {
     paddingTop: '56.25%', // 16:9
@@ -156,7 +158,7 @@ export default function OfferFeed(props) {
       setPage(1)
       setSlicedData(1)
     } else {
-      alert('An error occurred, please try again...')
+      notifyError('An error occurred, please try again...')
     }
   }
 
@@ -223,15 +225,24 @@ export default function OfferFeed(props) {
                         noWrap
                         variant='h5'
                         component='h2'
+                        style={{
+                          color: '#1e1233',
+                          textDecorationLine: 'underline',
+                        }}
                       >
                         {item.title}
                       </Typography>
 
                       <div className={classes.iconTextCont}>
-                        <ArrowRightAltIcon fontSize='small' />
+                        <DescriptionIcon
+                          style={{ marginTop: 2 }}
+                          color='#1e1233'
+                          fontSize='small'
+                        />
                         <Typography
                           gutterBottom
                           noWrap
+                          color='textSecondary'
                           variant='body1'
                           style={{ marginLeft: 5 }}
                         >
@@ -246,9 +257,10 @@ export default function OfferFeed(props) {
                           marginTop: 10,
                         }}
                       >
-                        <PersonIcon fontSize='small' />
+                        <FaceIcon color='#1e1233' fontSize='small' />
                         <Typography
                           noWrap
+                          color='textSecondary'
                           variant='body2'
                           style={{ marginLeft: 5, marginTop: 1 }}
                         >
@@ -258,13 +270,16 @@ export default function OfferFeed(props) {
                     </CardContent>
                     <CardActions>
                       <Button
+                        variant='contained'
                         size='small'
                         color='primary'
                         onClick={() => handleViewOfferDetails(item.id)}
+                        style={{ marginRight: 10 }}
                       >
                         View
                       </Button>
                       <Button
+                        variant='contained'
                         size='small'
                         color='primary'
                         onClick={() => handleEditOffer(item.id)}

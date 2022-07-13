@@ -19,6 +19,7 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { useContext, useState } from 'react'
 import UserContext from '../store/UserContext'
 import { postOfferApi } from '../helpers/API/offer'
+import { appBackground } from '../helpers/constant'
 
 const useStyles = makeStyles(theme => ({
   paper: {

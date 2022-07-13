@@ -41,9 +41,6 @@ const useStyles = makeStyles(theme => ({
   heroButtons: {
     marginTop: theme.spacing(4),
   },
-  cont_each: {
-    padding: '1rem',
-  },
   bnn: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -121,23 +118,8 @@ export default function Offer() {
 
       {isLoaded ? (
         <Container component='main' className={classes.card} maxWidth='md'>
-          <div className={classes.cont_each}>
-            <Typography variant='h5' align='left'>
-              {offerData.empName}
-            </Typography>
-            {/* <Typography variant='h6' align='left'>
-              {jsonToNormalDate(offerData.o.start_Date)}
-            </Typography> */}
-          </div>
-          <Typography className={classes.cont_each} variant='h5'>
+          <Typography align='center' variant='h5'>
             {offerData.o.title}
-          </Typography>
-          <Typography
-            className={classes.cont_each}
-            variant='subtitle1'
-            align='justify'
-          >
-            {offerData.o.description}
           </Typography>
 
           <div
@@ -160,6 +142,26 @@ export default function Offer() {
               </Alert>
             </div>
           </div>
+
+          <Typography
+            variant='subtitle2'
+            align='justify'
+            style={{ marginBottom: 5 }}
+          >
+            <u>Description</u> : {offerData.o.description}
+          </Typography>
+
+          <Typography
+            variant='subtitle2'
+            align='left'
+            style={{ marginBottom: 5 }}
+          >
+            <u>Posted by</u> : <b>{offerData.empName}</b>
+          </Typography>
+
+          <Typography variant='subtitle2' align='left'>
+            <u>Category</u> : {offerData.o.offer_Category.name}
+          </Typography>
 
           <div className={classes.bnn}>
             <Button size='large' color='primary'>
