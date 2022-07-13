@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CorpClassfAuth
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
@@ -18,6 +18,10 @@ namespace CorpClassfAuth
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureLogging(logging =>
+                {
+                    logging.AddLog4Net(new Log4NetProviderOptions("log4net.config"));
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
