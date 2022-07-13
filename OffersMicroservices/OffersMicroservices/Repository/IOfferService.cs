@@ -13,8 +13,8 @@ namespace OffersMicroservices.Repository
         public Task<List<EmployeeOffer>> GetOfferDetailsByCategory(int id);
         public Task<List<EmployeeOffer>> GetOfferByTopLikes();
         public Task<List<EmployeeOffer>> GetOfferByPostedDate();
-        public Task EditAsync(int Id, Offer data);
-        public Task CreateAsync(Offer offer);
+        public Task<int> EditAsync(int Id, Offer data);
+        public Task<int> CreateAsync(Offer offer);
         public Task EngageAsync(int Id, int Emp_Id);
         public Task<List<EmployeeOffer>> GetOfferDetailsByEmpId(int id);
         public Task<List<EmployeeComment>> GetComments(int id);

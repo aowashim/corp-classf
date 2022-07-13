@@ -80,7 +80,7 @@ namespace OffersMicroservices.Repository
                 }).ToListAsync();
             return result;
         }
-        public async Task EditAsync(int Id, Offer data)
+        public async Task<int> EditAsync(int Id, Offer data)
         {
             Offer temp = await _context.Offers.FindAsync(Id);
             temp.Title = data.Title;
@@ -89,14 +89,18 @@ namespace OffersMicroservices.Repository
             temp.End_Date = data.End_Date;
             temp.Category_Id = data.Category_Id;
 
-            _context.Offers.Update(temp);
+            var result = _context.Offers.Update(temp);
             _context.SaveChanges();
+
+            return result.Entity.Id;
         }
-        public async Task CreateAsync(Offer offer)
+        public async Task<int> CreateAsync(Offer offer)
         {
-            await _context.Offers.AddAsync(offer);
+            var result = await _context.Offers.AddAsync(offer);
 
             _context.SaveChanges();
+
+            return result.Entity.Id;
         }
         public async Task EngageAsync(int Id, int Emp_Id)
         {

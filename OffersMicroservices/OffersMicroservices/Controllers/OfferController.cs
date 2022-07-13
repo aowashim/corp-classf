@@ -25,7 +25,7 @@ namespace OffersMicroservices.Controllers
         private readonly DatabaseContext _context;
         public OfferController(IOfferService service)
         {
-            _offerService=service;
+            _offerService = service;
         }
 
 
@@ -64,7 +64,7 @@ namespace OffersMicroservices.Controllers
             try
             {
                 var result = await _offerService.GetOfferDetails(id);
- 
+
                 if (result == null)
                 {
                     return NotFound();
@@ -86,7 +86,7 @@ namespace OffersMicroservices.Controllers
         {
             try
             {
-                var result =await _offerService.GetOfferDetailsByCategory(id);
+                var result = await _offerService.GetOfferDetailsByCategory(id);
 
                 if (result == null)
                 {
@@ -109,8 +109,8 @@ namespace OffersMicroservices.Controllers
         {
             try
             {
-                
-                var result=await _offerService.GetOfferByTopLikes();
+
+                var result = await _offerService.GetOfferByTopLikes();
 
                 if (result == null)
                 {
@@ -134,8 +134,8 @@ namespace OffersMicroservices.Controllers
         {
             try
             {
-                
-                var result= await _offerService.GetOfferByPostedDate();
+
+                var result = await _offerService.GetOfferByPostedDate();
 
                 if (result == null)
                 {
@@ -160,8 +160,8 @@ namespace OffersMicroservices.Controllers
         {
             try
             {
-                await _offerService.CreateAsync(offer);
-                return Ok();
+                var id = await _offerService.CreateAsync(offer);
+                return Ok(id);
             }
             catch (Exception e)
             {
@@ -178,8 +178,8 @@ namespace OffersMicroservices.Controllers
         {
             try
             {
-                await _offerService.EditAsync(Id, data);
-                return Ok();
+                var id = await _offerService.EditAsync(Id, data);
+                return Ok(id);
             }
             catch (Exception e)
             {
@@ -214,8 +214,8 @@ namespace OffersMicroservices.Controllers
         public async Task<ActionResult> GetOfferDetailsByEmpId(int id)
         {
             try
-            { 
-                var result=await _offerService.GetOfferDetailsByEmpId(id);
+            {
+                var result = await _offerService.GetOfferDetailsByEmpId(id);
 
                 if (result == null)
                 {
@@ -239,7 +239,7 @@ namespace OffersMicroservices.Controllers
         {
             try
             {
-                var comments=await _offerService.GetComments(id);
+                var comments = await _offerService.GetComments(id);
                 if (comments == null)
                 {
                     return NotFound();
@@ -259,7 +259,7 @@ namespace OffersMicroservices.Controllers
         public async Task<ActionResult> PostComment(Comment comment)
         {
             try
-            {             
+            {
                 await _offerService.PostAsync(comment);
                 return Ok();
             }
