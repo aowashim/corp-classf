@@ -10,6 +10,7 @@ import OfferFeed from './pages/OfferFeed'
 import Offer from './pages/Offer'
 import Loading from './components/Loading'
 import EditOffer from './pages/EditOffer'
+import Home from './pages/Home'
 
 function App() {
   const [user, setUser] = useState({
@@ -48,7 +49,8 @@ function App() {
         <BrowserRouter>
           <UserContext.Provider value={userMemo}>
             <Routes>
-              <Route index element={<OfferFeed />} />
+              <Route index element={<Home />} />
+              <Route path='offers' element={<OfferFeed />} />
               <Route path='signin' element={<SignIn />} />
               <Route path='signup' element={<SignUp />} />
               <Route path='postoffer' element={<PostOffer />} />

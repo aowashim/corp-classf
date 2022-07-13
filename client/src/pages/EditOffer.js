@@ -1,3 +1,5 @@
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { editOfferApi, getOfferDetailsApi } from '../helpers/API/offer'
 import UserContext from '../store/UserContext'
@@ -75,6 +77,12 @@ function EditOffer() {
     },
   })
 
+  const notifyError = msg =>
+    toast.error(msg, { position: toast.POSITION.TOP_CENTER })
+
+  const notifySuccess = msg =>
+    toast.success(msg, { position: toast.POSITION.TOP_CENTER })
+
   const handleChangeCatg = event => {
     setCategory(event.target.value)
   }
@@ -83,10 +91,10 @@ function EditOffer() {
     const res = await editOfferApi(values, category, id)
 
     if (res.status === 200) {
-      alert('Offer edited successfully')
-      navigate('/')
+      notifySuccess('Offer edited successfully, Opening offer details page...')
+      navigate(`/offer/${res.data}`)
     } else {
-      alert('An error occurred, please try again...')
+      notifyError('An error occurred, please try again...')
     }
   }
 
@@ -106,7 +114,7 @@ function EditOffer() {
         setIsLoaded(true)
       } else {
         alert('You can edit your offers only...')
-        navigate('/')
+        navigate('/offers')
       }
     } else {
       alert('An error occurred, please try again...')

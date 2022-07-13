@@ -317,6 +317,6 @@ export default function OfferFeed(props) {
       {/* End footer */}
     </>
   ) : (
-    <Navigate to='/signin' />
+    <Navigate to='/' />
   )
 }

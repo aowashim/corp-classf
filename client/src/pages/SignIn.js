@@ -88,7 +88,7 @@ export default function SignIn() {
 
       notifySuccess('Successfully Signed In')
 
-      navigate('/')
+      navigate('/offers')
     } else {
       notifyError('Invalid Employee Id or Password')
     }
@@ -155,6 +155,6 @@ export default function SignIn() {
       </Container>
     </div>
   ) : (
-    <Navigate to='/' />
+    <Navigate to='/offers' />
   )
 }

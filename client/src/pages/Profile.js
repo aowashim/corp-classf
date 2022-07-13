@@ -128,7 +128,7 @@ function Profile() {
       )}
     </>
   ) : (
-    <Navigate to='/signin' />
+    <Navigate to='/' />
   )
 }
 
