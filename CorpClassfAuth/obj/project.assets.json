@@ -2,6 +2,18 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
+      "log4net/2.0.14": {
+        "type": "package",
+        "dependencies": {
+          "System.Configuration.ConfigurationManager": "4.5.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/log4net.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/log4net.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Authentication.JwtBearer/3.1.26": {
         "type": "package",
         "dependencies": {
@@ -345,6 +357,22 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Logging.Log4Net.AspNetCore/5.0.3": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration": "3.1.13",
+          "Microsoft.Extensions.Configuration.Abstractions": "3.1.13",
+          "Microsoft.Extensions.Configuration.Binder": "3.1.13",
+          "Microsoft.Extensions.Logging": "3.1.13",
+          "log4net": "2.0.12"
+        },
+        "compile": {
+          "lib/netcoreapp3.1/Microsoft.Extensions.Logging.Log4Net.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Microsoft.Extensions.Logging.Log4Net.AspNetCore.dll": {}
         }
       },
       "Microsoft.Extensions.Options/3.1.26": {
@@ -784,7 +812,7 @@
           "System.Security.Permissions": "4.5.0"
         },
         "compile": {
-          "ref/netstandard2.0/_._": {}
+          "ref/netstandard2.0/System.Configuration.ConfigurationManager.dll": {}
         },
         "runtime": {
           "lib/netstandard2.0/System.Configuration.ConfigurationManager.dll": {}
@@ -1337,7 +1365,7 @@
           "System.Security.Principal.Windows": "4.5.0"
         },
         "compile": {
-          "ref/netstandard2.0/_._": {}
+          "ref/netstandard2.0/System.Security.AccessControl.dll": {}
         },
         "runtime": {
           "lib/netstandard2.0/System.Security.AccessControl.dll": {}
@@ -1403,7 +1431,7 @@
           "System.Security.AccessControl": "4.5.0"
         },
         "compile": {
-          "ref/netstandard2.0/_._": {}
+          "ref/netstandard2.0/System.Security.Permissions.dll": {}
         },
         "runtime": {
           "lib/netstandard2.0/System.Security.Permissions.dll": {}
@@ -1415,7 +1443,7 @@
           "Microsoft.NETCore.Platforms": "2.0.0"
         },
         "compile": {
-          "ref/netstandard2.0/_._": {}
+          "ref/netstandard2.0/System.Security.Principal.Windows.dll": {}
         },
         "runtime": {
           "lib/netstandard2.0/System.Security.Principal.Windows.dll": {}
@@ -1650,6 +1678,34 @@
     }
   },
   "libraries": {
+    "log4net/2.0.14": {
+      "sha512": "KevyXUuhOyhx7l1jWwq6ZGVlRC2Aetg0qDp6rJpfSZGcDPKQDwfOE6yEuVkVf0kEP08NQqBDn/TQ/TJv4wgyhw==",
+      "type": "package",
+      "path": "log4net/2.0.14",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net20/log4net.dll",
+        "lib/net20/log4net.xml",
+        "lib/net35-client/log4net.dll",
+        "lib/net35-client/log4net.xml",
+        "lib/net35/log4net.dll",
+        "lib/net35/log4net.xml",
+        "lib/net40-client/log4net.dll",
+        "lib/net40-client/log4net.xml",
+        "lib/net40/log4net.dll",
+        "lib/net40/log4net.xml",
+        "lib/net45/log4net.dll",
+        "lib/net45/log4net.xml",
+        "lib/netstandard1.3/log4net.dll",
+        "lib/netstandard1.3/log4net.xml",
+        "lib/netstandard2.0/log4net.dll",
+        "lib/netstandard2.0/log4net.xml",
+        "log4net.2.0.14.nupkg.sha512",
+        "log4net.nuspec",
+        "package-icon.png"
+      ]
+    },
     "Microsoft.AspNetCore.Authentication.JwtBearer/3.1.26": {
       "sha512": "WQVL31Sn5Zv/Rjnxnl7LZ3rLOzZkEE+/EpiTSePtB2ZXAVMl5CeWoIdhprgpAnrv6djQM7/CSJfg1F//Ct8ebA==",
       "type": "package",
@@ -2203,6 +2259,27 @@
         "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.xml",
         "microsoft.extensions.logging.abstractions.3.1.26.nupkg.sha512",
         "microsoft.extensions.logging.abstractions.nuspec"
+      ]
+    },
+    "Microsoft.Extensions.Logging.Log4Net.AspNetCore/5.0.3": {
+      "sha512": "y8XbJ8W0YxoyPjc7fnJiJc6NOtcxdnHpvjwesbiV/+Cy6LHKGN5X6lxkxhK6sxzt9IXwUvg15Am62czLuJT+oQ==",
+      "type": "package",
+      "path": "microsoft.extensions.logging.log4net.aspnetcore/5.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "lib/net5.0/Microsoft.Extensions.Logging.Log4Net.AspNetCore.dll",
+        "lib/netcoreapp1.1/Microsoft.Extensions.Logging.Log4Net.AspNetCore.dll",
+        "lib/netcoreapp2.0/Microsoft.Extensions.Logging.Log4Net.AspNetCore.dll",
+        "lib/netcoreapp2.1/Microsoft.Extensions.Logging.Log4Net.AspNetCore.dll",
+        "lib/netcoreapp2.2/Microsoft.Extensions.Logging.Log4Net.AspNetCore.dll",
+        "lib/netcoreapp3.0/Microsoft.Extensions.Logging.Log4Net.AspNetCore.dll",
+        "lib/netcoreapp3.1/Microsoft.Extensions.Logging.Log4Net.AspNetCore.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.Logging.Log4Net.AspNetCore.dll",
+        "lib/netstandard2.1/Microsoft.Extensions.Logging.Log4Net.AspNetCore.dll",
+        "microsoft.extensions.logging.log4net.aspnetcore.5.0.3.nupkg.sha512",
+        "microsoft.extensions.logging.log4net.aspnetcore.nuspec"
       ]
     },
     "Microsoft.Extensions.Options/3.1.26": {
@@ -6080,24 +6157,26 @@
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 3.1.26",
       "Microsoft.EntityFrameworkCore.SqlServer >= 3.1.26",
       "Microsoft.EntityFrameworkCore.Tools >= 3.1.26",
+      "Microsoft.Extensions.Logging.Log4Net.AspNetCore >= 5.0.3",
       "Microsoft.OpenApi >= 1.2.3",
-      "Swashbuckle.AspNetCore >= 5.5.0"
+      "Swashbuckle.AspNetCore >= 5.5.0",
+      "log4net >= 2.0.14"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\aowas\\.nuget\\packages\\": {}
+    "C:\\Users\\Owner\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\aowas\\Documents\\cts_proj\\micro-ser\\new\\CorpClassfAuth\\CorpClassfAuth.csproj",
+      "projectUniqueName": "D:\\CTS\\CorporateClassifieds_MFPE\\Corp-Classf-Main\\corp-classf\\CorpClassfAuth\\CorpClassfAuth.csproj",
       "projectName": "CorpClassfAuth",
-      "projectPath": "C:\\Users\\aowas\\Documents\\cts_proj\\micro-ser\\new\\CorpClassfAuth\\CorpClassfAuth.csproj",
-      "packagesPath": "C:\\Users\\aowas\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\aowas\\Documents\\cts_proj\\micro-ser\\new\\CorpClassfAuth\\obj\\",
+      "projectPath": "D:\\CTS\\CorporateClassifieds_MFPE\\Corp-Classf-Main\\corp-classf\\CorpClassfAuth\\CorpClassfAuth.csproj",
+      "packagesPath": "C:\\Users\\Owner\\.nuget\\packages\\",
+      "outputPath": "D:\\CTS\\CorporateClassifieds_MFPE\\Corp-Classf-Main\\corp-classf\\CorpClassfAuth\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\aowas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Owner\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -6141,6 +6220,10 @@
             "target": "Package",
             "version": "[3.1.26, )"
           },
+          "Microsoft.Extensions.Logging.Log4Net.AspNetCore": {
+            "target": "Package",
+            "version": "[5.0.3, )"
+          },
           "Microsoft.OpenApi": {
             "target": "Package",
             "version": "[1.2.3, )"
@@ -6148,6 +6231,10 @@
           "Swashbuckle.AspNetCore": {
             "target": "Package",
             "version": "[5.5.0, )"
+          },
+          "log4net": {
+            "target": "Package",
+            "version": "[2.0.14, )"
           }
         },
         "imports": [
@@ -6168,7 +6255,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   }
