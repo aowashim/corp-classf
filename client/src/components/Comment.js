@@ -6,7 +6,7 @@ import FaceIcon from '@material-ui/icons/Face'
 
 export default function Comment(props) {
   return (
-    <div key={props.data.id} style={{ marginBottom: 20 }}>
+    <div style={{ marginBottom: 20 }}>
       <div
         style={{
           display: 'flex',
@@ -20,7 +20,7 @@ export default function Comment(props) {
           variant='body2'
           style={{ marginLeft: 5, marginTop: 1, fontWeight: 'bold' }}
         >
-          {props.data.empName}
+          {props.data.emp_Name}
         </Typography>
       </div>
       <Typography style={{ marginLeft: 25 }} variant='body2'>

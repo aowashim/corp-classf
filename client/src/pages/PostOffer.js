@@ -1,3 +1,5 @@
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import {
   Button,
   Container,
@@ -16,7 +18,7 @@ import NavBar from '../components/NavBar'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { useContext, useState } from 'react'
 import UserContext from '../store/UserContext'
-import { getAllOfferApi, postOfferApi } from '../helpers/API/offer'
+import { postOfferApi } from '../helpers/API/offer'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -46,6 +48,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
+toast.configure()
 export default function PostOffer(props) {
   const classes = useStyles()
   const { pathname } = useLocation()
@@ -70,14 +73,20 @@ export default function PostOffer(props) {
     },
   })
 
+  const notifyError = msg =>
+    toast.error(msg, { position: toast.POSITION.TOP_CENTER })
+
+  const notifySuccess = msg =>
+    toast.success(msg, { position: toast.POSITION.TOP_CENTER })
+
   const handlePostOffer = async values => {
     const res = await postOfferApi(values, category, user.id)
 
     if (res.status === 200) {
-      alert('Offer posted successfully')
-      navigate('/')
+      notifySuccess('Offer posted successfully, Opening offer details page...')
+      navigate(`/offer/${res.data}`)
     } else {
-      alert('An error occurred, please try again...')
+      notifyError('An error occurred, please try again...')
     }
   }
 
@@ -185,6 +194,6 @@ export default function PostOffer(props) {
       </Container>
     </div>
   ) : (
-    <Navigate to='/signin' />
+    <Navigate to='/' />
   )
 }

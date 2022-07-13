@@ -190,7 +190,7 @@ export default function Offer() {
             {viewComment && (
               <div style={{ marginLeft: 10, marginTop: 25 }}>
                 {commentLoaded ? (
-                  commentData.map(item => <Comment data={item} />)
+                  commentData.map(item => <Comment key={item.id} data={item} />)
                 ) : (
                   <Loading color='primary' size={30} />
                 )}

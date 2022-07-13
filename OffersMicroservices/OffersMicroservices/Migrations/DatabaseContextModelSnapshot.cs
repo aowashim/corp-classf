@@ -19,7 +19,7 @@ namespace OffersMicroservices.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
 
-            modelBuilder.Entity("OffersMicroservices.Database.Comment", b =>
+            modelBuilder.Entity("OffersMicroservices.Database.Entities.Comment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -70,7 +70,7 @@ namespace OffersMicroservices.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("OffersMicroservices.Database.Offer", b =>
+            modelBuilder.Entity("OffersMicroservices.Database.Entities.Offer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -108,7 +108,7 @@ namespace OffersMicroservices.Migrations
                     b.ToTable("Offers");
                 });
 
-            modelBuilder.Entity("OffersMicroservices.Database.Offer_Category", b =>
+            modelBuilder.Entity("OffersMicroservices.Database.Entities.Offer_Category", b =>
                 {
                     b.Property<int>("Cateory_Id")
                         .ValueGeneratedOnAdd()
@@ -123,16 +123,16 @@ namespace OffersMicroservices.Migrations
                     b.ToTable("Offer_Category");
                 });
 
-            modelBuilder.Entity("OffersMicroservices.Database.Comment", b =>
+            modelBuilder.Entity("OffersMicroservices.Database.Entities.Comment", b =>
                 {
-                    b.HasOne("OffersMicroservices.Database.Offer", null)
+                    b.HasOne("OffersMicroservices.Database.Entities.Offer", null)
                         .WithMany("CommentList")
                         .HasForeignKey("OfferId");
                 });
 
-            modelBuilder.Entity("OffersMicroservices.Database.Offer", b =>
+            modelBuilder.Entity("OffersMicroservices.Database.Entities.Offer", b =>
                 {
-                    b.HasOne("OffersMicroservices.Database.Offer_Category", "Offer_Category")
+                    b.HasOne("OffersMicroservices.Database.Entities.Offer_Category", "Offer_Category")
                         .WithMany()
                         .HasForeignKey("Category_Id")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -141,7 +141,7 @@ namespace OffersMicroservices.Migrations
                     b.Navigation("Offer_Category");
                 });
 
-            modelBuilder.Entity("OffersMicroservices.Database.Offer", b =>
+            modelBuilder.Entity("OffersMicroservices.Database.Entities.Offer", b =>
                 {
                     b.Navigation("CommentList");
                 });
