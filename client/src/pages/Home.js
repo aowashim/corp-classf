@@ -143,15 +143,15 @@ export default function Home() {
                 textAlign: 'center',
                 paddingTop: '5vw',
               }}
-              variant='h2'
-              // component='h1'
+              variant='h1'
+              component='h1'
               gutterBottom
             >
               CORPORATE CLASSIFIEDS
             </Typography>
             <Typography
               style={{ fontWeight: 400, textAlign: 'center' }}
-              variant='h5'
+              variant='h4'
               gutterBottom
             >
               BUY AND SELL AT FINGERTIPS

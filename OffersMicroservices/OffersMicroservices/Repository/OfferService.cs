@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using OffersMicroservice.Repository;
 using OffersMicroservices.Database;
 using OffersMicroservices.Database.Entities;
@@ -33,7 +33,10 @@ namespace OffersMicroservices.Repository
         public async Task<List<OfferEmployee>> GetOfferDetails(int id)
         {
             var result = await _context.Offers.Where(o => o.Id == id).Include(o => o.Offer_Category)
-                    .Join(_context.Employees, O => O.Emp_Id, e => e.EmpId, (ofr, e) => new OfferEmployee { o = ofr, empName = e.EmpName }).ToListAsync();
+                    .Join(_context.Employees, O => O.Emp_Id, e => e.EmpId, (o, e) => new OfferEmployee {
+                        offer=o,
+                        empName = e.EmpName 
+                    }).ToListAsync();
 
 
             return result;
@@ -89,23 +92,21 @@ namespace OffersMicroservices.Repository
             temp.End_Date = data.End_Date;
             temp.Category_Id = data.Category_Id;
 
-            var result = _context.Offers.Update(temp);
+            var result=_context.Offers.Update(temp);
             _context.SaveChanges();
-
             return result.Entity.Id;
         }
         public async Task<int> CreateAsync(Offer offer)
         {
-            var result = await _context.Offers.AddAsync(offer);
+            var result =await _context.Offers.AddAsync(offer);
 
             _context.SaveChanges();
-
             return result.Entity.Id;
         }
-        public async Task EngageAsync(int Id, int Emp_Id)
+        public async Task EngageAsync(int Id)
         {
             Offer temp = await _context.Offers.FindAsync(Id);
-            temp.Emp_Id = Emp_Id;
+            //temp.Emp_Id = Emp_Id;
             temp.Engaged_Date = System.DateTime.Now;
             _context.Offers.Update(temp);
             _context.SaveChanges();

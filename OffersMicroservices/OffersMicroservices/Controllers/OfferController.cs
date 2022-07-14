@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OffersMicroservice.Repository;
 using OffersMicroservices.Database;
@@ -22,7 +22,6 @@ namespace OffersMicroservices.Controllers
 
         private DateTime def_date = new DateTime(2001, 01, 01);
         private readonly IOfferService _offerService;
-        private readonly DatabaseContext _context;
         public OfferController(IOfferService service)
         {
             _offerService = service;
@@ -116,7 +115,7 @@ namespace OffersMicroservices.Controllers
                 {
                     return NotFound();
                 }
-                return Ok(result.FirstOrDefault());
+                return Ok(result);
 
             }
             catch (Exception e)
@@ -192,11 +191,11 @@ namespace OffersMicroservices.Controllers
         //             API fix engage_date of a specific offer_id to current date and time   */
         [Route("engageOffer")]
         [HttpPost]
-        public async Task<ActionResult> EngageOffer(int Id, int Emp_Id)
+        public async Task<ActionResult> EngageOffer(int Id)
         {
             try
             {
-                await _offerService.EngageAsync(Id, Emp_Id);
+                await _offerService.EngageAsync(Id);
                 return Ok();
             }
             catch (Exception e)

@@ -47,10 +47,10 @@ namespace OffersMicroservices.UnitTest
             //Arrange
             var offerService= new Mock<IOfferService>();
             var offers=OfferEmployeeMockData.GetOfferEmployee();
-            offerService.Setup(x => x.GetOfferDetails(offers[0].id)).ReturnsAsync(offers);
+            offerService.Setup(x => x.GetOfferDetails(offers[0].offer.Id)).ReturnsAsync(offers);
             var sut = new OfferController(offerService.Object);
             //Act
-            var result = (OkObjectResult)await sut.GetOfferDetails(offers[0].id);
+            var result = (OkObjectResult)await sut.GetOfferDetails(offers[0].offer.Id);
             //Assert
             Assert.IsType<OkObjectResult>(result);
         }
@@ -154,9 +154,9 @@ namespace OffersMicroservices.UnitTest
             offerService.Setup(x => x.CreateAsync(offers[0]));
             var sut = new OfferController(offerService.Object);
             //Act
-            var result = (OkResult)await sut.CreateOffer(offers[0]);
+            var result = (OkObjectResult)await sut.CreateOffer(offers[0]);
             //Assert
-            Assert.IsType<OkResult>(result);
+            Assert.IsType<OkObjectResult>(result);
         }
         [Fact]
         public async void EditOffer_ShouldReturn200Status()
@@ -168,9 +168,9 @@ namespace OffersMicroservices.UnitTest
             offerService.Setup(x => x.EditAsync(off_Id,offers[0]));
             var sut = new OfferController(offerService.Object);
             //Act
-            var result = (OkResult)await sut.EditOffer(off_Id,offers[0]);
+            var result = (OkObjectResult)await sut.EditOffer(off_Id,offers[0]);
             //Assert
-            Assert.IsType<OkResult>(result);
+            Assert.IsType<OkObjectResult>(result);
         }
 
         [Fact]
@@ -180,11 +180,11 @@ namespace OffersMicroservices.UnitTest
             var offerService = new Mock<IOfferService>();
             var offers = OfferMockData.GetOffers();
             var off_Id = offers[0].Id;
-            var emp_Id = offers[0].Emp_Id;
-            offerService.Setup(x => x.EngageAsync(off_Id, emp_Id));
+            //var emp_Id = offers[0].Emp_Id;
+            offerService.Setup(x => x.EngageAsync(off_Id));
             var sut = new OfferController(offerService.Object);
             //Act
-            var result = (OkResult)await sut.EngageOffer(off_Id, emp_Id);
+            var result = (OkResult)await sut.EngageOffer(off_Id);
             //Assert
             Assert.IsType<OkResult>(result);
         }
