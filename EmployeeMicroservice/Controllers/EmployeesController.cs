@@ -10,6 +10,7 @@ using EmployeeMicroservice.Database.Entities;
 using EmployeeMicroservice.Database;
 using EmployeeMicroservice.Repository;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,6 +18,7 @@ namespace EmployeeMicroservice.Controllers
 {
     [Route("api")]
     [ApiController]
+    [Authorize]
     public class EmployeesController : ControllerBase
     {
         /* --------[SETUP]-------- */
