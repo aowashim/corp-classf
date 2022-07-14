@@ -2,10 +2,9 @@
   "dependencies": {
     "mssql1": {
       "secretStore": "AzureAppSettings",
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/employeemicroservicedbserver/databases/EmployeeMicroservice_db",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/corporate-classifieds-server/databases/Corporate_Classifieds_db",
       "type": "mssql.azure",
-      "connectionId": "ConnectionStrings:myConn",
-      "dynamicId": null
+      "connectionId": "ConnectionStrings:myConn"
     }
   }
 }
