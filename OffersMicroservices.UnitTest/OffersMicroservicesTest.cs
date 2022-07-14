@@ -47,10 +47,10 @@ namespace OffersMicroservices.UnitTest
             //Arrange
             var offerService= new Mock<IOfferService>();
             var offers=OfferEmployeeMockData.GetOfferEmployee();
-            offerService.Setup(x => x.GetOfferDetails(offers[0].offer.Id)).ReturnsAsync(offers);
+            offerService.Setup(x => x.GetOfferDetails(offers[0].o.Id)).ReturnsAsync(offers);
             var sut = new OfferController(offerService.Object);
             //Act
-            var result = (OkObjectResult)await sut.GetOfferDetails(offers[0].offer.Id);
+            var result = (OkObjectResult)await sut.GetOfferDetails(offers[0].o.Id);
             //Assert
             Assert.IsType<OkObjectResult>(result);
         }
@@ -180,11 +180,11 @@ namespace OffersMicroservices.UnitTest
             var offerService = new Mock<IOfferService>();
             var offers = OfferMockData.GetOffers();
             var off_Id = offers[0].Id;
-            //var emp_Id = offers[0].Emp_Id;
-            offerService.Setup(x => x.EngageAsync(off_Id));
+            var emp_Id = offers[0].Emp_Id;
+            offerService.Setup(x => x.EngageAsync(off_Id,emp_Id));
             var sut = new OfferController(offerService.Object);
             //Act
-            var result = (OkResult)await sut.EngageOffer(off_Id);
+            var result = (OkResult)await sut.EngageOffer(off_Id,emp_Id);
             //Assert
             Assert.IsType<OkResult>(result);
         }
