@@ -11,6 +11,7 @@ import { useContext, useEffect, useState } from 'react'
 import UserContext from '../store/UserContext'
 import { getEmpProfileApi } from '../helpers/API/employee'
 import Loading from '../components/Loading'
+import { appCardColor } from '../helpers/constant'
 
 const useStyles = makeStyles(theme => ({
   cont: {
@@ -21,6 +22,7 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: 8,
     boxShadow: '0px 0px 10px 0px rgba(94,94,94,0.64)',
     borderRadius: '20px',
+    backgroundColor: appCardColor,
   },
   profileDetails: {
     marginTop: theme.spacing(3),
@@ -77,31 +79,29 @@ function Profile() {
             </Grid>
             <Grid item>
               <div style={{ display: 'flex', padding: 5 }}>
-                <Typography variant='h6' component='div'>
+                <Typography variant='h5' component='div'>
                   <b>{data.empName}</b>
                 </Typography>
               </div>
             </Grid>
             <Grid item>
-              <div style={{ display: 'flex', padding: 5 }}>
+              <div style={{ display: 'flex' }}>
                 <Typography variant='subtitle' component='div'>
                   <b>{data.designation}</b>
                 </Typography>
               </div>
             </Grid>
             <Grid item>
-              <div style={{ display: 'flex', padding: 5 }}>
-                <Typography variant='h5' component='div'>
+              <div style={{ display: 'flex', marginTop: 5 }}>
+                <Typography variant='subtitle1' component='div'>
                   <b>ID : {data.empId}</b>
                 </Typography>
               </div>
             </Grid>
             <Grid item>
-              <div style={{ display: 'flex', padding: 5 }}>
-                <Typography style={{ paddingRight: 10 }}>
-                  <EmailIcon />
-                </Typography>
-                <Typography variant='h6' component='div'>
+              <div style={{ display: 'flex' }}>
+                <EmailIcon style={{ marginRight: 7, marginTop: 3 }} />
+                <Typography variant='subtitle1' component='div'>
                   <b>{data.email}</b>
                 </Typography>
               </div>
@@ -114,16 +114,17 @@ function Profile() {
               >
                 <div
                   style={{
-                    color: '#17282F',
+                    backgroundColor: '#17282F',
                     display: 'flex',
-                    padding: 15,
+                    padding: 10,
                     backgroundColor: '#50C878',
                     borderRadius: '10px',
                     marginRight: 40,
+                    marginTop: 10,
                   }}
                 >
-                  <Typography variant='h5' component='div'>
-                    <LocationOnIcon />
+                  <LocationOnIcon fontSize='small' style={{ marginRight: 4 }} />
+                  <Typography>
                     <b>{data.office_Location}</b>
                   </Typography>
                 </div>
@@ -134,10 +135,14 @@ function Profile() {
                     padding: 15,
                     backgroundColor: '#ffd300',
                     borderRadius: '10px',
+                    marginTop: 10,
                   }}
                 >
-                  <Typography variant='h5' component='div'>
-                    <EmojiEventsIcon />
+                  <EmojiEventsIcon
+                    // fontSize='small'
+                    style={{ marginTop: 3, marginRight: 5 }}
+                  />
+                  <Typography variant='h5'>
                     <b>{data.points_Gained}</b>
                   </Typography>
                 </div>

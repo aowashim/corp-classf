@@ -134,7 +134,7 @@ export default function NavBar({ path }) {
                   Sign In
                 </MenuItem>
               )}
-              <MenuItem onClick={() => handleNavigate('/more')}>More</MenuItem>
+              {/* <MenuItem onClick={() => handleNavigate('/more')}>More</MenuItem> */}
             </Menu>
           </Toolbar>
         </AppBar>

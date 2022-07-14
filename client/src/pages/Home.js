@@ -54,7 +54,7 @@ const useStyles = makeStyles(theme => ({
     animation: 'fadeIn 2s ease-in-out infinite',
     height: '70vh',
     // backgroundColor: theme.palette.secondary.main,
-    backgroundImage: 'url(./Image/banner.png)',
+    backgroundImage: 'url(/Image/banner.png)',
     backgroundRepeat: 'no-repeat',
     // backgroundColor:
     //   theme.palette.type === "light"
@@ -110,7 +110,7 @@ export default function Home() {
         >
           <Toolbar className={classes.toolbar}>
             <Typography variant='title' component='h6'>
-              <img src='./Image/LogoComplete.png' alt='logo' height={60} />
+              <img src='/LogoComplete.png' alt='logo' height={60} />
             </Typography>
           </Toolbar>
         </AppBar>
@@ -143,15 +143,15 @@ export default function Home() {
                 textAlign: 'center',
                 paddingTop: '5vw',
               }}
-              variant='h1'
-              component='h1'
+              variant='h2'
+              // component='h1'
               gutterBottom
             >
               CORPORATE CLASSIFIEDS
             </Typography>
             <Typography
               style={{ fontWeight: 400, textAlign: 'center' }}
-              variant='h4'
+              variant='h5'
               gutterBottom
             >
               BUY AND SELL AT FINGERTIPS

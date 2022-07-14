@@ -28,7 +28,7 @@ import {
 import UserContext from '../store/UserContext'
 import FaceIcon from '@material-ui/icons/Face'
 import Pagination from '@material-ui/lab/Pagination'
-import { appBackground, appPrimary } from '../helpers/constant'
+import { appBackground, appCardColor, appPrimary } from '../helpers/constant'
 
 function Copyright() {
   return (
@@ -68,7 +68,7 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: '#e9d7fc',
+    backgroundColor: appCardColor,
   },
   cardMedia: {
     paddingTop: '56.25%', // 16:9
@@ -211,13 +211,13 @@ export default function OfferFeed(props) {
             className={classes.cardGrid}
             maxWidth='md'
           >
-            <Grid container spacing={4}>
+            <Grid container spacing={3}>
               {data.current.map(item => (
-                <Grid item key={item.id} xs={12} sm={6}>
+                <Grid item key={item.id} xs={12} sm={6} md={4}>
                   <Card className={classes.card}>
                     <CardMedia
                       className={classes.cardMedia}
-                      image='https://source.unsplash.com/random'
+                      image='/Image/Electronic.png'
                       title='Image title'
                     />
                     <CardContent className={classes.cardContent}>
@@ -225,7 +225,7 @@ export default function OfferFeed(props) {
                         gutterBottom
                         noWrap
                         variant='h5'
-                        component='h2'
+                        // component='h2'
                         style={{
                           color: '#1e1233',
                           // textDecorationLine: 'underline',
@@ -251,7 +251,7 @@ export default function OfferFeed(props) {
                         </Typography>
                       </div>
 
-                      <div
+                      {/* <div
                         style={{
                           display: 'flex',
                           flexDirection: 'row',
@@ -267,7 +267,7 @@ export default function OfferFeed(props) {
                         >
                           {item.empName}
                         </Typography>
-                      </div>
+                      </div> */}
                     </CardContent>
                     <CardActions>
                       <Button
@@ -275,7 +275,7 @@ export default function OfferFeed(props) {
                         size='small'
                         color='primary'
                         onClick={() => handleViewOfferDetails(item.id)}
-                        style={{ marginRight: 10 }}
+                        style={{ marginRight: 20 }}
                       >
                         View
                       </Button>

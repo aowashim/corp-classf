@@ -16,6 +16,7 @@ import Loading from '../components/Loading'
 import { jsonToNormalDate } from '../helpers/convertDate'
 import UserContext from '../store/UserContext'
 import Alert from '@material-ui/lab/Alert'
+import { appCardColor } from '../helpers/constant'
 
 function Copyright() {
   return (
@@ -62,6 +63,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     marginTop: 30,
     marginBottom: 30,
+    backgroundColor: appCardColor,
   },
 }))
 
