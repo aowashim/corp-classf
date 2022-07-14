@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { configAxios } from '../constant'
 
 const server = process.env.REACT_APP_SERVER_OFFER
 
@@ -22,7 +23,7 @@ export const postOfferApi = async (values, category_Id, emp_Id) => {
   }
 
   try {
-    const val = await axios.post(`${server}/addOffer`, jsonData)
+    const val = await axios.post(`${server}/addOffer`, jsonData, configAxios)
 
     res.data = val.data
     res.status = val.status
@@ -38,7 +39,7 @@ export const getAllOfferApi = async endPoint => {
   const res = { data: '', status: 200 }
 
   try {
-    const val = await axios.get(`${server}/${endPoint}`)
+    const val = await axios.get(`${server}/${endPoint}`, configAxios)
 
     res.data = val.data
     res.status = val.status
@@ -54,7 +55,7 @@ export const getOfferDetailsApi = async id => {
   const res = { data: '', status: 200 }
 
   try {
-    const val = await axios.get(`${server}/getOfferDetails/${id}`)
+    const val = await axios.get(`${server}/getOfferDetails/${id}`, configAxios)
 
     res.data = val.data
     res.status = val.status
@@ -84,7 +85,11 @@ export const editOfferApi = async (values, category_Id, offerId) => {
   }
 
   try {
-    const val = await axios.post(`${server}/editOffer?id=${offerId}`, jsonData)
+    const val = await axios.post(
+      `${server}/editOffer?id=${offerId}`,
+      jsonData,
+      configAxios
+    )
 
     res.data = val.data
     res.status = val.status
@@ -103,11 +108,15 @@ export const postCommentApi = async (content, user_Id, offer_Id) => {
   offer_Id = parseInt(offer_Id)
 
   try {
-    const val = await axios.post(`${server}/comment`, {
-      content,
-      user_Id,
-      offer_Id,
-    })
+    const val = await axios.post(
+      `${server}/comment`,
+      {
+        content,
+        user_Id,
+        offer_Id,
+      },
+      configAxios
+    )
 
     res.data = val.data
     res.status = val.status
@@ -123,7 +132,7 @@ export const getCommentsApi = async id => {
   const res = { data: '', status: 200 }
 
   try {
-    const val = await axios.get(`${server}/comments/${id}`)
+    const val = await axios.get(`${server}/comments/${id}`, configAxios)
 
     res.data = val.data
     res.status = val.status
@@ -140,7 +149,8 @@ export const likeOfferApi = async (empId, ofId) => {
 
   try {
     const val = await axios.post(
-      `${server}/engageOffer?Id=${ofId}&Emp_Id=${empId}`
+      `${server}/engageOffer?Id=${ofId}&Emp_Id=${empId}`,
+      configAxios
     )
 
     res.data = val.data
