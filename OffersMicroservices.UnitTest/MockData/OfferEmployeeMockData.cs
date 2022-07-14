@@ -14,7 +14,7 @@ namespace EmployeeMicroserviceUnitTest.MockData
             {
                 new OfferEmployee()
                 {
-                    offer = new Offer
+                    o = new Offer
                     {
                         Id = 1,
                         Title = "Samsung E10",
@@ -30,7 +30,7 @@ namespace EmployeeMicroserviceUnitTest.MockData
                 },
                 new OfferEmployee()
                 {
-                    offer= new Offer{
+                    o= new Offer{
                         Id = 2,
                         Title = "MSI NoteBook",
                         Description = "8GB RAM, 1 TB SSD",
@@ -45,7 +45,7 @@ namespace EmployeeMicroserviceUnitTest.MockData
                 },
                 new OfferEmployee()
                 {
-                    offer=new Offer{
+                    o=new Offer{
                         Id = 3,
                         Title = "DSA Book",
                         Description = "Author: Reema Thereja",
