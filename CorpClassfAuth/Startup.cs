@@ -43,10 +43,9 @@ namespace CorpClassfAuth
                     options.RequireHttpsMetadata = false;
                     options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
                     {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidIssuer = Configuration["JWT:ValidIssuer"],
-                        ValidAudience = Configuration["JWT:ValidAudience"],
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
                     };
                 });

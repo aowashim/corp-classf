@@ -69,16 +69,13 @@ namespace CorpClassfAuth.Repository
 
                 var authClaims = new List<Claim>()
                 {
-                    new Claim(ClaimTypes.Name, signModel.EmpId.ToString()),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                    new Claim(ClaimTypes.Name, signModel.EmpId.ToString())
                 };
 
                 var authSignInKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["JWT:Secret"]));
 
                 var token = new JwtSecurityToken(
-                    issuer: _configuration["JWT:ValidIssuer"],
-                    audience: _configuration["JWT:ValidAudience"],
-                    expires: DateTime.Now.AddDays(1),
+                    expires: DateTime.Now.AddMinutes(10),
                     claims: authClaims,
                     signingCredentials: new SigningCredentials(authSignInKey, SecurityAlgorithms.HmacSha256Signature)
                     );
