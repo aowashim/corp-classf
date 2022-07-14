@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PointsMicroservices.Database;
 using PointsMicroservices.Database.Entities;
 using PointsMicroservices.Repository;
@@ -13,6 +14,7 @@ namespace PointsMicroservices.Controllers
 {
     [Route("api")]
     [ApiController]
+    [Authorize]
     public class PointController : ControllerBase
     {
         private readonly DatabaseContext _context;

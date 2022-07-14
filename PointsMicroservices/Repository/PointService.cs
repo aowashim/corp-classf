@@ -28,7 +28,7 @@ namespace PointsMicroservices.Repository
             Employee emp = List_point.FirstOrDefault();
             int rewards = emp.Points_Gained;
             int diff_date = (DateTime.Now - offer.Start_Date).Days;
-            int engage_diif_date = (offer.Engaged_Date - offer.Start_Date).Days;
+            //int engage_diif_date = (offer.Engaged_Date - offer.Start_Date).Days;
             int n_likes = (int)offer.N_Likes;
             if (n_likes <= 100)
             {
@@ -41,10 +41,10 @@ namespace PointsMicroservices.Repository
                     rewards += 10;
                 }
             }
-            if (engage_diif_date <= 2)
-            {
-                rewards += 100;
-            }
+            //if (engage_diif_date <= 2)
+            //{
+            //    rewards += 100;
+            //}
             emp.Points_Gained = rewards;
             _context.Employees.Update(emp);
             await _context.SaveChangesAsync();
