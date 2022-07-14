@@ -14,8 +14,11 @@ import Loading from '../components/Loading'
 
 const useStyles = makeStyles(theme => ({
   cont: {
-    height: '80vh',
-    marginTop: '3rem',
+    // height: '80vh',
+    marginTop: '1.5rem',
+    marginBottom: '1rem',
+    paddingTop: 8,
+    paddingBottom: 8,
     boxShadow: '0px 0px 10px 0px rgba(94,94,94,0.64)',
     borderRadius: '20px',
   },
@@ -64,9 +67,13 @@ function Profile() {
             justify='center'
           >
             <Grid item xs={6} sm={6} md={6}>
-              <Typography variant='title' component='h6'>
-                <img src='./Image/profile.png' alt='logo' height={300} />
-              </Typography>
+              {/* <Typography variant='title' component='h6'> */}
+              <img
+                src='./Image/profile.png'
+                alt='logo'
+                style={{ height: '180px' }}
+              />
+              {/* </Typography> */}
             </Grid>
             <Grid item>
               <div style={{ display: 'flex', padding: 5 }}>

@@ -137,9 +137,19 @@ export default function Offer() {
               >
                 Offer Starts On : {jsonToNormalDate(offerData.o.start_Date)}
               </Alert>
-              <Alert style={{ marginBottom: 35 }} severity='error'>
+              <Alert style={{ marginBottom: 20 }} severity='error'>
                 Offer Ends On : {jsonToNormalDate(offerData.o.end_Date)}
               </Alert>
+
+              <Button
+                variant='contained'
+                size='large'
+                color='primary'
+                style={{ marginBottom: 20, width: '100%' }}
+              >
+                <FavoriteIcon fontSize='small' style={{ marginRight: 5 }} />
+                Like
+              </Button>
             </div>
           </div>
 
@@ -163,7 +173,7 @@ export default function Offer() {
             <u>Category</u> : {offerData.o.offer_Category.name}
           </Typography>
 
-          <div className={classes.bnn}>
+          {/* <div className={classes.bnn}>
             <Button size='large' color='primary'>
               <FavoriteIcon />
               Like
@@ -171,7 +181,7 @@ export default function Offer() {
             <Button size='large' color='primary'>
               Engage
             </Button>
-          </div>
+          </div> */}
 
           <Divider variant='fullWidth' style={{ marginTop: 40 }} />
 

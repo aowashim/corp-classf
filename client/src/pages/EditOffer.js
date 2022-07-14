@@ -17,11 +17,10 @@ import {
 } from '@material-ui/core'
 import { useFormik } from 'formik'
 import { postOfferValidation } from '../helpers/yupValidation'
-import NavBar from '../components/NavBar'
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { jsonToNormalDate } from '../helpers/convertDate'
 import Loading from '../components/Loading'
-import { appBackground } from '../helpers/constant'
+import NavBar from '../components/NavBar'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -64,6 +63,7 @@ function EditOffer() {
 
   useEffect(() => {
     handleGetOfferDetails()
+    console.log(pathname)
   }, [])
 
   const formik = useFormik({

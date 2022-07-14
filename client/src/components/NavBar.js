@@ -69,7 +69,7 @@ export default function NavBar({ path }) {
               }}
             > */}
             {/* <Typography variant='title' component='h6'> */}
-            <img src='./Image/LogoComplete.png' alt='logo' height={50} />
+            <img src='/LogoComplete.png' alt='logo' height={50} />
             {/* </Typography> */}
             <div className='cor'>
               <IconButton

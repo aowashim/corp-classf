@@ -53,12 +53,13 @@ const useStyles = makeStyles(theme => ({
   image: {
     animation: 'fadeIn 2s ease-in-out infinite',
     height: '70vh',
+    // backgroundColor: theme.palette.secondary.main,
     backgroundImage: 'url(./Image/banner.png)',
     backgroundRepeat: 'no-repeat',
-    backgroundColor:
-      theme.palette.type === 'light'
-        ? theme.palette.grey[50]
-        : theme.palette.grey[900],
+    // backgroundColor:
+    //   theme.palette.type === "light"
+    //     ? theme.palette.grey[50]
+    //     : theme.palette.grey[900],
     backgroundSize: '80%',
     backgroundPosition: 'center',
   },
@@ -102,7 +103,11 @@ export default function Home() {
   return (
     <>
       <div className='home-nav'>
-        <AppBar className='nav-bar' position='static' color='white'>
+        <AppBar
+          className='nav-bar'
+          position='static'
+          style={{ background: '#b69bff' }}
+        >
           <Toolbar className={classes.toolbar}>
             <Typography variant='title' component='h6'>
               <img src='./Image/LogoComplete.png' alt='logo' height={60} />
@@ -133,16 +138,20 @@ export default function Home() {
         >
           <MuiThemeProvider theme={theme}>
             <Typography
-              className={classes.txtMain}
+              style={{
+                fontWeight: 800,
+                textAlign: 'center',
+                paddingTop: '5vw',
+              }}
               variant='h2'
-              component='h2'
+              // component='h1'
               gutterBottom
             >
               CORPORATE CLASSIFIEDS
             </Typography>
             <Typography
               style={{ fontWeight: 400, textAlign: 'center' }}
-              variant='h6'
+              variant='h5'
               gutterBottom
             >
               BUY AND SELL AT FINGERTIPS
@@ -151,12 +160,13 @@ export default function Home() {
             <Grid container justify='center'>
               <Button
                 style={{
-                  //   textTransform: 'none',
-                  //   padding: '1rem 3rem',
-                  //   textAlign: 'Center',
+                  // textTransform: 'none',
+                  // padding: '1rem 3rem',
+                  // textAlign: 'Center',
                   marginTop: 20,
                 }}
                 size='large'
+                // variant="contained"
                 variant='outlined'
                 color='secondary'
                 onClick={() => navigate('/signin')}

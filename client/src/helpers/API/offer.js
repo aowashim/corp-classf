@@ -134,3 +134,21 @@ export const getCommentsApi = async id => {
 
   return res
 }
+
+export const likeOfferApi = async (empId, ofId) => {
+  const res = { data: '', status: 200 }
+
+  try {
+    const val = await axios.post(
+      `${server}/engageOffer?Id=${ofId}&Emp_Id=${empId}`
+    )
+
+    res.data = val.data
+    res.status = val.status
+  } catch (error) {
+    res.data = error.message
+    res.status = error.response.status
+  }
+
+  return res
+}

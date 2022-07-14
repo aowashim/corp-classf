@@ -23,6 +23,7 @@ import {
   MenuItem,
   Toolbar,
   Divider,
+  CardMedia,
 } from '@material-ui/core'
 import UserContext from '../store/UserContext'
 import FaceIcon from '@material-ui/icons/Face'
@@ -214,11 +215,11 @@ export default function OfferFeed(props) {
               {data.current.map(item => (
                 <Grid item key={item.id} xs={12} sm={6}>
                   <Card className={classes.card}>
-                    {/* <CardMedia
-                    className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
-                    title="Image title"
-                  /> */}
+                    <CardMedia
+                      className={classes.cardMedia}
+                      image='https://source.unsplash.com/random'
+                      title='Image title'
+                    />
                     <CardContent className={classes.cardContent}>
                       <Typography
                         gutterBottom
@@ -227,7 +228,7 @@ export default function OfferFeed(props) {
                         component='h2'
                         style={{
                           color: '#1e1233',
-                          textDecorationLine: 'underline',
+                          // textDecorationLine: 'underline',
                         }}
                       >
                         {item.title}
@@ -270,7 +271,7 @@ export default function OfferFeed(props) {
                     </CardContent>
                     <CardActions>
                       <Button
-                        variant='contained'
+                        variant='outlined'
                         size='small'
                         color='primary'
                         onClick={() => handleViewOfferDetails(item.id)}
@@ -279,7 +280,7 @@ export default function OfferFeed(props) {
                         View
                       </Button>
                       <Button
-                        variant='contained'
+                        variant='outlined'
                         size='small'
                         color='primary'
                         onClick={() => handleEditOffer(item.id)}
