@@ -7,3 +7,5 @@ export const configAxios = {
     Authorization: 'Bearer ' + localStorage.getItem('token'),
   },
 }
+
+export const sesExpMsg = 'Your session has expired, please login again...'

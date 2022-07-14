@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const server = process.env.REACT_APP_SERVER
+const server = process.env.REACT_APP_SERVER_AUTH
 
 export const signInApi = async values => {
   const res = { data: '', status: 200 }

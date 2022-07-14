@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import NavBar from '../components/NavBar'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
@@ -11,12 +13,18 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import Comment from '../components/Comment'
 import Divider from '@material-ui/core/Divider'
 import WriteComment from '../components/WriteComment'
-import { getCommentsApi, getOfferDetailsApi } from '../helpers/API/offer'
+import {
+  getCommentsApi,
+  getOfferDetailsApi,
+  likeOfferApi,
+} from '../helpers/API/offer'
 import Loading from '../components/Loading'
 import { jsonToNormalDate } from '../helpers/convertDate'
 import UserContext from '../store/UserContext'
 import Alert from '@material-ui/lab/Alert'
-import { appCardColor } from '../helpers/constant'
+import { appCardColor, sesExpMsg } from '../helpers/constant'
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
+import { refreshPointApi } from '../helpers/API/point'
 
 function Copyright() {
   return (
@@ -67,6 +75,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
+toast.configure()
 export default function Offer() {
   const classes = useStyles()
   const { pathname } = useLocation()
@@ -81,6 +90,12 @@ export default function Offer() {
   useEffect(() => {
     handleGetOfferDetails()
   }, [])
+
+  const notifyError = msg =>
+    toast.error(msg, { position: toast.POSITION.TOP_CENTER })
+
+  const notifySuccess = msg =>
+    toast.success(msg, { position: toast.POSITION.TOP_CENTER })
 
   const handleGetOfferDetails = async () => {
     const res = await getOfferDetailsApi(id)
@@ -107,7 +122,20 @@ export default function Offer() {
       setCommentData(res.data)
       setCommentLoaded(true)
     } else {
-      alert('An error occurred, please try again...')
+      notifyError('An error occurred, please try again...')
+    }
+  }
+
+  const handleLike = async () => {
+    const res = await likeOfferApi(user.id, offerData.o.id)
+    refreshPointApi(offerData.o)
+
+    if (res.status === 200) {
+      notifySuccess('Offer liked successfully')
+    } else if (res.status === 401) {
+      notifyError(sesExpMsg)
+    } else {
+      notifyError('An error occurred, please try again...')
     }
   }
 
@@ -148,9 +176,10 @@ export default function Offer() {
                 size='large'
                 color='primary'
                 style={{ marginBottom: 20, width: '100%' }}
+                onClick={handleLike}
               >
-                <FavoriteIcon fontSize='small' style={{ marginRight: 5 }} />
-                Like
+                {offerData.o.n_Likes}
+                <FavoriteIcon fontSize='small' style={{ marginLeft: 5 }} />
               </Button>
             </div>
           </div>

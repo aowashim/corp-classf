@@ -150,6 +150,7 @@ export const likeOfferApi = async (empId, ofId) => {
   try {
     const val = await axios.post(
       `${server}/engageOffer?Id=${ofId}&Emp_Id=${empId}`,
+      {},
       configAxios
     )
 
