@@ -28,6 +28,9 @@ namespace EmployeeMicroservice.Controllers
         }
 
 
+        [HttpGet("test")]
+        public IActionResult Get() => Ok("Working.....");
+
         /* --------[GET REQUESTS]-------- */
 
         // GET: api/ViewProfile/5
