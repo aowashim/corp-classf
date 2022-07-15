@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom'
 import UserContext from '../store/UserContext'
 import { MuiThemeProvider, createTheme } from '@material-ui/core/styles'
 import { appBackground, appPrimary } from '../helpers/constant'
+import useLogout from '../helpers/hooks/useLogout'
 
 const theme2 = createTheme({
   palette: {
@@ -29,6 +30,7 @@ export default function NavBar({ path }) {
   const navigate = useNavigate()
   const [anchorEl, setAnchorEl] = useState(null)
   const { user, setUser } = useContext(UserContext)
+  const handleLogout = useLogout()
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget)
@@ -36,16 +38,6 @@ export default function NavBar({ path }) {
 
   const handleClose = () => {
     setAnchorEl(null)
-  }
-
-  const handleLogout = () => {
-    localStorage.removeItem('id')
-    localStorage.removeItem('token')
-
-    setUser({
-      id: '',
-      token: '',
-    })
   }
 
   const handleNavigate = curPath => {
@@ -128,7 +120,7 @@ export default function NavBar({ path }) {
                 Post Offer
               </MenuItem>
               {user.id ? (
-                <MenuItem onClick={handleLogout}>Sign Out</MenuItem>
+                <MenuItem onClick={() => handleLogout()}>Sign Out</MenuItem>
               ) : (
                 <MenuItem onClick={() => handleNavigate('/signin')}>
                   Sign In
