@@ -25,6 +25,10 @@ import Alert from '@material-ui/lab/Alert'
 import { appCardColor, sesExpMsg } from '../helpers/constant'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import { refreshPointApi } from '../helpers/API/point'
+import LaptopIcon from '@material-ui/icons/Laptop'
+import HomeIcon from '@material-ui/icons/Home'
+import MenuBookIcon from '@material-ui/icons/MenuBook'
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket'
 
 function Copyright() {
   return (
@@ -148,71 +152,95 @@ export default function Offer() {
 
       {isLoaded ? (
         <Container component='main' className={classes.card} maxWidth='md'>
-          <Typography align='center' variant='h5'>
+          <Typography align='center' variant='h4' style={{ margin: 20 }}>
             {offerData.o.title}
           </Typography>
 
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              // width: '50%',
-            }}
-            align='center'
-          >
-            <div>
-              <Alert
-                style={{ marginBottom: 10, marginTop: 20 }}
-                severity='success'
-              >
-                Offer Starts On : {jsonToNormalDate(offerData.o.start_Date)}
-              </Alert>
-              <Alert style={{ marginBottom: 20 }} severity='error'>
-                Offer Ends On : {jsonToNormalDate(offerData.o.end_Date)}
-              </Alert>
-
-              <Button
-                variant='contained'
-                size='large'
-                color='primary'
-                style={{ marginBottom: 20, width: '100%' }}
-                onClick={handleLike}
-              >
-                {offerData.o.n_Likes}
-                <FavoriteIcon fontSize='small' style={{ marginLeft: 5 }} />
-              </Button>
-            </div>
-          </div>
-
           <Typography
-            variant='subtitle2'
-            align='justify'
-            style={{ marginBottom: 5 }}
-          >
-            <u>Description</u> : {offerData.o.description}
-          </Typography>
-
-          <Typography
-            variant='subtitle2'
+            variant='subtitle1'
             align='left'
             style={{ marginBottom: 5 }}
           >
-            <u>Posted by</u> : <b>{offerData.empName}</b>
+            {/* <u>Posted by</u> : <b>{offerData.empName}</b> */}
+            <b>Seller: {offerData.empName}</b>
+          </Typography>
+
+          <Typography
+            variant='body1'
+            align='justify'
+            style={{ marginBottom: 5 }}
+          >
+            {offerData.o.description}
           </Typography>
 
           <Typography variant='subtitle2' align='left'>
-            <u>Category</u> : {offerData.o.offer_Category.name}
+            {/* <u>Category</u> : {offerData.o.offer_Category.name} */}
+
+            <div
+              className='cat'
+              style={{
+                display: 'flex',
+                justifyContent: 'space-evenly',
+                margin: 30,
+              }}
+            >
+              <div className={classes.circl}>
+                <LaptopIcon
+                  color={
+                    offerData.o.category_Id === 1 ? 'secondary' : 'disabled'
+                  }
+                />
+              </div>
+              <div className={classes.circl}>
+                <HomeIcon
+                  color={
+                    offerData.o.category_Id === 2 ? 'secondary' : 'disabled'
+                  }
+                />
+              </div>
+              <div className={classes.circl}>
+                <MenuBookIcon
+                  color={
+                    offerData.o.category_Id === 3 ? 'secondary' : 'disabled'
+                  }
+                />
+              </div>
+              <div className={classes.circl}>
+                <ShoppingBasketIcon
+                  color={
+                    offerData.o.category_Id === 4 ? 'secondary' : 'disabled'
+                  }
+                />
+              </div>
+            </div>
           </Typography>
 
-          {/* <div className={classes.bnn}>
-            <Button size='large' color='primary'>
-              <FavoriteIcon />
-              Like
-            </Button>
-            <Button size='large' color='primary'>
-              Engage
-            </Button>
-          </div> */}
+          <div align='center'>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-evenly',
+                // width: '50%',
+              }}
+            >
+              <Alert style={{ marginRight: 10 }} severity='success'>
+                Starts On : {jsonToNormalDate(offerData.o.start_Date)}
+              </Alert>
+              <Button
+                // variant='outlined'
+                size='large'
+                color='secondary'
+                style={{ marginBottom: 20 }}
+                onClick={handleLike}
+              >
+                <FavoriteIcon fontSize='small' style={{ marginRight: 5 }} />
+                Like
+              </Button>
+              <Alert style={{ marginRight: 10 }} severity='error'>
+                Ends On : {jsonToNormalDate(offerData.o.end_Date)}
+              </Alert>
+            </div>
+          </div>
 
           <Divider variant='fullWidth' style={{ marginTop: 40 }} />
 

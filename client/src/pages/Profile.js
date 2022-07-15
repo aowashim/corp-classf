@@ -16,10 +16,10 @@ import { appCardColor } from '../helpers/constant'
 const useStyles = makeStyles(theme => ({
   cont: {
     // height: '80vh',
-    marginTop: '1.5rem',
+    marginTop: '5rem',
     marginBottom: '1rem',
-    paddingTop: 8,
-    paddingBottom: 8,
+    paddingTop: 15,
+    paddingBottom: 15,
     boxShadow: '0px 0px 10px 0px rgba(94,94,94,0.64)',
     borderRadius: '20px',
     backgroundColor: appCardColor,
@@ -73,7 +73,7 @@ function Profile() {
               <img
                 src='./Image/profile.png'
                 alt='logo'
-                style={{ height: '180px' }}
+                style={{ height: '120px' }}
               />
               {/* </Typography> */}
             </Grid>

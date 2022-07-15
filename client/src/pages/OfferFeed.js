@@ -217,7 +217,7 @@ export default function OfferFeed(props) {
                   <Card className={classes.card}>
                     <CardMedia
                       className={classes.cardMedia}
-                      image='/Image/Electronic.png'
+                      image='/Image/orderBG.png'
                       title='Image title'
                     />
                     <CardContent className={classes.cardContent}>
