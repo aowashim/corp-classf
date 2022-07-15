@@ -15,7 +15,7 @@ namespace OffersMicroservices.Repository
         public Task<List<EmployeeOffer>> GetOfferByPostedDate();
         public Task<int> EditAsync(int Id, Offer data);
         public Task<int> CreateAsync(Offer offer);
-        public Task EngageAsync(int Id);
+        public Task EngageAsync(int Id, int Emp_Id);
         public Task<List<EmployeeOffer>> GetOfferDetailsByEmpId(int id);
         public Task<List<EmployeeComment>> GetComments(int id);
         public Task PostAsync(Comment comment);

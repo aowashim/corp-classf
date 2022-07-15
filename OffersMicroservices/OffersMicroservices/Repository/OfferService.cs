@@ -33,7 +33,7 @@ namespace OffersMicroservices.Repository
         public async Task<List<OfferEmployee>> GetOfferDetails(int id)
         {
             var result = await _context.Offers.Where(o => o.Id == id).Include(o => o.Offer_Category)
-                    .Join(_context.Employees, O => O.Emp_Id, e => e.EmpId, (ofr, e) => new OfferEmployee { offer = ofr, empName = e.EmpName }).ToListAsync();
+                    .Join(_context.Employees, O => O.Emp_Id, e => e.EmpId, (ofr, e) => new OfferEmployee { o = ofr, empName = e.EmpName }).ToListAsync();
 
 
             return result;
@@ -102,7 +102,7 @@ namespace OffersMicroservices.Repository
 
             return result.Entity.Id;
         }
-        public async Task EngageAsync(int Id)
+        public async Task EngageAsync(int Id, int Emp_Id)
         {
             Offer temp = await _context.Offers.FindAsync(Id);
             //temp.Emp_Id = Emp_Id;

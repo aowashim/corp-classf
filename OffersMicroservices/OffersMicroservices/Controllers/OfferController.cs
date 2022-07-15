@@ -194,11 +194,11 @@ namespace OffersMicroservices.Controllers
         //             API fix engage_date of a specific offer_id to current date and time   */
         [Route("engageOffer")]
         [HttpPost]
-        public async Task<ActionResult> EngageOffer(int Id)
+        public async Task<ActionResult> EngageOffer(int Id, int Emp_Id)
         {
             try
             {
-                await _offerService.EngageAsync(Id);
+                await _offerService.EngageAsync(Id, Emp_Id);
                 return Ok();
             }
             catch (Exception e)
