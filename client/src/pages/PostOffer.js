@@ -19,7 +19,8 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { useContext, useState } from 'react'
 import UserContext from '../store/UserContext'
 import { postOfferApi } from '../helpers/API/offer'
-import { appBackground } from '../helpers/constant'
+import { appBackground, sesExpMsg } from '../helpers/constant'
+import useLogout from '../helpers/hooks/useLogout'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -56,6 +57,7 @@ export default function PostOffer(props) {
   const { user } = useContext(UserContext)
   const [category, setCategory] = useState(1)
   const navigate = useNavigate()
+  const handleLogout = useLogout()
 
   const handleChangeCatg = event => {
     setCategory(event.target.value)
@@ -86,6 +88,9 @@ export default function PostOffer(props) {
     if (res.status === 200) {
       notifySuccess('Offer posted successfully, Opening offer details page...')
       navigate(`/offer/${res.data}`)
+    } else if (res.status === 401) {
+      handleLogout()
+      notifyError(sesExpMsg)
     } else {
       notifyError('An error occurred, please try again...')
     }

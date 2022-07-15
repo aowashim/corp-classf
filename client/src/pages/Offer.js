@@ -29,6 +29,7 @@ import LaptopIcon from '@material-ui/icons/Laptop'
 import HomeIcon from '@material-ui/icons/Home'
 import MenuBookIcon from '@material-ui/icons/MenuBook'
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket'
+import useLogout from '../helpers/hooks/useLogout'
 
 function Copyright() {
   return (
@@ -90,6 +91,7 @@ export default function Offer() {
   const [viewComment, setViewComment] = useState(false)
   const [commentData, setCommentData] = useState([])
   const [commentLoaded, setCommentLoaded] = useState(false)
+  const handleLogout = useLogout()
 
   useEffect(() => {
     handleGetOfferDetails()
@@ -107,6 +109,9 @@ export default function Offer() {
     if (res.status === 200) {
       setOfferData(res.data[0])
       setIsLoaded(true)
+    } else if (res.status === 401) {
+      handleLogout()
+      notifyError(sesExpMsg)
     } else {
       alert('An error occurred, please try again...')
     }
@@ -125,6 +130,9 @@ export default function Offer() {
     if (res.status === 200) {
       setCommentData(res.data)
       setCommentLoaded(true)
+    } else if (res.status === 401) {
+      handleLogout()
+      notifyError(sesExpMsg)
     } else {
       notifyError('An error occurred, please try again...')
     }
@@ -137,6 +145,7 @@ export default function Offer() {
     if (res.status === 200) {
       notifySuccess('Offer liked successfully')
     } else if (res.status === 401) {
+      handleLogout()
       notifyError(sesExpMsg)
     } else {
       notifyError('An error occurred, please try again...')

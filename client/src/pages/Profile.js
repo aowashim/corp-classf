@@ -11,7 +11,8 @@ import { useContext, useEffect, useState } from 'react'
 import UserContext from '../store/UserContext'
 import { getEmpProfileApi } from '../helpers/API/employee'
 import Loading from '../components/Loading'
-import { appCardColor } from '../helpers/constant'
+import { appCardColor, sesExpMsg } from '../helpers/constant'
+import useLogout from '../helpers/hooks/useLogout'
 
 const useStyles = makeStyles(theme => ({
   cont: {
@@ -39,10 +40,17 @@ function Profile() {
   const { user } = useContext(UserContext)
   const [data, setData] = useState('')
   const [isLoaded, setIsLoaded] = useState(false)
+  const handleLogout = useLogout()
 
   useEffect(() => {
     handleGetProfile()
   }, [])
+
+  const notifyError = msg =>
+    toast.error(msg, { position: toast.POSITION.TOP_CENTER })
+
+  const notifySuccess = msg =>
+    toast.success(msg, { position: toast.POSITION.TOP_CENTER })
 
   const handleGetProfile = async () => {
     const res = await getEmpProfileApi(user.id)
@@ -50,8 +58,11 @@ function Profile() {
     if (res.status === 200) {
       setData(res.data.value)
       setIsLoaded(true)
+    } else if (res.status === 401) {
+      handleLogout()
+      notifyError(sesExpMsg)
     } else {
-      alert('An error occurred, please try again...')
+      notifyError('An error occurred, please try again...')
     }
   }
 

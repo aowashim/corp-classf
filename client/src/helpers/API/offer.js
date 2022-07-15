@@ -23,7 +23,7 @@ export const postOfferApi = async (values, category_Id, emp_Id) => {
   }
 
   try {
-    const val = await axios.post(`${server}/addOffer`, jsonData, configAxios)
+    const val = await axios.post(`${server}/addOffer`, jsonData, configAxios())
 
     res.data = val.data
     res.status = val.status
@@ -39,7 +39,7 @@ export const getAllOfferApi = async endPoint => {
   const res = { data: '', status: 200 }
 
   try {
-    const val = await axios.get(`${server}/${endPoint}`, configAxios)
+    const val = await axios.get(`${server}/${endPoint}`, configAxios())
 
     res.data = val.data
     res.status = val.status
@@ -55,7 +55,10 @@ export const getOfferDetailsApi = async id => {
   const res = { data: '', status: 200 }
 
   try {
-    const val = await axios.get(`${server}/getOfferDetails/${id}`, configAxios)
+    const val = await axios.get(
+      `${server}/getOfferDetails/${id}`,
+      configAxios()
+    )
 
     res.data = val.data
     res.status = val.status
@@ -90,7 +93,7 @@ export const editOfferApi = async (values, category_Id, offerId) => {
     const val = await axios.post(
       `${server}/editOffer?id=${offerId}`,
       jsonData,
-      configAxios
+      configAxios()
     )
 
     res.data = val.data
@@ -117,7 +120,7 @@ export const postCommentApi = async (content, user_Id, offer_Id) => {
         user_Id,
         offer_Id,
       },
-      configAxios
+      configAxios()
     )
 
     res.data = val.data
@@ -134,7 +137,7 @@ export const getCommentsApi = async id => {
   const res = { data: '', status: 200 }
 
   try {
-    const val = await axios.get(`${server}/comments/${id}`, configAxios)
+    const val = await axios.get(`${server}/comments/${id}`, configAxios())
 
     res.data = val.data
     res.status = val.status
@@ -153,7 +156,7 @@ export const likeOfferApi = async (empId, ofId) => {
     const val = await axios.post(
       `${server}/engageOffer?Id=${ofId}&Emp_Id=${empId}`,
       {},
-      configAxios
+      configAxios()
     )
 
     res.data = val.data

@@ -28,7 +28,13 @@ import {
 import UserContext from '../store/UserContext'
 import FaceIcon from '@material-ui/icons/Face'
 import Pagination from '@material-ui/lab/Pagination'
-import { appBackground, appCardColor, appPrimary } from '../helpers/constant'
+import {
+  appBackground,
+  appCardColor,
+  appPrimary,
+  sesExpMsg,
+} from '../helpers/constant'
+import useLogout from '../helpers/hooks/useLogout'
 
 function Copyright() {
   return (
@@ -98,6 +104,7 @@ export default function OfferFeed(props) {
   const navigate = useNavigate()
   const [page, setPage] = useState(1)
   const [refresh, setRefresh] = useState(false)
+  const handleLogout = useLogout()
 
   const { pathname } = useLocation()
 
@@ -158,6 +165,9 @@ export default function OfferFeed(props) {
       items.current = res.data
       setPage(1)
       setSlicedData(1)
+    } else if (res.status === 401) {
+      handleLogout()
+      notifyError(sesExpMsg)
     } else {
       notifyError('An error occurred, please try again...')
     }

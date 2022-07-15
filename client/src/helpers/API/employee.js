@@ -7,7 +7,7 @@ export const getEmpProfileApi = async id => {
   const res = { data: '', status: 200 }
 
   try {
-    const val = await axios.get(`${server}/ViewProfile/${id}`, configAxios)
+    const val = await axios.get(`${server}/ViewProfile/${id}`, configAxios())
 
     res.data = val.data
     res.status = val.status

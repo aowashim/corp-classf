@@ -10,7 +10,7 @@ export const refreshPointApi = async offer => {
     const val = await axios.post(
       `${server}/refreshPointsOfEmployee`,
       offer,
-      configAxios
+      configAxios()
     )
 
     res.data = val.data

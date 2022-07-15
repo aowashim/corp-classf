@@ -21,6 +21,8 @@ import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { jsonToNormalDate } from '../helpers/convertDate'
 import Loading from '../components/Loading'
 import NavBar from '../components/NavBar'
+import { sesExpMsg } from '../helpers/constant'
+import useLogout from '../helpers/hooks/useLogout'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -60,6 +62,7 @@ function EditOffer() {
   const [category, setCategory] = useState(1)
   const { user } = useContext(UserContext)
   const navigate = useNavigate()
+  const handleLogout = useLogout()
 
   useEffect(() => {
     handleGetOfferDetails()
@@ -95,6 +98,9 @@ function EditOffer() {
     if (res.status === 200) {
       notifySuccess('Offer edited successfully, Opening offer details page...')
       navigate(`/offer/${res.data}`)
+    } else if (res.status === 401) {
+      handleLogout()
+      notifyError(sesExpMsg)
     } else {
       notifyError('An error occurred, please try again...')
     }
@@ -115,11 +121,15 @@ function EditOffer() {
         setCategory(data.category_Id)
         setIsLoaded(true)
       } else {
-        alert('You can edit your offers only...')
+        notifyError('You can edit your offers only...')
         navigate('/offers')
       }
+    } else if (res.status === 401) {
+      handleLogout()
+      notifyError(sesExpMsg)
     } else {
-      alert('An error occurred, please try again...')
+      notifyError('An error occurred, please try again...')
+      navigate('/offers')
     }
   }
 

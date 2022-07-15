@@ -6,10 +6,13 @@ import Button from '@material-ui/core/Button'
 import { useFormik } from 'formik'
 import { postCommentValidation } from '../helpers/yupValidation'
 import { postCommentApi } from '../helpers/API/offer'
+import useLogout from '../helpers/hooks/useLogout'
+import { sesExpMsg } from '../helpers/constant'
 
 toast.configure()
 export default function WriteComment(props) {
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const handleLogout = useLogout()
 
   const formik = useFormik({
     initialValues: {
@@ -34,6 +37,9 @@ export default function WriteComment(props) {
     if (res.status === 200) {
       resetForm()
       notifySuccess('Comment posted successfully...')
+    } else if (res.status === 401) {
+      handleLogout()
+      notifyError(sesExpMsg)
     } else {
       notifyError('An error occurred, please try again...')
     }

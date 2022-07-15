@@ -102,15 +102,15 @@ export default function Home() {
 
   return (
     <>
-      <div className="home-nav">
+      <div className='home-nav'>
         <AppBar
-          className="nav-bar"
-          position="static"
-          style={{ background: "#b69bff" }}
+          className='nav-bar'
+          position='static'
+          style={{ background: '#b69bff' }}
         >
           <Toolbar className={classes.toolbar}>
-            <Typography variant="title" component="h6">
-              <img src="/LogoComplete.png" alt="logo" height={60} />
+            <Typography variant='title' component='h6'>
+              <img src='/LogoComplete.png' alt='logo' height={60} />
             </Typography>
           </Toolbar>
         </AppBar>
@@ -126,39 +126,39 @@ export default function Home() {
         </Grid>
       </Grid> */}
 
-      <Grid container component="main" className={classes.root}>
+      <Grid container component='main' className={classes.root}>
         <Grid item xs={12} sm={12} md={6} className={classes.image} />
         <Grid
           item
           xs={12}
           sm={12}
           md={6}
-          style={{ height: "80vh" }}
+          style={{ height: '80vh' }}
           elevation={6}
         >
           <MuiThemeProvider theme={theme}>
             <Typography
               style={{
-                color: "#8363DA",
+                color: '#8363DA',
                 fontWeight: 800,
-                textAlign: "center",
-                paddingTop: "5vw",
+                textAlign: 'center',
+                paddingTop: '5vw',
               }}
-              variant="h1"
+              variant='h1'
               // component='h1'
               gutterBottom
             >
               CORPORATE CLASSIFIEDS
             </Typography>
             <Typography
-              style={{ fontWeight: 400, textAlign: "center" }}
-              variant="h5"
+              style={{ fontWeight: 400, textAlign: 'center' }}
+              variant='h5'
               gutterBottom
             >
               BUY AND SELL AT FINGERTIPS
             </Typography>
 
-            <Grid container justify="center">
+            <Grid container justify='center'>
               <Button
                 style={{
                   // textTransform: 'none',
@@ -166,11 +166,11 @@ export default function Home() {
                   // textAlign: 'Center',
                   marginTop: 20,
                 }}
-                size="large"
+                size='large'
                 // variant="contained"
-                variant="outlined"
-                color="secondary"
-                onClick={() => navigate("/signin")}
+                variant='outlined'
+                color='secondary'
+                onClick={() => navigate('/signin')}
               >
                 Sign in
               </Button>
@@ -179,5 +179,5 @@ export default function Home() {
         </Grid>
       </Grid>
     </>
-  );
+  )
 }
