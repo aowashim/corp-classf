@@ -64,6 +64,8 @@ export const getOfferDetailsApi = async id => {
     res.status = error.response.status
   }
 
+  console.log(res)
+
   return res
 }
 

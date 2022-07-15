@@ -233,8 +233,10 @@ export default function Offer() {
                 style={{ marginBottom: 20 }}
                 onClick={handleLike}
               >
+                <Typography variant='h6' style={{ marginRight: 4 }}>
+                  {offerData.o.n_Likes}
+                </Typography>
                 <FavoriteIcon fontSize='small' style={{ marginRight: 5 }} />
-                Like
               </Button>
               <Alert style={{ marginRight: 10 }} severity='error'>
                 Ends On : {jsonToNormalDate(offerData.o.end_Date)}

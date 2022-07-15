@@ -7,6 +7,8 @@ import {
   Toolbar,
   Typography,
 } from '@material-ui/core'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { useFormik } from 'formik'
 import { signUpValidation } from '../helpers/yupValidation'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
@@ -34,6 +36,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
+toast.configure()
 export default function SignUp(props) {
   const classes = useStyles()
   const { pathname } = useLocation()
@@ -61,12 +64,18 @@ export default function SignUp(props) {
     const res = await signUpApi(values)
 
     if (res.status === 200) {
-      alert('Sign Up successfull, please sign in to continue...')
+      notifySuccess('Sign Up successfull, please sign in to continue...')
       navigate('/signin')
     } else {
-      alert('An error occurred, please try again...')
+      notifyError('An error occurred, please try again...')
     }
   }
+
+  const notifyError = msg =>
+    toast.error(msg, { position: toast.POSITION.TOP_CENTER })
+
+  const notifySuccess = msg =>
+    toast.success(msg, { position: toast.POSITION.TOP_CENTER })
 
   return (
     <div>

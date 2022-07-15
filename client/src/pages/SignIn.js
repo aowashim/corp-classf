@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Avatar from '@material-ui/core/Avatar'
@@ -54,6 +54,7 @@ export default function SignIn() {
   const { pathname } = useLocation()
   const { user, setUser } = useContext(UserContext)
   const navigate = useNavigate()
+  const [signingIn, setSigningIn] = useState(false)
 
   const formik = useFormik({
     initialValues: {
@@ -74,6 +75,7 @@ export default function SignIn() {
 
   // this handles sign in by calling the signin api
   const handleSignIn = async values => {
+    setSigningIn(true)
     values.empId = parseInt(values.empId)
     const res = await signInApi(values)
 
@@ -92,6 +94,8 @@ export default function SignIn() {
     } else {
       notifyError('Invalid Employee Id or Password')
     }
+
+    setSigningIn(false)
   }
 
   return !user.id ? (
@@ -137,11 +141,12 @@ export default function SignIn() {
             <Button
               type='submit'
               fullWidth
+              disabled={signingIn ? true : false}
               variant='contained'
               color='primary'
               className={classes.submit}
             >
-              Sign In
+              {signingIn ? 'Signing In...' : 'Sign In'}
             </Button>
 
             <Box align='center'>

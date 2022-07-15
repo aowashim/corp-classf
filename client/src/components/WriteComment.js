@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { TextField } from '@material-ui/core'
@@ -9,6 +9,8 @@ import { postCommentApi } from '../helpers/API/offer'
 
 toast.configure()
 export default function WriteComment(props) {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
   const formik = useFormik({
     initialValues: {
       comment: '',
@@ -26,6 +28,7 @@ export default function WriteComment(props) {
     toast.success(msg, { position: toast.POSITION.TOP_CENTER })
 
   const handlePostComment = async (val, resetForm) => {
+    setIsSubmitting(true)
     const res = await postCommentApi(val, props.eid, props.oid)
 
     if (res.status === 200) {
@@ -34,6 +37,8 @@ export default function WriteComment(props) {
     } else {
       notifyError('An error occurred, please try again...')
     }
+
+    setIsSubmitting(false)
   }
 
   return (
@@ -55,10 +60,11 @@ export default function WriteComment(props) {
         <Button
           style={{ margin: 8 }}
           type='submit'
+          disabled={isSubmitting ? true : false}
           variant='contained'
           color='primary'
         >
-          Submit
+          {isSubmitting ? 'Submitting...' : 'Submit'}
         </Button>
       </form>
     </div>
