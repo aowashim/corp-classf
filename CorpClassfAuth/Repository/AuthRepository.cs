@@ -75,7 +75,7 @@ namespace CorpClassfAuth.Repository
                 var authSignInKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["JWT:Secret"]));
 
                 var token = new JwtSecurityToken(
-                    expires: DateTime.Now.AddMinutes(10),
+                    expires: DateTime.Now.AddDays(1),
                     claims: authClaims,
                     signingCredentials: new SigningCredentials(authSignInKey, SecurityAlgorithms.HmacSha256Signature)
                     );
