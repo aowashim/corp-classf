@@ -58,6 +58,7 @@ export default function PostOffer(props) {
   const [category, setCategory] = useState(1)
   const navigate = useNavigate()
   const handleLogout = useLogout()
+  const [isPosting, setIsPosting] = useState(false)
 
   const handleChangeCatg = event => {
     setCategory(event.target.value)
@@ -83,6 +84,7 @@ export default function PostOffer(props) {
     toast.success(msg, { position: toast.POSITION.TOP_CENTER })
 
   const handlePostOffer = async values => {
+    setIsPosting(true)
     const res = await postOfferApi(values, category, user.id)
 
     if (res.status === 200) {
@@ -94,6 +96,8 @@ export default function PostOffer(props) {
     } else {
       notifyError('An error occurred, please try again...')
     }
+
+    setIsPosting(false)
   }
 
   return user.id ? (
@@ -188,11 +192,12 @@ export default function PostOffer(props) {
               <Button
                 type='submit'
                 fullWidth
+                disabled={isPosting ? true : false}
                 variant='contained'
                 color='primary'
                 className={classes.submit}
               >
-                Post Offer
+                {isPosting ? 'Posting...' : 'Post Offer'}
               </Button>
             </form>
           </div>

@@ -63,6 +63,7 @@ function EditOffer() {
   const { user } = useContext(UserContext)
   const navigate = useNavigate()
   const handleLogout = useLogout()
+  const [isEditing, setIsEditing] = useState(false)
 
   useEffect(() => {
     handleGetOfferDetails()
@@ -93,6 +94,7 @@ function EditOffer() {
   }
 
   const handleEditOffer = async values => {
+    setIsEditing(true)
     const res = await editOfferApi(values, category, id)
 
     if (res.status === 200) {
@@ -104,6 +106,8 @@ function EditOffer() {
     } else {
       notifyError('An error occurred, please try again...')
     }
+
+    setIsEditing(false)
   }
 
   const handleGetOfferDetails = async () => {
@@ -231,11 +235,12 @@ function EditOffer() {
                 <Button
                   type='submit'
                   fullWidth
+                  disabled={isEditing ? true : false}
                   variant='contained'
                   color='primary'
                   className={classes.submit}
                 >
-                  Edit Offer
+                  {isEditing ? 'Editing...' : 'Edit Offer'}
                 </Button>
               </form>
             </div>

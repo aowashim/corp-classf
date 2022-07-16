@@ -15,6 +15,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import NavBar from '../components/NavBar'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { signUpApi } from '../helpers/API/auth'
+import { useState } from 'react'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -41,6 +42,7 @@ export default function SignUp(props) {
   const classes = useStyles()
   const { pathname } = useLocation()
   const navigate = useNavigate()
+  const [isSigningUp, setIsSigningUp] = useState(false)
 
   const formik = useFormik({
     initialValues: {
@@ -60,6 +62,7 @@ export default function SignUp(props) {
 
   // this handles sign up by calling the signup api
   const handleSignUp = async values => {
+    setIsSigningUp(true)
     values.empId = parseInt(values.empId)
     const res = await signUpApi(values)
 
@@ -69,6 +72,8 @@ export default function SignUp(props) {
     } else {
       notifyError('An error occurred, please try again...')
     }
+
+    setIsSigningUp(false)
   }
 
   const notifyError = msg =>
@@ -204,11 +209,12 @@ export default function SignUp(props) {
               <Button
                 type='submit'
                 fullWidth
+                disabled={isSigningUp ? true : false}
                 variant='contained'
                 color='primary'
                 className={classes.submit}
               >
-                Sign Up
+                {isSigningUp ? 'Signing Up...' : 'Sign Up'}
               </Button>
             </form>
           </div>

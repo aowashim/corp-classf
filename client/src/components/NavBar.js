@@ -9,7 +9,7 @@ import {
 import MenuIcon from '@material-ui/icons/Menu'
 import { useContext, useState } from 'react'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import UserContext from '../store/UserContext'
 import { MuiThemeProvider, createTheme } from '@material-ui/core/styles'
 import { appBackground, appPrimary } from '../helpers/constant'
@@ -31,6 +31,7 @@ export default function NavBar({ path }) {
   const [anchorEl, setAnchorEl] = useState(null)
   const { user, setUser } = useContext(UserContext)
   const handleLogout = useLogout()
+  const { pathname } = useLocation()
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget)
@@ -38,6 +39,11 @@ export default function NavBar({ path }) {
 
   const handleClose = () => {
     setAnchorEl(null)
+  }
+
+  const goToOffers = () => {
+    path = pathname
+    handleNavigate('/offers')
   }
 
   const handleNavigate = curPath => {
@@ -61,7 +67,12 @@ export default function NavBar({ path }) {
               }}
             > */}
             {/* <Typography variant='title' component='h6'> */}
-            <img src='/LogoComplete.png' alt='logo' height={50} />
+            <img
+              src='/LogoComplete.png'
+              alt='logo'
+              height={50}
+              onClick={goToOffers}
+            />
             {/* </Typography> */}
             <div className='cor'>
               <IconButton
