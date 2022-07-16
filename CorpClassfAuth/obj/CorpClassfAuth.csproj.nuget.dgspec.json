@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\CTS\\CorporateClassifieds_MFPE\\Corp-Classf-Main\\corp-classf\\CorpClassfAuth\\CorpClassfAuth.csproj": {}
+    "C:\\Users\\aowas\\Documents\\cts_proj\\corp-classf\\CorpClassfAuth\\CorpClassfAuth.csproj": {}
   },
   "projects": {
-    "D:\\CTS\\CorporateClassifieds_MFPE\\Corp-Classf-Main\\corp-classf\\CorpClassfAuth\\CorpClassfAuth.csproj": {
+    "C:\\Users\\aowas\\Documents\\cts_proj\\corp-classf\\CorpClassfAuth\\CorpClassfAuth.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\CTS\\CorporateClassifieds_MFPE\\Corp-Classf-Main\\corp-classf\\CorpClassfAuth\\CorpClassfAuth.csproj",
+        "projectUniqueName": "C:\\Users\\aowas\\Documents\\cts_proj\\corp-classf\\CorpClassfAuth\\CorpClassfAuth.csproj",
         "projectName": "CorpClassfAuth",
-        "projectPath": "D:\\CTS\\CorporateClassifieds_MFPE\\Corp-Classf-Main\\corp-classf\\CorpClassfAuth\\CorpClassfAuth.csproj",
-        "packagesPath": "C:\\Users\\Owner\\.nuget\\packages\\",
-        "outputPath": "D:\\CTS\\CorporateClassifieds_MFPE\\Corp-Classf-Main\\corp-classf\\CorpClassfAuth\\obj\\",
+        "projectPath": "C:\\Users\\aowas\\Documents\\cts_proj\\corp-classf\\CorpClassfAuth\\CorpClassfAuth.csproj",
+        "packagesPath": "C:\\Users\\aowas\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\aowas\\Documents\\cts_proj\\corp-classf\\CorpClassfAuth\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Owner\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\aowas\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -93,7 +93,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -118,7 +118,7 @@ namespace OffersMicroservices.Controllers
                 {
                     return NotFound();
                 }
-                return Ok(result.FirstOrDefault());
+                return Ok(result);
 
             }
             catch (Exception e)
