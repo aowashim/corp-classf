@@ -109,7 +109,9 @@ export default function OfferFeed(props) {
   const { pathname } = useLocation()
 
   useEffect(() => {
-    handleGetOffers()
+    if (user.id) {
+      handleGetOffers()
+    }
   }, [viewOfferBy])
 
   const notifyError = msg =>

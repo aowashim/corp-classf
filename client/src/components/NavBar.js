@@ -81,7 +81,8 @@ export default function NavBar({ path }) {
                 color='inherit'
                 aria-label='menu'
               >
-                <MenuIcon />
+                {/* <MenuIcon /> */}
+                <AccountCircleIcon />
               </IconButton>
 
               {/* <Typography
@@ -96,13 +97,13 @@ export default function NavBar({ path }) {
               Corporate Classifieds
             </Typography> */}
               {/* </div> */}
-              <IconButton
+              {/* <IconButton
                 color='inherit'
                 aria-label='cart'
                 onClick={() => handleNavigate('/profile')}
               >
                 <AccountCircleIcon />
-              </IconButton>
+              </IconButton> */}
             </div>
 
             <Menu
@@ -123,6 +124,9 @@ export default function NavBar({ path }) {
               //open={open}
               onClose={handleClose}
             >
+              <MenuItem onClick={() => handleNavigate('/profile')}>
+                Profile
+              </MenuItem>
               <MenuItem onClick={() => handleNavigate('/offers')}>
                 Offers
               </MenuItem>

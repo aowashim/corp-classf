@@ -43,7 +43,9 @@ function Profile() {
   const handleLogout = useLogout()
 
   useEffect(() => {
-    handleGetProfile()
+    if (user.id) {
+      handleGetProfile()
+    }
   }, [])
 
   const notifyError = msg =>

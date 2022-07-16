@@ -66,8 +66,9 @@ function EditOffer() {
   const [isEditing, setIsEditing] = useState(false)
 
   useEffect(() => {
-    handleGetOfferDetails()
-    console.log(pathname)
+    if (user.id) {
+      handleGetOfferDetails()
+    }
   }, [])
 
   const formik = useFormik({
@@ -251,7 +252,7 @@ function EditOffer() {
       )}
     </div>
   ) : (
-    <Navigate to='/signin' />
+    <Navigate to='/' />
   )
 }
 

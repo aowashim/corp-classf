@@ -5,7 +5,7 @@ import NavBar from '../components/NavBar'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
-import { useLocation, useParams } from 'react-router-dom'
+import { Navigate, useLocation, useParams } from 'react-router-dom'
 import Link from '@material-ui/core/Link'
 import { Box, Button, Toolbar } from '@material-ui/core'
 import FavoriteIcon from '@material-ui/icons/Favorite'
@@ -94,7 +94,9 @@ export default function Offer() {
   const handleLogout = useLogout()
 
   useEffect(() => {
-    handleGetOfferDetails()
+    if (user.id) {
+      handleGetOfferDetails()
+    }
   }, [])
 
   const notifyError = msg =>
@@ -152,7 +154,7 @@ export default function Offer() {
     }
   }
 
-  return (
+  return user.id ? (
     <div>
       <NavBar path={pathname} />
       <Toolbar />
@@ -284,5 +286,7 @@ export default function Offer() {
         <Loading color='primary' size={50} />
       )}
     </div>
+  ) : (
+    <Navigate to='/' />
   )
 }
