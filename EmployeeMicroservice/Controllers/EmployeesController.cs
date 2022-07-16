@@ -18,7 +18,7 @@ namespace EmployeeMicroservice.Controllers
 {
     [Route("api")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class EmployeesController : ControllerBase
     {
         /* --------[SETUP]-------- */
@@ -38,8 +38,10 @@ namespace EmployeeMicroservice.Controllers
         {
             try 
             {
-                var employee = await _employeeService.ViewProfile(id);
+                if (id < 0) throw new Exception("Invalid ID"); // Throws Exception for Invalid ID.
 
+                var employee = await _employeeService.ViewProfile(id);
+                
                 if (employee == null)
                 {
                     return NotFound();
@@ -60,6 +62,7 @@ namespace EmployeeMicroservice.Controllers
         {
             try
             {
+                if (id < 0) throw new Exception("Invalid ID"); // Throws Exception for Invalid ID.
 
                 var offers = await _employeeService.ViewEmployeeOffers(id);
 
@@ -91,6 +94,10 @@ namespace EmployeeMicroservice.Controllers
                 {
                     return NotFound();
                 }
+
+                else if (top3offers.Count > 3)      // Throwing error for fetching more than 3 offers
+                    throw new Exception("Service is not working as intended");
+                
                 //var json = JsonSerializer.Serialize(offers);
 
                 return Ok(top3offers);

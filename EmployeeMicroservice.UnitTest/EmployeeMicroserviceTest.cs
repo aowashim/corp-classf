@@ -44,6 +44,20 @@ namespace EmployeeMicroservice.UnitTest
         }
 
         [Fact]
+        public async void ViewProfile_ShouldReturnExceptionMessage()
+        {
+            // Arrange
+            var employeeService = new Mock<IEmployeeService>();
+            var sut = new EmployeesController(employeeService.Object);
+
+            // Act
+            var result = await sut.ViewProfile(-1);
+
+            // Assert
+            Assert.IsType<BadRequestObjectResult>(result.Result);
+        }
+
+        [Fact]
         public async void ViewEmployeeOffers_ShouldReturn200Status()
         {
             // Arrange
@@ -76,6 +90,20 @@ namespace EmployeeMicroservice.UnitTest
         }
 
         [Fact]
+        public async void ViewEmployeeOffers_ShouldReturnExceptionMessage()
+        {
+            // Arrange
+            var employeeService = new Mock<IEmployeeService>();
+            var sut = new EmployeesController(employeeService.Object);
+
+            // Act
+            var result = await sut.ViewEmployeeOffers(-1);
+
+            // Assert
+            Assert.IsType<BadRequestObjectResult>(result.Result);
+        }
+
+        [Fact]
         public async void ViewMostLikedOffers_ShouldReturn200Status()
         {
             // Arrange
@@ -103,6 +131,22 @@ namespace EmployeeMicroservice.UnitTest
 
             // Assert
             Assert.IsType<NotFoundResult>(result.Result);
+        }
+
+        [Fact]
+        public async void ViewMostLikedOffers_ShouldReturnExceptionMessage()
+        {
+            // Arrange
+            var employeeService = new Mock<IEmployeeService>();
+            var empoffers = EmployeeOfferMockData.GetEmployeeOffersForCheckingException();
+            employeeService.Setup(s => s.ViewMostLikedOffers()).ReturnsAsync(empoffers);
+            var sut = new EmployeesController(employeeService.Object);
+
+            // Act
+            var result = await sut.ViewMostLikedOffers();
+
+            // Assert
+            Assert.IsType<BadRequestObjectResult>(result.Result);
         }
     }
 }
