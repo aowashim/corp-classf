@@ -6,10 +6,10 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
-COPY ["PointsMicroservices/PointsMicroservices.csproj", "PointsMicroservices/"]
-RUN dotnet restore "PointsMicroservices/PointsMicroservices.csproj"
+COPY ["PointsMicroservices.csproj", "."]
+RUN dotnet restore "./PointsMicroservices.csproj"
 COPY . .
-WORKDIR "/src/PointsMicroservices"
+WORKDIR "/src/."
 RUN dotnet build "PointsMicroservices.csproj" -c Release -o /app/build
 
 FROM build AS publish
