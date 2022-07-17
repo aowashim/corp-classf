@@ -14,13 +14,13 @@ namespace EmployeeMicroservice.UnitTest
     public class EmployeeMicroServiceTest
     {
         [Fact]
-        public async void ViewProfile_ShouldReturn200Status()
+        public async void ViewProfile_ShouldReturn200Status() 
         {
             // Arrange
             var employeeService = new Mock<IEmployeeService>();
             var employees = EmployeeMockData.GetEmployees();
             employeeService.Setup(s => s.ViewProfile(employees[0].EmpId)).ReturnsAsync(employees[0]);
-            var sut = new EmployeesController(employeeService.Object);
+            var sut = new EmployeesController(employeeService.Object); //System Under Test
 
             // Act
             var result = await sut.ViewProfile(employees[0].EmpId);
