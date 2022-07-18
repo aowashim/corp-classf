@@ -30,6 +30,7 @@ import HomeIcon from '@material-ui/icons/Home'
 import MenuBookIcon from '@material-ui/icons/MenuBook'
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket'
 import useLogout from '../helpers/hooks/useLogout'
+import { useRef } from 'react'
 
 function Copyright() {
   return (
@@ -92,6 +93,8 @@ export default function Offer() {
   const [commentData, setCommentData] = useState([])
   const [commentLoaded, setCommentLoaded] = useState(false)
   const handleLogout = useLogout()
+  const likeCount = useRef(0)
+  const [refresh, setRefresh] = useState(false)
 
   useEffect(() => {
     if (user.id) {
@@ -107,6 +110,7 @@ export default function Offer() {
 
   const handleGetOfferDetails = async () => {
     const res = await getOfferDetailsApi(id)
+    likeCount.current = res.data[0].o.n_Likes
 
     if (res.status === 200) {
       setOfferData(res.data[0])
@@ -145,7 +149,9 @@ export default function Offer() {
     refreshPointApi(offerData.o)
 
     if (res.status === 200) {
-      notifySuccess('Offer liked successfully')
+      likeCount.current += 1
+      setRefresh(!refresh)
+      // notifySuccess('Offer liked successfully')
     } else if (res.status === 401) {
       handleLogout()
       notifyError(sesExpMsg)
@@ -238,14 +244,14 @@ export default function Offer() {
                 Starts On : {jsonToNormalDate(offerData.o.start_Date)}
               </Alert>
               <Button
-                // variant='outlined'
+                variant='outlined'
                 size='large'
                 color='secondary'
                 style={{ marginBottom: 20 }}
                 onClick={handleLike}
               >
-                <Typography variant='h6' style={{ marginRight: 4 }}>
-                  {offerData.o.n_Likes}
+                <Typography variant='h6' style={{ marginRight: 7 }}>
+                  {likeCount.current}
                 </Typography>
                 <FavoriteIcon fontSize='small' style={{ marginRight: 5 }} />
               </Button>
